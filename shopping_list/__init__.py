@@ -16,6 +16,12 @@ def create_app(config_class=Config):
     app.config.from_object(config_class)
     Talisman(app, content_security_policy=None)
 
+    # import and register blueprints
+    from shopping_list.modules import static
+    app.register_blueprint(static)
+    from shopping_list.modules.main.routes import main
+    app.register_blueprint(main)
+
     db.app = app
     db.init_app(app)
     with app.app_context():
