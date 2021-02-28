@@ -2,6 +2,7 @@ from flask_talisman import Talisman
 from flask import Flask, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api, Resource, reqparse
+from flask_cors import CORS
 
 from shopping_list.config import Config
 
@@ -22,7 +23,7 @@ def create_app(config_class=Config):
         db.create_all()
 
     api.app = app
-    # api.init_app(app)
+    CORS(app)
 
     @app.route('/')
     def serve():

@@ -1,5 +1,6 @@
 from shopping_list import api
-from .resources import Test
+from .resources import Index
 
+URL_PREFIX = 'items'
 
-api.add_resource(Test, '/api/test')
+api.add_resource(Index, f'/api/{URL_PREFIX}/')

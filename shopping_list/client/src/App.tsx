@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import axios from "axios";
 
@@ -12,7 +11,7 @@ class App extends React.Component<any, any> {
     }
 
     componentDidMount() {
-        axios.get('/api/test').then(response => {
+        axios.get('/api/items/').then(response => {
             console.log('success');
             console.log(response);
             this.setState({response: response});

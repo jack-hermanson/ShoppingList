@@ -1,11 +1,13 @@
-from flask import Blueprint, jsonify
-from flask_restful import Api, Resource, reqparse
+from flask import jsonify
+from flask_restful import Resource
+from time import sleep
 
 
+class Index(Resource):
 
-class Test(Resource):
-
-    def get(self):
+    @staticmethod
+    def get():
+        sleep(1)
         return jsonify({'test': 'is here'})
 
 
