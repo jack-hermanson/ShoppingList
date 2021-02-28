@@ -1,14 +1,16 @@
 from flask_restful import Api, Resource, reqparse
 from flask import jsonify
+import time
 
 
 class HelloApiHandler(Resource):
 
     def get(self):
-        return {
+        time.sleep(2)
+        return jsonify({
             'resultStatus': 'SUCCESS',
             'message': "Hello API handler"
-        }
+        })
 
     def post(self):
         print(self)
