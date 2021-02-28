@@ -2,12 +2,11 @@ from flask_talisman import Talisman
 from flask import Flask, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api, Resource, reqparse
-from flask_cors import CORS  # comment out on deployment?
-from .api.HelloApiHandler import HelloApiHandler
 
 from shopping_list.config import Config
 
 db = SQLAlchemy()
+api = Api()
 
 
 def create_app(config_class=Config):
@@ -22,15 +21,14 @@ def create_app(config_class=Config):
     with app.app_context():
         db.create_all()
 
-    CORS(app)  # comment out on deployment
+    api.app = app
+    # api.init_app(app)
 
-    api = Api(app)
-
-    @app.route('/', defaults={'path': ''})
-    def serve(path):
+    @app.route('/')
+    def serve():
         return send_from_directory(app.static_folder, 'index.html')
 
-    api.add_resource(HelloApiHandler, '/flask/hello')
+    from .modules.items import routes
 
     return app
 

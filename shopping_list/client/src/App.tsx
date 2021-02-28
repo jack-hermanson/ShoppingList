@@ -7,15 +7,15 @@ class App extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {
-            getMessage: {}
+            response: null
         };
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/flask/hello').then(response => {
+        axios.get('/api/test').then(response => {
             console.log('success');
             console.log(response);
-            this.setState({'getMessage': response});
+            this.setState({response: response});
         }).catch(error => {
             console.log(error);
         })
@@ -25,7 +25,7 @@ class App extends React.Component<any, any> {
         return (
             <div className="App">
                 <p>Test</p>
-                <p>{this.state.getMessage.data?.message || "LOADING"}</p>
+                <p>{this.state.response?.data?.test || "LOADING"}</p>
             </div>
         );
     }
