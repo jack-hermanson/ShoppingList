@@ -15,14 +15,10 @@ export default class AlertPanel extends Component<AlertPanelProps, State> {
     constructor(props: AlertPanelProps) {
         super(props);
 
-        this.props = props;
-
         this.state = {
             visible: true
         };
     }
-
-    props: AlertPanelProps;
 
     render() {
         return (
