@@ -1,13 +1,13 @@
-from flask import jsonify
+from flask import jsonify, session
 from flask_restful import Resource
-from time import sleep
+from ..alerts.services import set_alert
 
 
 class Index(Resource):
 
     @staticmethod
     def get():
-        sleep(1)
+        set_alert("You have visited the /items endpoint.", "primary")
         return jsonify({'test': 'is here'})
 
 
