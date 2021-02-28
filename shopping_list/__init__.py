@@ -17,8 +17,6 @@ def create_app(config_class=Config):
     Talisman(app, content_security_policy=None)
 
     # import and register blueprints
-    from shopping_list.modules import static
-    app.register_blueprint(static)
     from shopping_list.modules.main.routes import main
     app.register_blueprint(main)
 
