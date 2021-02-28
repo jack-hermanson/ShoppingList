@@ -1,13 +1,37 @@
-import React from 'react';
 import axios from "axios";
+import {Container, Row, Col} from "reactstrap";
+import AlertPanel, {AlertPanelProps} from "./components/AlertPanel/AlertPanel";
+import ShoppingList from "./components/ShoppingList/ShoppingList";
+import React, {Component, Fragment} from "react";
 
-class App extends React.Component<any, any> {
+interface State {
+    alert: AlertPanelProps | null;
+}
+
+class App extends Component<any, State> {
+
+    constructor(props: any) {
+        super(props);
+
+        this.state = {
+            alert: null
+        };
+    }
 
     render() {
         return (
-            <>
-                <p>Test</p>
-            </>
+            <Fragment>
+                <Container>
+                    <AlertPanel text={"test"} color="info" />
+                </Container>
+                <Container>
+                    <Row>
+                        <Col>
+                            <ShoppingList/>
+                        </Col>
+                    </Row>
+                </Container>
+            </Fragment>
         );
     }
 
