@@ -1,7 +1,7 @@
 from flask_talisman import Talisman
 from flask import Flask, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
-from flask_restful import Api, Resource, reqparse
+from flask_restful import Api
 from flask_cors import CORS
 
 from shopping_list.config import Config
@@ -30,6 +30,7 @@ def create_app(config_class=Config):
         return send_from_directory(app.static_folder, 'index.html')
 
     from .modules.items import routes
+    from .modules.alerts import routes
 
     return app
 

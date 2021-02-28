@@ -5,7 +5,7 @@ import ShoppingList from "./components/ShoppingList/ShoppingList";
 import React, {Component, Fragment} from "react";
 
 interface State {
-    alert: AlertPanelProps | null;
+    alerts: Array<AlertPanelProps> | null;
 }
 
 class App extends Component<any, State> {
@@ -14,25 +14,36 @@ class App extends Component<any, State> {
         super(props);
 
         this.state = {
-            alert: null
+            alerts: null
         };
+    }
+
+    async componentDidMount() {
+        await this.getAlerts();
     }
 
     render() {
         return (
             <Fragment>
                 <Container>
-                    <AlertPanel text={"test"} color="info" />
+                    {this.state.alerts?.map(alert => (
+                        <AlertPanel color={alert.color} text={alert.text} key={alert.text} />
+                    ))}
                 </Container>
                 <Container>
                     <Row>
                         <Col>
-                            <ShoppingList/>
+                            <ShoppingList />
                         </Col>
                     </Row>
                 </Container>
             </Fragment>
         );
+    }
+
+    async getAlerts() {
+        const response = await axios.get("/api/alerts/");
+        this.setState({alerts: response.data});
     }
 
     // constructor(props: any) {
