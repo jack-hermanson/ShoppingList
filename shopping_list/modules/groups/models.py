@@ -6,3 +6,10 @@ class Group(db.Model):
     name = db.Column(db.String)
     notes = db.Column(db.Text)
     group_items = db.relationship('GroupItem', backref='group', lazy=True)
+
+    def as_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'notes': self.notes
+        }
