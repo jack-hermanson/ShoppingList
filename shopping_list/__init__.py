@@ -34,6 +34,7 @@ def create_app(config_class=Config):
 
     from .modules.items import routes
     from .modules.alerts import routes
+    from .modules.groups import routes
 
     return app
 

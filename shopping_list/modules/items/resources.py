@@ -1,4 +1,4 @@
-from flask import jsonify, session
+from flask import jsonify
 from flask_restful import Resource
 from ..alerts.services import set_alert
 
