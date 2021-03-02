@@ -4,7 +4,7 @@ from ..alerts.services import set_alert
 from . import services
 
 
-class New(Resource):
+class NewGroup(Resource):
 
     @staticmethod
     def post():
@@ -17,7 +17,7 @@ class New(Resource):
         return jsonify(new_group)
 
 
-class All(Resource):
+class GetAllGroups(Resource):
 
     @staticmethod
     def get():
