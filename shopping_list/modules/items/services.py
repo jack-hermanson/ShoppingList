@@ -28,3 +28,7 @@ def new(item: dict) -> dict:
             response['item']['groups'].append(new_group_item.as_dict())
 
     return response
+
+
+def get_all() -> list:
+    return [item.as_dict() for item in Item.query.all()]

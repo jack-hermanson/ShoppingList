@@ -19,6 +19,17 @@ class NewItem(Resource):
         return jsonify(services.new(args))
 
 
+class GetItems(Resource):
+
+    @staticmethod
+    def get():
+        parser = reqparse.RequestParser()
+        parser.add_argument('order-by', type=str, required=False)
+        args: dict = parser.parse_args()
+
+        return jsonify(services.get_all())
+
+
 
 
 

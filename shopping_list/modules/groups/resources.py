@@ -17,7 +17,7 @@ class NewGroup(Resource):
         return jsonify(new_group)
 
 
-class GetAllGroups(Resource):
+class GetGroups(Resource):
 
     @staticmethod
     def get():
