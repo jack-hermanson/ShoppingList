@@ -12,6 +12,7 @@ import {
     DropdownItem
 } from "reactstrap";
 import Group from "./Group";
+import {getGroupIds} from "../../api/groups";
 
 
 interface State {
@@ -32,7 +33,8 @@ export default class ShoppingList extends Component<any, State> {
     }
 
     async componentDidMount() {
-
+        const groupIds = await getGroupIds();
+        this.setState({groupIds: groupIds});
     }
 
     render() {

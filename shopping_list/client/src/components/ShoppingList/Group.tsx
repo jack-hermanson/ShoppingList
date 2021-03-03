@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import GroupModel from "../../models/GroupModel";
 import {Card, CardBody, CardHeader} from "reactstrap";
-import {getGroup} from "../api/groups";
+import {getGroup} from "../../api/groups";
 
 export interface GroupProps {
     groupId: number;

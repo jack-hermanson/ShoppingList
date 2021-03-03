@@ -28,6 +28,13 @@ class GetGroups(Resource):
         return jsonify(services.get_all())
 
 
+class GetGroupIds(Resource):
+
+    @staticmethod
+    def get():
+        return jsonify(services.get_all_ids())
+
+
 class GetGroup(Resource):
 
     @staticmethod
