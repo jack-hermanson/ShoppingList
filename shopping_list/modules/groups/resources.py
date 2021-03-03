@@ -27,3 +27,17 @@ class GetGroups(Resource):
 
         return jsonify(services.get_all())
 
+
+class GetGroupIds(Resource):
+
+    @staticmethod
+    def get():
+        return jsonify(services.get_all_ids())
+
+
+class GetGroup(Resource):
+
+    @staticmethod
+    def get(group_id):
+        return jsonify(services.get_one(group_id))
+

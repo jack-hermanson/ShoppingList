@@ -7,8 +7,13 @@ interface HeadingProps {
 export default class Heading extends Component<HeadingProps, any> {
     render() {
         return (
-            <div className="border-bottom mb-3">
-                <h2>{this.props.title}</h2>
+            <div>
+                <div className="page-title">
+                    <h4 className="title-text">{this.props.title}</h4>
+                    <div className="right">
+                        {this.props.children}
+                    </div>
+                </div>
             </div>
         );
     }

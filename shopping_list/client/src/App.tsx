@@ -24,20 +24,20 @@ class App extends Component<any, State> {
 
     render() {
         return (
-            <Fragment>
-                <Container>
-                    {this.state.alerts?.map(alert => (
-                        <AlertPanel color={alert.color} text={alert.text} key={alert.text} />
-                    ))}
-                </Container>
-                <Container>
-                    <Row>
-                        <Col>
-                            <ShoppingList />
-                        </Col>
-                    </Row>
-                </Container>
-            </Fragment>
+            <Container className={"main-container pt-0"}>
+                <Row>
+                    <Col>
+                        {this.state.alerts?.map(alert => (
+                            <AlertPanel color={alert.color} text={alert.text} key={alert.text}/>
+                        ))}
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <ShoppingList/>
+                    </Col>
+                </Row>
+            </Container>
         );
     }
 
