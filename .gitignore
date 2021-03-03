@@ -125,3 +125,5 @@ dmypy.json
 .idea/
 **/node_modules
 .idea/ShoppingList.iml
+shopping_list/site.db
+.DS_Store
