@@ -17,6 +17,9 @@ def create_app(config_class=Config):
     app.config.from_object(config_class)
     Talisman(app, content_security_policy=None)
 
+    from shopping_list.modules.items import models
+    from shopping_list.modules.groups import models
+
     db.app = app
     db.init_app(app)
     with app.app_context():
@@ -31,6 +34,7 @@ def create_app(config_class=Config):
 
     from .modules.items import routes
     from .modules.alerts import routes
+    from .modules.groups import routes
 
     return app
 
