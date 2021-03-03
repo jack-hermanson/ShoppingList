@@ -28,7 +28,7 @@ export default class ShoppingList extends Component<any, State> {
 
         this.state = {
             actionsDropdownOpen: false,
-            groupIds: [1, 2]
+            groupIds: []
         };
     }
 
