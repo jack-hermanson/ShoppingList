@@ -1,5 +1,5 @@
 export default interface GroupModel {
-    id: number;
-    name: string;
-    notes: string;
+    id: number | null;
+    name: string | null;
+    notes: string | null;
 };

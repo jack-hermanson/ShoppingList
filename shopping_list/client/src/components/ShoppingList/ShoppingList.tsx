@@ -11,10 +11,12 @@ import {
     DropdownMenu,
     DropdownItem
 } from "reactstrap";
+import Group from "./Group";
 
 
 interface State {
     actionsDropdownOpen: boolean;
+    groupIds: Array<number>;
 }
 
 
@@ -24,8 +26,13 @@ export default class ShoppingList extends Component<any, State> {
         super(props);
 
         this.state = {
-            actionsDropdownOpen: false
+            actionsDropdownOpen: false,
+            groupIds: [1, 2]
         };
+    }
+
+    async componentDidMount() {
+
     }
 
     render() {
@@ -45,6 +52,9 @@ export default class ShoppingList extends Component<any, State> {
                 </Heading>
                 <Row>
                     <Col sm={12} lg={8}>
+                        {this.state.groupIds.map(groupId => (
+                            <Group groupId={groupId} />
+                        ))}
                         <Card className="space-between">
                             <CardHeader>Some Category</CardHeader>
                             <CardBody>Some Category</CardBody>
