@@ -13,7 +13,14 @@ class Item(db.Model):
             'id': self.id,
             'name': self.name,
             'notes': self.notes,
-            'recurring': self.recurring
+            'recurring': self.recurring,
+            'groups': [
+                {
+                    'group_name': group_item.group.name,
+                    'group_id': group_item.group.id
+                }
+                for group_item in self.group_items
+            ]
         }
 
 
@@ -25,5 +32,7 @@ class GroupItem(db.Model):
     def as_dict(self):
         return {
             'item_id': self.item_id,
-            'group_id': self.group_id
+            'group_id': self.group_id,
+            'group': self.group.as_dict(),
+            'item': self.item.as_dict()
         }
