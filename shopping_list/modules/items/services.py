@@ -37,7 +37,7 @@ def get_items_in_group(group_id: int) -> list:
 
 
 def delete_item(item_id: int) -> dict:
-    item = Item.query.filter(Item.id == item_id).first_or_404()
+    item = Item.query.get_or_404(item_id)
 
     for group_item in item.group_items:
         db.session.delete(group_item)

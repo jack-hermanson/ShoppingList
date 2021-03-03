@@ -53,7 +53,7 @@ export default class ShoppingList extends Component<any, State> {
                 <Row>
                     <Col sm={12} lg={8}>
                         {this.state.groupIds.map(groupId => (
-                            <Group groupId={groupId} />
+                            <Group key={groupId} groupId={groupId} />
                         ))}
                         <Card className="space-between">
                             <CardHeader>Some Category</CardHeader>
