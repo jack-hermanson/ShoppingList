@@ -25,10 +25,25 @@ class GetItems(Resource):
     def get():
         parser = reqparse.RequestParser()
         parser.add_argument('order-by', type=str, required=False)
+        parser.add_argument('group-id', type=int, required=False)
         args: dict = parser.parse_args()
 
-        return jsonify(services.get_all())
+        if args.get('group-id'):
+            return jsonify(services.get_items_in_group(args.get('group-id')))
+        else:
+            return jsonify(services.get_all())
 
+
+class DeleteItem(Resource):
+
+    @staticmethod
+    def delete():
+        parser = reqparse.RequestParser()
+        parser.add_argument('id', type=int, required=True)
+        args: dict = parser.parse_args()
+
+        response = services.delete_item(args.get('id'))
+        return jsonify(response)
 
 
 
