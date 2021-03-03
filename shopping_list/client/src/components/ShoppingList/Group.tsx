@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import GroupModel from "../../models/GroupModel";
-import {Card, CardBody, CardHeader} from "reactstrap";
+import {Card, CardBody, CardHeader, Input, ListGroup, ListGroupItem, Table} from "reactstrap";
 import {getGroup} from "../../api/groups";
 
 export interface GroupProps {
@@ -34,7 +34,24 @@ export default class Group extends Component<GroupProps, State> {
         return (
             <Card className="space-between">
                 <CardHeader>{this.state.name}</CardHeader>
-                <CardBody>{this.state.id}</CardBody>
+                <Table className="mb-0 same-width" striped>
+
+                    <tbody>
+                    <tr>
+                        <td>Item</td>
+                        <td>
+                            <Input className="ml-auto" type="checkbox" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Item</td>
+                        <td>
+                            <Input className="ml-auto" type="checkbox" />
+                        </td>
+                    </tr>
+                    </tbody>
+
+                </Table>
             </Card>
         )
     }
