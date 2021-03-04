@@ -53,3 +53,15 @@ class DeleteGroup(Resource):
 
         return jsonify(services.delete_group(args.get('id'), args.get('deleteItems')))
 
+
+class EditGroup(Resource):
+
+    @staticmethod
+    def put(group_id):
+        parser = reqparse.RequestParser()
+        parser.add_argument('name', type=str, required=True)
+        parser.add_argument('notes', type=str, required=True)
+        args: dict = parser.parse_args()
+
+        return jsonify(services.edit_group(group_id, args))
+

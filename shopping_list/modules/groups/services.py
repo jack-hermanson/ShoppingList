@@ -49,5 +49,11 @@ def delete_group(group_id: int, delete_items: bool) -> dict:
     }
 
 
+def edit_group(group_id: int, edited_group: dict) -> dict:
+    group = Group.query.get_or_404(group_id)
+    group.name = edited_group.get('name')
+    group.notes = edited_group.get('notes')
+    db.session.commit()
 
+    return group.as_dict()
 
