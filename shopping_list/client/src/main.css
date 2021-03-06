@@ -10201,7 +10201,7 @@ label.required:after {
 }
 
 .card .table tr td:last-child, .card .table th:last-child {
-  padding-right: 2em;
+  padding-right: 1.25em;
 }
 .card .table tr:first-child td, .card .table tr:first-child th {
   border-top: none;

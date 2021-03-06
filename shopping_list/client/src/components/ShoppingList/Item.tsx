@@ -11,15 +11,18 @@ export default class Item extends Component<Props, any> {
     render() {
         return (
             <tr>
-                <td>
-                    {this.props.item.name}
-                    {this.props.item.notes === ""
-                        ? ""
-                        : <small className="text-muted d-block">{this.props.item.notes}</small>
-                    }
-                </td>
-                <td>
-                    <Input className="ml-auto" type="checkbox" />
+                <td className="d-flex">
+                    <div className="custom-control">
+                        <label className="custom-control-label" />
+                        <Input type="checkbox" className="custom-control-input" />
+                    </div>
+                    <div>
+                        {this.props.item.name}
+                        {this.props.item.notes === ""
+                            ? ""
+                            : <small className="text-muted d-block">{this.props.item.notes}</small>
+                        }
+                    </div>
                 </td>
             </tr>
         );
