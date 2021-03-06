@@ -57,6 +57,7 @@ def edit_item(item_id: int, new_item: dict) -> dict:
     item.name = new_item.get('name')
     item.notes = new_item.get('notes')
     item.recurring = new_item.get('recurring')
+    db.session.commit()
 
     # groups
     req_group_ids = new_item.get('groups') or []
