@@ -88,3 +88,8 @@ def edit_item(item_id: int, new_item: dict) -> dict:
 
     # done
     return item.as_dict()
+
+
+def item_details(item_id: int) -> dict:
+    item = Item.query.get_or_404(item_id)
+    return item.as_dict()

@@ -61,4 +61,10 @@ class EditItem(Resource):
         return jsonify(services.edit_item(item_id, args))
 
 
+class ItemDetails(Resource):
+
+    @staticmethod
+    def get(item_id):
+        return jsonify(services.item_details(item_id))
+
 
