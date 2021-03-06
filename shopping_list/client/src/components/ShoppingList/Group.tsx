@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import GroupModel from "../../models/GroupModel";
-import {Card, CardBody, CardHeader, Input, ListGroup, ListGroupItem, Table} from "reactstrap";
+import {Card, CardBody, CardHeader, Input, Table} from "reactstrap";
 import {getGroup} from "../../api/groups";
 
 export interface GroupProps {
@@ -39,9 +39,6 @@ export default class Group extends Component<GroupProps, State> {
                         ? ""
                         : <small className="d-block text-muted">{this.state.notes}</small> }
                 </CardHeader>
-                <CardBody className="py-0">
-
-                </CardBody>
                 <Table className="mb-0 same-width" striped>
 
                     <tbody>

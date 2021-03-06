@@ -45,8 +45,15 @@ label.required:after {
   padding-left: 1.25rem;
 }
 
-.card .table tr td {
-  padding-right: 1.25rem;
+.card .table {
+  tr td {
+    padding-right: 1.25rem;
+  }
+  tr:first-child {
+    td, th {
+      border-top: none;
+    }
+  }
 }
 
 table.same-width {
