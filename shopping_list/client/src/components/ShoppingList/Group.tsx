@@ -2,13 +2,16 @@ import React, {Component} from "react";
 import GroupModel from "../../models/GroupModel";
 import {Card, CardBody, CardHeader, Input, Table} from "reactstrap";
 import {getGroup} from "../../api/groups";
+import ItemModel from "../../models/ItemModel";
+import axios from "axios";
+import Item from "./Item";
 
 export interface GroupProps {
     groupId: number;
 }
 
 interface State extends GroupModel {
-
+    items: Array<ItemModel>;
 }
 
 export default class Group extends Component<GroupProps, State> {
@@ -17,7 +20,8 @@ export default class Group extends Component<GroupProps, State> {
         this.state = {
             id: null,
             name: null,
-            notes: null
+            notes: null,
+            items: []
         };
     }
 
@@ -27,6 +31,10 @@ export default class Group extends Component<GroupProps, State> {
             id: group.id,
             name: group.name,
             notes: group.notes
+        });
+        const groupItems: Array<ItemModel> = await this.getGroupItems();
+        this.setState({
+            items: groupItems
         });
     }
 
@@ -40,25 +48,19 @@ export default class Group extends Component<GroupProps, State> {
                         : <small className="d-block text-muted">{this.state.notes}</small> }
                 </CardHeader>
                 <Table className="mb-0 same-width" striped>
-
                     <tbody>
-                    <tr>
-                        <td>Item</td>
-                        <td>
-                            <Input className="ml-auto" type="checkbox" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Item</td>
-                        <td>
-                            <Input className="ml-auto" type="checkbox" />
-                        </td>
-                    </tr>
+                        {this.state.items.map(item => (
+                            <Item key={item.id} item={item} />
+                        ))}
                     </tbody>
-
                 </Table>
             </Card>
         )
+    }
+
+    async getGroupItems(): Promise<Array<ItemModel>> {
+        const response = await axios.get(`/api/items/?group-id=${this.state.id}`);
+        return response.data;
     }
 
 
