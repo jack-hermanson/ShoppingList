@@ -1,5 +1,6 @@
 from shopping_list import db
 from .models import Group
+from ..items.models import GroupItem
 from typing import List
 
 
@@ -26,3 +27,33 @@ def get_all_ids() -> List[int]:
 def get_one(group_id: int) -> dict:
     group = Group.query.get_or_404(group_id)
     return group.as_dict()
+
+
+def delete_group(group_id: int, delete_items: bool) -> dict:
+    group_items = GroupItem.query.filter(GroupItem.group_id == group_id).all()
+    group = Group.query.get_or_404(group_id)
+    group_name = group.name
+
+    for group_item in group_items:
+        if delete_items:
+            db.session.delete(group_item.item)
+        db.session.delete(group_item)
+
+    db.session.delete(group)
+    db.session.commit()
+
+    return {
+        'id': group_id,
+        'deleteItems': delete_items,
+        'name': group_name
+    }
+
+
+def edit_group(group_id: int, edited_group: dict) -> dict:
+    group = Group.query.get_or_404(group_id)
+    group.name = edited_group.get('name')
+    group.notes = edited_group.get('notes')
+    db.session.commit()
+
+    return group.as_dict()
+

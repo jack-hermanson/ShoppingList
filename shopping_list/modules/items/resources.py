@@ -5,16 +5,22 @@ from . import services
 from ..alerts.services import set_alert
 
 
+def item_parser() -> dict:
+    parser = reqparse.RequestParser()
+    parser.add_argument('name', type=str, required=True)
+    parser.add_argument('notes', type=str, required=True)
+    parser.add_argument('recurring', type=bool, required=True)
+    parser.add_argument('groups', type=int, action='append', required=False)
+
+    args: dict = parser.parse_args()
+    return args
+
+
 class NewItem(Resource):
 
     @staticmethod
     def post():
-        parser = reqparse.RequestParser()
-        parser.add_argument('name', type=str, required=True)
-        parser.add_argument('notes', type=str, required=False)
-        parser.add_argument('recurring', type=bool, required=True)
-        parser.add_argument('groups', type=int, action='append', required=False)
-        args: dict = parser.parse_args()
+        args = item_parser()
         
         return jsonify(services.new(args))
 
@@ -46,5 +52,19 @@ class DeleteItem(Resource):
         return jsonify(response)
 
 
+class EditItem(Resource):
+
+    @staticmethod
+    def put(item_id):
+        args = item_parser()
+
+        return jsonify(services.edit_item(item_id, args))
+
+
+class GetItem(Resource):
+
+    @staticmethod
+    def get(item_id):
+        return jsonify(services.get_one(item_id))
 
 
