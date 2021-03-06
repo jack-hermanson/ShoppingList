@@ -42,12 +42,12 @@ label.required:after {
 }
 
 .card .table tr th:first-of-type, .card .table tr td:first-child {
-  padding-left: 1.25rem;
+  padding-left: 1.25em;
 }
 
 .card .table {
-  tr td {
-    padding-right: 1.25rem;
+  tr td:last-child, th:last-child {
+    padding-right: 2em;
   }
   tr:first-child {
     td, th {
