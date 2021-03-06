@@ -57,14 +57,6 @@ export default class ShoppingList extends Component<any, State> {
                         {this.state.groupIds.map(groupId => (
                             <Group key={groupId} groupId={groupId} />
                         ))}
-                        <Card className="space-between">
-                            <CardHeader>Some Category</CardHeader>
-                            <CardBody>Some Category</CardBody>
-                        </Card>
-                        <Card>
-                            <CardHeader>Some Category</CardHeader>
-                            <CardBody>Some Category</CardBody>
-                        </Card>
                     </Col>
                     <Col>
                         <Card className="space-between mt-3 mt-lg-0">
