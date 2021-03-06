@@ -4,7 +4,7 @@ import {Card, Button, CardHeader, Table} from "reactstrap";
 import {getGroup} from "../../api/groups";
 import ItemModel from "../../models/ItemModel";
 import axios from "axios";
-import Item from "./Item";
+import Item from "./Item/Item";
 import {FaRedo} from "react-icons/fa";
 
 export interface GroupProps {
