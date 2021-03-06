@@ -26,14 +26,22 @@ export default class Group extends Component<GroupProps, State> {
         this.setState({
             id: group.id,
             name: group.name,
-            notes: group.name
+            notes: group.notes
         });
     }
 
     render() {
         return (
             <Card className="space-between">
-                <CardHeader>{this.state.name}</CardHeader>
+                <CardHeader>
+                    {this.state.name}
+                    {this.state.notes === ""
+                        ? ""
+                        : <small className="d-block text-muted">{this.state.notes}</small> }
+                </CardHeader>
+                <CardBody className="py-0">
+
+                </CardBody>
                 <Table className="mb-0 same-width" striped>
 
                     <tbody>
