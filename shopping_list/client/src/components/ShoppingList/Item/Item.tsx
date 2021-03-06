@@ -1,29 +1,50 @@
-import React, {Component} from "react";
+import React, {Component, Fragment} from "react";
 import ItemModel from "../../../models/ItemModel";
-import {Badge, Input} from "reactstrap";
+import {Input} from "reactstrap";
 import {FaInfoCircle} from "react-icons/fa";
-import {FiRepeat} from "react-icons/fi";
 import ItemLabel from "./ItemLabel";
+import EditItemModal from "./EditItemModal";
 
 interface Props {
     item: ItemModel;
 }
 
-export default class Item extends Component<Props, any> {
+interface State {
+    showEditModal: boolean;
+}
+
+export default class Item extends Component<Props, State> {
+
+    constructor(props: Props) {
+        super(props);
+
+        this.state = {
+            showEditModal: false
+        };
+    }
 
     render() {
         return (
-            <tr>
-                <td>
-                    <div className="custom-control custom-checkbox">
-                        <Input id={`checkbox_${this.props.item.id}`} type="checkbox" className="custom-control-input" />
-                        <ItemLabel item={this.props.item} />
-                    </div>
-                </td>
-                <td>
-                    <FaInfoCircle />
-                </td>
-            </tr>
+            <Fragment>
+                <tr>
+                    <td>
+                        <div className="custom-control custom-checkbox">
+                            <Input id={`checkbox_${this.props.item.id}`} type="checkbox"
+                                   className="custom-control-input"/>
+                            <ItemLabel item={this.props.item}/>
+                        </div>
+                    </td>
+                    <td>
+                        <FaInfoCircle onClick={() => this.setState({showEditModal: true})} />
+                    </td>
+                </tr>
+
+                <EditItemModal
+                    showEditModal={this.state.showEditModal}
+                    closeEditModal={() => this.setState({showEditModal: false})}
+                    item={this.props.item}
+                />
+            </Fragment>
         );
     }
 
