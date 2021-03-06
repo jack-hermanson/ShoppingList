@@ -1,10 +1,11 @@
 import React, {Component} from "react";
 import GroupModel from "../../models/GroupModel";
-import {Card, CardBody, CardHeader, Input, Table} from "reactstrap";
+import {Card, Button, CardHeader, Table} from "reactstrap";
 import {getGroup} from "../../api/groups";
 import ItemModel from "../../models/ItemModel";
 import axios from "axios";
 import Item from "./Item";
+import {FaRedo} from "react-icons/fa";
 
 export interface GroupProps {
     groupId: number;
@@ -41,17 +42,22 @@ export default class Group extends Component<GroupProps, State> {
     render() {
         return (
             <Card className="space-between">
-                <CardHeader>
-                    {this.state.name}
-                    {this.state.notes === ""
-                        ? ""
-                        : <small className="d-block text-muted">{this.state.notes}</small> }
+                <CardHeader className="d-flex">
+                    <div className="d-block mt-auto">
+                        {this.state.name}
+                        {this.state.notes === ""
+                            ? ""
+                            : <small className="d-block text-muted">{this.state.notes}</small>}
+                    </div>
+                    <div className="mt-auto ml-auto">
+                        <Button size="sm" color="primary">Complete</Button>
+                    </div>
                 </CardHeader>
                 <Table className="mb-0 same-width" striped>
                     <tbody>
-                        {this.state.items.map(item => (
-                            <Item key={item.id} item={item} />
-                        ))}
+                    {this.state.items.map(item => (
+                        <Item key={item.id} item={item}/>
+                    ))}
                     </tbody>
                 </Table>
             </Card>
