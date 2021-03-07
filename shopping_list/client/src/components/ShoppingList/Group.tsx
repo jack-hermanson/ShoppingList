@@ -50,7 +50,7 @@ export default class Group extends Component<GroupProps, State> {
                             : <small className="d-block text-muted">{this.state.notes}</small>}
                     </div>
                     <div className="my-auto ml-auto">
-                        <Button size="sm" color="primary">Complete</Button>
+                        <Button size="sm" color="info">Complete</Button>
                     </div>
                 </CardHeader>
                 <Table className="mb-0 same-width" striped>
