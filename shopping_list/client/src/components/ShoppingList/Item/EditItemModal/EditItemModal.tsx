@@ -33,7 +33,7 @@ export default class EditItemModal extends Component<Props, State> {
     render() {
         return (
             <Form>
-                <Modal toggle={this.props.closeEditModal} isOpen={this.props.showEditModal}>
+                <Modal centered toggle={this.props.closeEditModal} isOpen={this.props.showEditModal}>
                     <ModalHeader toggle={this.props.closeEditModal} className="d-flex">
                         {this.props.item.name}
                     </ModalHeader>

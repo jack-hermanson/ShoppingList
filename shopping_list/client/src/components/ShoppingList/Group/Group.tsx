@@ -1,9 +1,8 @@
 import React, {Component, Fragment} from "react";
 import GroupModel from "../../../models/GroupModel";
 import {Card} from "reactstrap";
-import {getGroup} from "../../../api/groups";
+import {getGroup, getGroupItemIds} from "../../../api/groups";
 import ItemModel from "../../../models/ItemModel";
-import axios from "axios";
 import GroupHeader from "./GroupHeader";
 import GroupBody from "./GroupBody";
 import EditItemModal from "../Item/EditItemModal/EditItemModal";
@@ -13,7 +12,7 @@ interface Props {
 }
 
 interface State extends GroupModel {
-    items: Array<ItemModel>;
+    itemIds: Array<number>;
     showEditItemModal: boolean;
     itemToEdit?: ItemModel;
 }
@@ -25,7 +24,7 @@ export default class Group extends Component<Props, State> {
             id: null,
             name: null,
             notes: null,
-            items: [],
+            itemIds: [],
             showEditItemModal: false
         };
 
@@ -40,10 +39,7 @@ export default class Group extends Component<Props, State> {
             name: group.name,
             notes: group.notes
         });
-        const groupItems: Array<ItemModel> = await this.getGroupItems();
-        this.setState({
-            items: groupItems
-        });
+        await this.getGroupItemIds();
     }
 
     render() {
@@ -55,7 +51,7 @@ export default class Group extends Component<Props, State> {
                         notes={this.state.notes as string}
                     />
                     <GroupBody
-                        items={this.state.items}
+                        itemIds={this.state.itemIds}
                         showEditItemModal={this.showEditItemModal}
                     />
                 </Card>
@@ -65,9 +61,11 @@ export default class Group extends Component<Props, State> {
         )
     }
 
-    async getGroupItems(): Promise<Array<ItemModel>> {
-        const response = await axios.get(`/api/items/?group-id=${this.state.id}`);
-        return response.data;
+    async getGroupItemIds(): Promise<void> {
+        const groupItemIds = await getGroupItemIds(this.props.groupId);
+        this.setState({
+            itemIds: groupItemIds
+        });
     }
 
     showEditItemModal(item: ItemModel) {

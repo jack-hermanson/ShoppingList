@@ -4,7 +4,7 @@ import {Table} from "reactstrap";
 import ItemModel from "../../../models/ItemModel";
 
 interface Props {
-    items: Array<ItemModel>;
+    itemIds: Array<number>;
     showEditItemModal: (item: ItemModel) => void;
 }
 
@@ -14,10 +14,10 @@ export default class GroupBody extends Component<Props, any> {
             <Fragment>
                 <Table className="mb-0 same-width" striped>
                     <tbody>
-                    {this.props.items.map(item => (
+                    {this.props.itemIds.map(itemId => (
                         <Item
-                            key={item.id}
-                            item={item}
+                            key={itemId}
+                            itemId={itemId}
                             toggleEditItemModal={this.props.showEditItemModal}
                         />
                     ))}

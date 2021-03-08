@@ -20,3 +20,8 @@ export const getGroupIds = async(): Promise<Array<number>> => {
     const response = await axios.get("/api/groups/ids");
     return response.data;
 };
+
+export const getGroupItemIds = async (groupId: number): Promise<Array<number>> => {
+    const response = await axios.get(`/api/items/group/${groupId}`);
+    return response.data;
+}
