@@ -10,7 +10,8 @@ def item_parser() -> dict:
     parser.add_argument('name', type=str, required=True)
     parser.add_argument('notes', type=str, required=True)
     parser.add_argument('recurring', type=bool, required=True)
-    parser.add_argument('groups', type=int, action='append', required=False)
+    parser.add_argument('checked', type=bool, required=False)
+    parser.add_argument('groups', type=int, action='append', required=True)
 
     args: dict = parser.parse_args()
     return args
