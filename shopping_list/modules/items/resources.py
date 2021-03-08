@@ -80,3 +80,10 @@ class ToggleChecked(Resource):
         return jsonify(services.toggle_checked(item_id, args.get('checked')))
 
 
+class GetItemIdsInGroup(Resource):
+
+    @staticmethod
+    def get(group_id):
+        return jsonify(services.get_item_ids_in_group(group_id))
+
+

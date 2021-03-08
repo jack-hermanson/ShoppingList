@@ -1,5 +1,6 @@
 from shopping_list import db
 from .models import Item, GroupItem
+from typing import List
 
 
 def new(item: dict) -> dict:
@@ -108,3 +109,8 @@ def toggle_checked(item_id: int, checked: bool) -> dict:
         'id': item_id,
         'checked': item.checked
     }
+
+
+def get_item_ids_in_group(group_id: int) -> List[int]:
+    group_items = GroupItem.query.filter(GroupItem.group_id == group_id).all()
+    return [group_item.item_id for group_item in group_items]
