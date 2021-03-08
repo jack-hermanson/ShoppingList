@@ -6,6 +6,7 @@ class Item(db.Model):
     name = db.Column(db.String)
     notes = db.Column(db.Text)
     recurring = db.Column(db.Boolean)
+    checked = db.Column(db.Boolean, default=False)
     group_items = db.relationship('GroupItem', backref='item', lazy=True)
 
     def as_dict(self):
