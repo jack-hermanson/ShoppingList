@@ -14,6 +14,9 @@ import {
 import Group from "./Group/Group";
 import {getGroupIds} from "../../api/groups";
 
+interface Props {
+    fetchNewAlerts: () => Promise<void>;
+}
 
 interface State {
     actionsDropdownOpen: boolean;
@@ -21,9 +24,9 @@ interface State {
 }
 
 
-export default class ShoppingList extends Component<any, State> {
+export default class ShoppingList extends Component<Props, State> {
 
-    constructor(props: any) {
+    constructor(props: Props) {
         super(props);
 
         this.state = {
@@ -55,7 +58,11 @@ export default class ShoppingList extends Component<any, State> {
                 <Row>
                     <Col sm={12} lg={8}>
                         {this.state.groupIds.map(groupId => (
-                            <Group key={groupId} groupId={groupId} />
+                            <Group
+                                key={groupId}
+                                groupId={groupId}
+                                fetchNewAlerts={this.props.fetchNewAlerts}
+                            />
                         ))}
                     </Col>
                     <Col>

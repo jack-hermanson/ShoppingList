@@ -7,6 +7,7 @@ import GroupBody from "./GroupBody";
 
 interface Props {
     groupId: number;
+    fetchNewAlerts: () => Promise<void>;
 }
 
 interface State extends GroupModel {
@@ -44,6 +45,7 @@ export default class Group extends Component<Props, State> {
                     />
                     <GroupBody
                         itemIds={this.state.itemIds}
+                        fetchNewAlerts={this.props.fetchNewAlerts}
                     />
                 </Card>
             </Fragment>

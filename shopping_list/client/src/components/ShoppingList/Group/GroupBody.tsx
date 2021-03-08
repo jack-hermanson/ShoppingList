@@ -6,6 +6,7 @@ import EditItemModal from "../Item/EditItemModal/EditItemModal";
 
 interface Props {
     itemIds: Array<number>;
+    fetchNewAlerts: () => Promise<void>;
 }
 
 interface State {
@@ -77,11 +78,11 @@ export default class GroupBody extends Component<Props, State> {
         });
     }
 
-    submitEditItem(itemId: number) {
-        console.log("submit from group body", itemId);
+    async submitEditItem(itemId: number) {
         this.setState({
             editedItemId: itemId,
             showEditItemModal: false
         });
+        await this.props.fetchNewAlerts();
     }
 }

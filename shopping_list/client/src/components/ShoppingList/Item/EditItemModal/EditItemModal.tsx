@@ -78,11 +78,10 @@ export default class EditItemModal extends Component<Props, ItemModel> {
         this.setState({
             recurring: event.target.checked
         });
-        console.log(event.target.checked);
+        console.log("checked?", event.target.checked);
     }
 
     async submitForm() {
-        console.log("form submitted from modal", this.state.id);
         await editItem(this.state);
         this.props.submitEditItem(this.state.id as number);
     }

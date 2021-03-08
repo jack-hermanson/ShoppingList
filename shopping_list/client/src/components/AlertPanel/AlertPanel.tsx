@@ -22,7 +22,12 @@ export default class AlertPanel extends Component<AlertPanelProps, State> {
 
     render() {
         return (
-            <Alert color={this.props.color}>
+            <Alert
+                className="mt-3"
+                color={this.props.color}
+                isOpen={this.state.visible}
+                toggle={() => this.setState({visible: false})}
+            >
                 {this.props.text}
             </Alert>
         );

@@ -28,7 +28,6 @@ export default class Item extends Component<Props, State> {
 
     async componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any) {
         if (this.props.reRenderItem && this.props.reRenderItem !== prevProps.reRenderItem) {
-            console.log("re render is true");
             this.setState({
                 item: await getItem(this.props.itemId)
             });

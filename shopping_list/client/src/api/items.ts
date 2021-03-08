@@ -1,5 +1,6 @@
 import axios from "axios";
 import ItemModel from "../models/ItemModel";
+import {setAlert, setSuccessAlert} from "./alerts";
 
 export const getItem = async (itemId: number): Promise<ItemModel> => {
     const response = await axios.get(`/api/items/${itemId}`);
@@ -26,11 +27,11 @@ interface ItemRequestModel extends Omit<ItemModel, "groups"> {
 }
 
 export const editItem = async (item: ItemModel): Promise<void> => {
-    console.log("original item", item);
     const requestItem: ItemRequestModel = {...item, groups: getItemGroupIds(item)};
-    console.log(requestItem);
     try {
-        await axios.put(`/api/items/edit/${item.id}`, requestItem);
+        const response = await axios.put(`/api/items/edit/${item.id}`, requestItem);
+        const responseData: ItemModel = response.data;
+        await setSuccessAlert("updated", `item "${responseData.name}"`)
     } catch(error) {
         throw error;
     }
