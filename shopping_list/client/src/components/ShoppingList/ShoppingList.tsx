@@ -11,7 +11,7 @@ import {
     DropdownMenu,
     DropdownItem
 } from "reactstrap";
-import Group from "./Group";
+import Group from "./Group/Group";
 import {getGroupIds} from "../../api/groups";
 
 

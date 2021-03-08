@@ -3,25 +3,14 @@ import ItemModel from "../../../models/ItemModel";
 import {Input} from "reactstrap";
 import {FaInfoCircle} from "react-icons/fa";
 import ItemLabel from "./ItemLabel";
-import EditItemModal from "./EditItemModal";
+import EditItemModal from "./EditItemModal/EditItemModal";
 
 interface Props {
     item: ItemModel;
+    toggleEditItemModal: (item: ItemModel) => void;
 }
 
-interface State {
-    showEditModal: boolean;
-}
-
-export default class Item extends Component<Props, State> {
-
-    constructor(props: Props) {
-        super(props);
-
-        this.state = {
-            showEditModal: false
-        };
-    }
+export default class Item extends Component<Props, any> {
 
     render() {
         return (
@@ -35,15 +24,12 @@ export default class Item extends Component<Props, State> {
                         </div>
                     </td>
                     <td>
-                        <FaInfoCircle onClick={() => this.setState({showEditModal: true})} />
+                        <FaInfoCircle
+                            style={{cursor: "pointer"}}
+                            onClick={() => this.props.toggleEditItemModal(this.props.item)}
+                        />
                     </td>
                 </tr>
-
-                <EditItemModal
-                    showEditModal={this.state.showEditModal}
-                    closeEditModal={() => this.setState({showEditModal: false})}
-                    item={this.props.item}
-                />
             </Fragment>
         );
     }

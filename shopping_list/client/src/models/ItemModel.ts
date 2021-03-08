@@ -1,6 +1,6 @@
 
 export default interface ItemModel {
-    id: number;
+    id?: number;
     name: string;
     notes: string;
     recurring: boolean;
