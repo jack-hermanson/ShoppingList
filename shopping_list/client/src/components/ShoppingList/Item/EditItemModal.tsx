@@ -1,6 +1,6 @@
 import React, {ChangeEvent, Component} from "react";
 import ItemModel from "../../../models/ItemModel";
-import {Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Input, Label, InputGroup} from "reactstrap";
+import {Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Input, Label} from "reactstrap";
 
 interface Props {
     showEditModal: boolean;
@@ -32,7 +32,9 @@ export default class EditItemModal extends Component<Props, State> {
         return (
             <Form>
                 <Modal toggle={this.props.closeEditModal} isOpen={this.props.showEditModal}>
-                    <ModalHeader>{this.props.item.name}</ModalHeader>
+                    <ModalHeader toggle={this.props.closeEditModal} className="d-flex">
+                        {this.props.item.name}
+                    </ModalHeader>
                     <ModalBody>
                         <FormGroup>
                             <Label htmlFor="name-input">Name</Label>
