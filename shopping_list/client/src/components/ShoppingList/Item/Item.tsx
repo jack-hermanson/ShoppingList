@@ -3,7 +3,6 @@ import ItemModel from "../../../models/ItemModel";
 import {Input} from "reactstrap";
 import {FaInfoCircle} from "react-icons/fa";
 import ItemLabel from "./ItemLabel";
-import EditItemModal from "./EditItemModal/EditItemModal";
 
 interface Props {
     item: ItemModel;
@@ -18,8 +17,13 @@ export default class Item extends Component<Props, any> {
                 <tr>
                     <td>
                         <div className="custom-control custom-checkbox">
-                            <Input id={`checkbox_${this.props.item.id}`} type="checkbox"
-                                   className="custom-control-input"/>
+                            <Input
+                                id={`checkbox_${this.props.item.id}`}
+                                type="checkbox"
+                                className="custom-control-input"
+                                checked={this.props.item.checked}
+                                onChange={() => console.log("check toggle")}
+                            />
                             <ItemLabel item={this.props.item}/>
                         </div>
                     </td>

@@ -20,7 +20,8 @@ export default class EditItemModal extends Component<Props, State> {
             name: this.props.item.name,
             notes: this.props.item.notes,
             recurring: this.props.item.recurring,
-            groups: this.props.item.groups
+            groups: this.props.item.groups,
+            checked: this.props.item.checked
         };
 
         this.handleNameTextChange = this.handleNameTextChange.bind(this);

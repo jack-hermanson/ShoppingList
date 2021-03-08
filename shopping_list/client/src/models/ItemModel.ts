@@ -4,6 +4,7 @@ export default interface ItemModel {
     name: string;
     notes: string;
     recurring: boolean;
+    checked: boolean;
     groups: Array<{
         group_id: number;
         group_name: string;

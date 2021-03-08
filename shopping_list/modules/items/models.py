@@ -15,6 +15,7 @@ class Item(db.Model):
             'name': self.name,
             'notes': self.notes,
             'recurring': self.recurring,
+            'checked': self.checked,
             'groups': [
                 {
                     'group_name': group_item.group.name,
