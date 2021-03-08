@@ -6,7 +6,7 @@ import ItemModel from "../../../models/ItemModel";
 import axios from "axios";
 import GroupHeader from "./GroupHeader";
 import GroupBody from "./GroupBody";
-import EditItemModal from "../Item/EditItemModal";
+import EditItemModal from "../Item/EditItemModal/EditItemModal";
 
 interface Props {
     groupId: number;

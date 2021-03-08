@@ -3,7 +3,7 @@ import ItemModel from "../../../models/ItemModel";
 import {Input} from "reactstrap";
 import {FaInfoCircle} from "react-icons/fa";
 import ItemLabel from "./ItemLabel";
-import EditItemModal from "./EditItemModal";
+import EditItemModal from "./EditItemModal/EditItemModal";
 
 interface Props {
     item: ItemModel;
@@ -24,7 +24,10 @@ export default class Item extends Component<Props, any> {
                         </div>
                     </td>
                     <td>
-                        <FaInfoCircle onClick={() => this.props.toggleEditItemModal(this.props.item)} />
+                        <FaInfoCircle
+                            style={{cursor: "pointer"}}
+                            onClick={() => this.props.toggleEditItemModal(this.props.item)}
+                        />
                     </td>
                 </tr>
             </Fragment>

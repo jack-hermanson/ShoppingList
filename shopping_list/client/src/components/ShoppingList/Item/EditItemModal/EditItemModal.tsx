@@ -1,6 +1,7 @@
 import React, {ChangeEvent, Component} from "react";
-import ItemModel from "../../../models/ItemModel";
-import {Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Input, Label} from "reactstrap";
+import ItemModel from "../../../../models/ItemModel";
+import {Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Input, Label, Button} from "reactstrap";
+import EditItemForm from "./EditItemForm";
 
 interface Props {
     showEditModal: boolean;
@@ -36,40 +37,28 @@ export default class EditItemModal extends Component<Props, State> {
                         {this.props.item.name}
                     </ModalHeader>
                     <ModalBody>
-                        <FormGroup>
-                            <Label htmlFor="name-input">Name</Label>
-                            <Input
-                                id="name-input"
-                                type="text"
-                                value={this.state.name}
-                                onChange={this.handleNameTextChange}
-                            />
-                        </FormGroup>
-                        <FormGroup>
-                            <Label htmlFor="notes-input">Notes</Label>
-                            <Input
-                                id="notes-input"
-                                type="textarea"
-                                value={this.state.notes}
-                                onChange={this.handleNotesTextChange}
-                            />
-                        </FormGroup>
-
-                        <Label className="mb-0">Recurring</Label>
-                        <FormGroup check>
-                            <Label check>
-                                <Input
-                                    checked={this.state.recurring}
-                                    onChange={this.handleRecurringCheckChange}
-                                    type="checkbox"
-                                />
-                                Item Repeats
-                            </Label>
-                        </FormGroup>
+                        {this.renderEditItemForm()}
                     </ModalBody>
+                    <ModalFooter>
+                        <Button onClick={this.props.closeEditModal} color="secondary">Cancel</Button>
+                        <Button onClick={this.submitForm} type="submit" color="info">Submit</Button>
+                    </ModalFooter>
                 </Modal>
             </Form>
         );
+    }
+
+    renderEditItemForm() {
+        return (
+            <EditItemForm
+                name={this.state.name}
+                notes={this.state.notes}
+                recurring={this.state.recurring}
+                handleNameTextChange={this.handleNameTextChange}
+                handleNotesTextChange={this.handleNotesTextChange}
+                handleRecurringCheckChange={this.handleRecurringCheckChange}
+            />
+        )
     }
 
     handleNameTextChange(event: ChangeEvent<HTMLInputElement>) {
@@ -89,6 +78,10 @@ export default class EditItemModal extends Component<Props, State> {
             recurring: event.target.checked
         });
         console.log(event.target.checked);
+    }
+
+    submitForm() {
+        console.log("form submitted");
     }
 
 }
