@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component, Fragment} from "react";
 import GroupModel from "../../models/GroupModel";
 import {Card, Button, CardHeader, Table} from "reactstrap";
 import {getGroup} from "../../api/groups";
@@ -6,6 +6,7 @@ import ItemModel from "../../models/ItemModel";
 import axios from "axios";
 import Item from "./Item/Item";
 import {FaRedo} from "react-icons/fa";
+import EditItemModal from "./Item/EditItemModal";
 
 export interface GroupProps {
     groupId: number;
@@ -13,6 +14,8 @@ export interface GroupProps {
 
 interface State extends GroupModel {
     items: Array<ItemModel>;
+    showEditItemModal: boolean;
+    itemToEdit?: ItemModel;
 }
 
 export default class Group extends Component<GroupProps, State> {
@@ -22,8 +25,11 @@ export default class Group extends Component<GroupProps, State> {
             id: null,
             name: null,
             notes: null,
-            items: []
+            items: [],
+            showEditItemModal: false
         };
+
+        this.toggleEditItemModal = this.toggleEditItemModal.bind(this);
     }
 
     async componentDidMount() {
@@ -41,32 +47,61 @@ export default class Group extends Component<GroupProps, State> {
 
     render() {
         return (
-            <Card className="space-between">
-                <CardHeader className="d-flex">
-                    <div className="d-block mt-auto">
-                        {this.state.name}
-                        {this.state.notes === ""
-                            ? ""
-                            : <small className="d-block text-muted">{this.state.notes}</small>}
-                    </div>
-                    <div className="my-auto ml-auto">
-                        <Button size="sm" color="info">Complete</Button>
-                    </div>
-                </CardHeader>
-                <Table className="mb-0 same-width" striped>
-                    <tbody>
-                    {this.state.items.map(item => (
-                        <Item key={item.id} item={item}/>
-                    ))}
-                    </tbody>
-                </Table>
-            </Card>
+            <Fragment>
+                <Card className="space-between">
+                    <CardHeader className="d-flex">
+                        <div className="d-block mt-auto">
+                            {this.state.name}
+                            {this.state.notes === ""
+                                ? ""
+                                : <small className="d-block text-muted">{this.state.notes}</small>}
+                        </div>
+                        <div className="my-auto ml-auto">
+                            <Button size="sm" color="info">Complete</Button>
+                        </div>
+                    </CardHeader>
+                    <Table className="mb-0 same-width" striped>
+                        <tbody>
+                        {this.state.items.map(item => (
+                            <Item
+                                key={item.id}
+                                item={item}
+                                toggleEditItemModal={this.toggleEditItemModal}
+                            />
+                        ))}
+                        </tbody>
+                    </Table>
+                </Card>
+
+                {this.state.showEditItemModal
+                    ? this.renderEditItemModal(this.state.itemToEdit as ItemModel)
+                    : ""}
+            </Fragment>
         )
     }
 
     async getGroupItems(): Promise<Array<ItemModel>> {
         const response = await axios.get(`/api/items/?group-id=${this.state.id}`);
         return response.data;
+    }
+
+    toggleEditItemModal(item: ItemModel) {
+        this.setState({
+            showEditItemModal: !this.state.showEditItemModal,
+            itemToEdit: item
+        });
+    }
+
+    renderEditItemModal(item: ItemModel): JSX.Element {
+        return (
+            <EditItemModal
+                showEditModal={this.state.showEditItemModal}
+                closeEditModal={() => this.setState({
+                    showEditItemModal: false
+                })}
+                item={item}
+            />
+        )
     }
 
 
