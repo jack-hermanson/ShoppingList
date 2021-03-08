@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from "react";
 import GroupModel from "../../../models/GroupModel";
-import {Card} from "reactstrap";
+import {Card, CardBody, CardText} from "reactstrap";
 import {getGroup, getGroupItemIds} from "../../../api/groups";
 import GroupHeader from "./GroupHeader";
 import GroupBody from "./GroupBody";
@@ -12,6 +12,7 @@ interface Props {
 
 interface State extends GroupModel {
     itemIds: Array<number>;
+    loading: boolean;
 }
 
 export default class Group extends Component<Props, State> {
@@ -21,7 +22,8 @@ export default class Group extends Component<Props, State> {
             id: null,
             name: null,
             notes: null,
-            itemIds: []
+            itemIds: [],
+            loading: true
         };
     }
 
@@ -33,20 +35,28 @@ export default class Group extends Component<Props, State> {
             notes: group.notes
         });
         await this.getGroupItemIds();
+        await this.finishLoading();
     }
 
     render() {
         return (
             <Fragment>
                 <Card className="space-between">
-                    <GroupHeader
-                        name={this.state.name as string}
-                        notes={this.state.notes as string}
-                    />
-                    <GroupBody
-                        itemIds={this.state.itemIds}
-                        fetchNewAlerts={this.props.fetchNewAlerts}
-                    />
+                    {this.state.loading ? (
+                        <CardBody>Loading group...</CardBody>
+                    ) : (
+                        <Fragment>
+                            <GroupHeader
+                                name={this.state.name as string}
+                                notes={this.state.notes as string}
+                            />
+                            <GroupBody
+                                itemIds={this.state.itemIds}
+                                fetchNewAlerts={this.props.fetchNewAlerts}
+                            />
+                        </Fragment>
+                    )}
+
                 </Card>
             </Fragment>
         )
@@ -59,6 +69,7 @@ export default class Group extends Component<Props, State> {
         });
     }
 
-
-
+    async finishLoading(): Promise<void> {
+        this.setState({loading: false});
+    }
 }

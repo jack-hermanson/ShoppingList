@@ -69,7 +69,7 @@ export default class Item extends Component<Props, State> {
         } else {
             return (
                 <tr>
-                    <td colSpan={2}>Loading...</td>
+                    <td colSpan={2}>Loading item...</td>
                 </tr>
             );
         }

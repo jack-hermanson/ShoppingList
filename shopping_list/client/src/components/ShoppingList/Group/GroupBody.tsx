@@ -13,6 +13,7 @@ interface State {
     showEditItemModal: boolean;
     itemToEdit: ItemModel | null;
     editedItemId: number | null;
+    loading: boolean;
 }
 
 export default class GroupBody extends Component<Props, State> {
@@ -23,7 +24,8 @@ export default class GroupBody extends Component<Props, State> {
         this.state = {
             showEditItemModal: false,
             itemToEdit: null,
-            editedItemId: null
+            editedItemId: null,
+            loading: true
         };
 
         this.showEditItemModal = this.showEditItemModal.bind(this);
@@ -31,24 +33,32 @@ export default class GroupBody extends Component<Props, State> {
         this.submitEditItem = this.submitEditItem.bind(this);
     }
 
+    componentDidMount() {
+        this.setState({loading: false});
+    }
+
     render() {
         return (
-            <Fragment>
-                <Table className="mb-0 same-width" striped>
-                    <tbody>
-                    {this.props.itemIds.map(itemId => (
-                        <Item
-                            key={itemId}
-                            itemId={itemId}
-                            toggleEditItemModal={this.showEditItemModal}
-                            reRenderItem={this.state.editedItemId === itemId}
-                            resetEditedItemId={() => this.setState({editedItemId: null})}
-                        />
-                    ))}
-                    </tbody>
-                </Table>
-                {this.renderEditItemModal()}
-            </Fragment>
+            this.state.loading ? (
+                <p>Loading</p>
+            ) : (
+                <Fragment>
+                    <Table className="mb-0 same-width" striped>
+                        <tbody>
+                        {this.props.itemIds.map(itemId => (
+                            <Item
+                                key={itemId}
+                                itemId={itemId}
+                                toggleEditItemModal={this.showEditItemModal}
+                                reRenderItem={this.state.editedItemId === itemId}
+                                resetEditedItemId={() => this.setState({editedItemId: null})}
+                            />
+                        ))}
+                        </tbody>
+                    </Table>
+                    {this.renderEditItemModal()}
+                </Fragment>
+            )
         );
     }
 
