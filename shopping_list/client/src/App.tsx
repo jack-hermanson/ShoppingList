@@ -1,8 +1,8 @@
-import axios from "axios";
 import {Container, Row, Col} from "reactstrap";
 import AlertPanel, {AlertPanelProps} from "./components/AlertPanel/AlertPanel";
 import ShoppingList from "./components/ShoppingList/ShoppingList";
-import React, {Component, Fragment} from "react";
+import React, {Component} from "react";
+import {getAlerts} from "./api/alerts";
 
 interface State {
     alerts: Array<AlertPanelProps> | null;
@@ -42,8 +42,8 @@ class App extends Component<any, State> {
     }
 
     async getAlerts() {
-        const response = await axios.get("/api/alerts/");
-        this.setState({alerts: response.data});
+        const alerts = await getAlerts();
+        this.setState({alerts});
     }
 }
 

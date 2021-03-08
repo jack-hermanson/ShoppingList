@@ -2,6 +2,7 @@ import React, {ChangeEvent, Component} from "react";
 import ItemModel from "../../../../models/ItemModel";
 import {Modal, ModalHeader, ModalBody, ModalFooter, Form, Button} from "reactstrap";
 import EditItemForm from "./EditItemForm";
+import {editItem} from "../../../../api/items";
 
 interface Props {
     showEditModal: boolean;
@@ -14,6 +15,7 @@ export default class EditItemModal extends Component<Props, ItemModel> {
     constructor(props: Props) {
         super(props);
         this.state = {
+            id: this.props.item.id,
             name: this.props.item.name,
             notes: this.props.item.notes,
             recurring: this.props.item.recurring,
@@ -40,7 +42,7 @@ export default class EditItemModal extends Component<Props, ItemModel> {
                     </ModalBody>
                     <ModalFooter>
                         <Button onClick={this.props.closeEditModal} color="secondary">Cancel</Button>
-                        <Button onClick={this.submitForm} type="submit" color="info">Submit</Button>
+                        <Button onClick={async () => await this.submitForm()} type="submit" color="info">Submit</Button>
                     </ModalFooter>
                 </Modal>
             </Form>
@@ -79,9 +81,10 @@ export default class EditItemModal extends Component<Props, ItemModel> {
         console.log(event.target.checked);
     }
 
-    submitForm() {
-        console.log("form submitted from modal", this.props.item.id);
-        this.props.submitEditItem(this.props.item.id as number);
+    async submitForm() {
+        console.log("form submitted from modal", this.state.id);
+        await editItem(this.state);
+        this.props.submitEditItem(this.state.id as number);
     }
 
 }
