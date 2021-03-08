@@ -11,6 +11,7 @@ interface Props {
 interface State {
     showEditItemModal: boolean;
     itemToEdit: ItemModel | null;
+    editedItemId: number | null;
 }
 
 export default class GroupBody extends Component<Props, State> {
@@ -20,11 +21,13 @@ export default class GroupBody extends Component<Props, State> {
 
         this.state = {
             showEditItemModal: false,
-            itemToEdit: null
+            itemToEdit: null,
+            editedItemId: null
         };
 
         this.showEditItemModal = this.showEditItemModal.bind(this);
         this.toggleEditItemModal = this.toggleEditItemModal.bind(this);
+        this.submitEditItem = this.submitEditItem.bind(this);
     }
 
     render() {
@@ -37,6 +40,8 @@ export default class GroupBody extends Component<Props, State> {
                             key={itemId}
                             itemId={itemId}
                             toggleEditItemModal={this.showEditItemModal}
+                            reRenderItem={this.state.editedItemId === itemId}
+                            resetEditedItemId={() => this.setState({editedItemId: null})}
                         />
                     ))}
                     </tbody>
@@ -53,6 +58,7 @@ export default class GroupBody extends Component<Props, State> {
                     showEditModal={this.state.showEditItemModal}
                     closeEditModal={this.toggleEditItemModal}
                     item={this.state.itemToEdit}
+                    submitEditItem={this.submitEditItem}
                 />
             );
         } else {
@@ -68,6 +74,14 @@ export default class GroupBody extends Component<Props, State> {
         this.setState({
             itemToEdit: item,
             showEditItemModal: true
+        });
+    }
+
+    submitEditItem(itemId: number) {
+        console.log("submit from group body", itemId);
+        this.setState({
+            editedItemId: itemId,
+            showEditItemModal: false
         });
     }
 }

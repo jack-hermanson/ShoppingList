@@ -8,6 +8,8 @@ import {getItem} from "../../../api/items";
 interface Props {
     itemId: number;
     toggleEditItemModal: (item: ItemModel) => void;
+    reRenderItem: boolean;
+    resetEditedItemId: () => void;
 }
 
 interface State {
@@ -21,6 +23,16 @@ export default class Item extends Component<Props, State> {
 
         this.state = {
             item: null
+        }
+    }
+
+    async componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any) {
+        if (this.props.reRenderItem && this.props.reRenderItem !== prevProps.reRenderItem) {
+            console.log("re render is true");
+            this.setState({
+                item: await getItem(this.props.itemId)
+            });
+            this.props.resetEditedItemId();
         }
     }
 

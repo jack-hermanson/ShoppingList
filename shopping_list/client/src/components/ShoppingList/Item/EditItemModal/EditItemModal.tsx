@@ -1,19 +1,16 @@
 import React, {ChangeEvent, Component} from "react";
 import ItemModel from "../../../../models/ItemModel";
-import {Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Input, Label, Button} from "reactstrap";
+import {Modal, ModalHeader, ModalBody, ModalFooter, Form, Button} from "reactstrap";
 import EditItemForm from "./EditItemForm";
 
 interface Props {
     showEditModal: boolean;
     closeEditModal: () => void;
     item: ItemModel;
+    submitEditItem: (itemId: number) => void;
 }
 
-interface State extends ItemModel {
-
-}
-
-export default class EditItemModal extends Component<Props, State> {
+export default class EditItemModal extends Component<Props, ItemModel> {
     constructor(props: Props) {
         super(props);
         this.state = {
@@ -27,6 +24,7 @@ export default class EditItemModal extends Component<Props, State> {
         this.handleNameTextChange = this.handleNameTextChange.bind(this);
         this.handleNotesTextChange = this.handleNotesTextChange.bind(this);
         this.handleRecurringCheckChange = this.handleRecurringCheckChange.bind(this);
+        this.submitForm = this.submitForm.bind(this);
     }
 
 
@@ -82,7 +80,8 @@ export default class EditItemModal extends Component<Props, State> {
     }
 
     submitForm() {
-        console.log("form submitted");
+        console.log("form submitted from modal", this.props.item.id);
+        this.props.submitEditItem(this.props.item.id as number);
     }
 
 }

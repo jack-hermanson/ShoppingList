@@ -45,32 +45,6 @@ class App extends Component<any, State> {
         const response = await axios.get("/api/alerts/");
         this.setState({alerts: response.data});
     }
-
-    // constructor(props: any) {
-    //     super(props);
-    //     this.state = {
-    //         response: null
-    //     };
-    // }
-
-    // componentDidMount() {
-    //     axios.get('/api/items/').then(response => {
-    //         console.log('success');
-    //         console.log(response);
-    //         this.setState({response: response});
-    //     }).catch(error => {
-    //         console.log(error);
-    //     })
-    // }
-    //
-    // render() {
-    //     return (
-    //         <div className="App">
-    //             <p>Test</p>
-    //             <p>{this.state.response?.data?.test || "LOADING"}</p>
-    //         </div>
-    //     );
-    // }
 }
 
 export default App;
