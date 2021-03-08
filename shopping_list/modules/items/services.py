@@ -98,3 +98,13 @@ def edit_item(item_id: int, new_item: dict) -> dict:
 def get_one(item_id: int) -> dict:
     item = Item.query.get_or_404(item_id)
     return item.as_dict()
+
+
+def toggle_checked(item_id: int, checked: bool) -> dict:
+    item = Item.query.get_or_404(item_id)
+    item.checked = checked
+    db.session.commit()
+    return {
+        'id': item_id,
+        'checked': item.checked
+    }

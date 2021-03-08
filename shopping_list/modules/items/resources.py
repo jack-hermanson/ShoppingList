@@ -69,3 +69,14 @@ class GetItem(Resource):
         return jsonify(services.get_one(item_id))
 
 
+class ToggleChecked(Resource):
+
+    @staticmethod
+    def put(item_id):
+        parser = reqparse.RequestParser()
+        parser.add_argument('checked', type=bool, required=True)
+        args: dict = parser.parse_args()
+
+        return jsonify(services.toggle_checked(item_id, args.get('checked')))
+
+
