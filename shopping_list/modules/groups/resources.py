@@ -1,6 +1,5 @@
 from flask import jsonify
 from flask_restful import Resource, reqparse
-from ..alerts.services import set_alert
 from . import services
 
 
