@@ -5,6 +5,7 @@ import ItemModel from "../../../models/ItemModel";
 import EditItemModal from "../Item/EditItemModal/EditItemModal";
 import GroupModel from "../../../models/GroupModel";
 import {getItemsInGroup} from "../../../api/items";
+import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
 
 interface Props {
     group: GroupModel;
@@ -41,7 +42,7 @@ export default class GroupBody extends Component<Props, State> {
                         </tbody>
                     </Table>
                     :
-                    <h5>Loading...</h5>
+                    <LoadingSpinner className="my-3" />
                 }
             </Fragment>
         );
