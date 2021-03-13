@@ -1,11 +1,11 @@
-import axios from "axios";
 import {Container, Row, Col} from "reactstrap";
 import AlertPanel, {AlertPanelProps} from "./components/AlertPanel/AlertPanel";
 import ShoppingList from "./components/ShoppingList/ShoppingList";
-import React, {Component, Fragment} from "react";
+import React, {Component} from "react";
+import {getAlerts} from "./api/alerts";
 
 interface State {
-    alerts: Array<AlertPanelProps> | null;
+    alerts: Array<AlertPanelProps>;
 }
 
 class App extends Component<any, State> {
@@ -14,11 +14,17 @@ class App extends Component<any, State> {
         super(props);
 
         this.state = {
-            alerts: null
+            alerts: []
         };
+
+        this.fetchNewAlerts = this.fetchNewAlerts.bind(this);
     }
 
     async componentDidMount() {
+        await this.fetchNewAlerts();
+    }
+
+    async fetchNewAlerts() {
         await this.getAlerts();
     }
 
@@ -34,7 +40,9 @@ class App extends Component<any, State> {
                 </Row>
                 <Row>
                     <Col>
-                        <ShoppingList/>
+                        <ShoppingList
+                            fetchNewAlerts={this.fetchNewAlerts}
+                        />
                     </Col>
                 </Row>
             </Container>
@@ -42,35 +50,9 @@ class App extends Component<any, State> {
     }
 
     async getAlerts() {
-        const response = await axios.get("/api/alerts/");
-        this.setState({alerts: response.data});
+        const alerts = await getAlerts();
+        this.setState({alerts: alerts});
     }
-
-    // constructor(props: any) {
-    //     super(props);
-    //     this.state = {
-    //         response: null
-    //     };
-    // }
-
-    // componentDidMount() {
-    //     axios.get('/api/items/').then(response => {
-    //         console.log('success');
-    //         console.log(response);
-    //         this.setState({response: response});
-    //     }).catch(error => {
-    //         console.log(error);
-    //     })
-    // }
-    //
-    // render() {
-    //     return (
-    //         <div className="App">
-    //             <p>Test</p>
-    //             <p>{this.state.response?.data?.test || "LOADING"}</p>
-    //         </div>
-    //     );
-    // }
 }
 
 export default App;

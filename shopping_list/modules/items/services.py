@@ -1,5 +1,6 @@
 from shopping_list import db
 from .models import Item, GroupItem
+from typing import List
 
 
 def new(item: dict) -> dict:
@@ -7,7 +8,8 @@ def new(item: dict) -> dict:
     new_item = Item(
         name=item.get('name'),
         notes=item.get('notes') if item.get('notes') else '',
-        recurring=item.get('recurring')
+        recurring=item.get('recurring'),
+        checked=False
     )
     db.session.add(new_item)
     db.session.commit()
@@ -53,10 +55,13 @@ def delete_item(item_id: int) -> dict:
 
 
 def edit_item(item_id: int, new_item: dict) -> dict:
+    checked = new_item.get('checked')
+
     item = Item.query.get_or_404(item_id)
     item.name = new_item.get('name')
     item.notes = new_item.get('notes')
     item.recurring = new_item.get('recurring')
+    item.checked = checked if checked is not None else item.checked
     db.session.commit()
 
     # groups
@@ -94,3 +99,18 @@ def edit_item(item_id: int, new_item: dict) -> dict:
 def get_one(item_id: int) -> dict:
     item = Item.query.get_or_404(item_id)
     return item.as_dict()
+
+
+def toggle_checked(item_id: int, checked: bool) -> dict:
+    item = Item.query.get_or_404(item_id)
+    item.checked = checked
+    db.session.commit()
+    return {
+        'id': item_id,
+        'checked': item.checked
+    }
+
+
+def get_item_ids_in_group(group_id: int) -> List[int]:
+    group_items = GroupItem.query.filter(GroupItem.group_id == group_id).all()
+    return [group_item.item_id for group_item in group_items]

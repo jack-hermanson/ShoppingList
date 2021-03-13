@@ -1,21 +1,18 @@
 import React, {Component, Fragment} from "react";
 import GroupModel from "../../../models/GroupModel";
-import {Card} from "reactstrap";
-import {getGroup} from "../../../api/groups";
-import ItemModel from "../../../models/ItemModel";
-import axios from "axios";
+import {Card, CardBody, CardText} from "reactstrap";
+import {getGroup, getGroupItemIds} from "../../../api/groups";
 import GroupHeader from "./GroupHeader";
 import GroupBody from "./GroupBody";
-import EditItemModal from "../Item/EditItemModal/EditItemModal";
 
 interface Props {
     groupId: number;
+    fetchNewAlerts: () => Promise<void>;
 }
 
 interface State extends GroupModel {
-    items: Array<ItemModel>;
-    showEditItemModal: boolean;
-    itemToEdit?: ItemModel;
+    itemIds: Array<number>;
+    loading: boolean;
 }
 
 export default class Group extends Component<Props, State> {
@@ -25,12 +22,9 @@ export default class Group extends Component<Props, State> {
             id: null,
             name: null,
             notes: null,
-            items: [],
-            showEditItemModal: false
+            itemIds: [],
+            loading: true
         };
-
-        this.showEditItemModal = this.showEditItemModal.bind(this);
-        this.toggleEditItemModal = this.toggleEditItemModal.bind(this);
     }
 
     async componentDidMount() {
@@ -40,59 +34,42 @@ export default class Group extends Component<Props, State> {
             name: group.name,
             notes: group.notes
         });
-        const groupItems: Array<ItemModel> = await this.getGroupItems();
-        this.setState({
-            items: groupItems
-        });
+        await this.getGroupItemIds();
+        await this.finishLoading();
     }
 
     render() {
         return (
             <Fragment>
                 <Card className="space-between">
-                    <GroupHeader
-                        name={this.state.name as string}
-                        notes={this.state.notes as string}
-                    />
-                    <GroupBody
-                        items={this.state.items}
-                        showEditItemModal={this.showEditItemModal}
-                    />
-                </Card>
+                    {this.state.loading ? (
+                        <CardBody>Loading group...</CardBody>
+                    ) : (
+                        <Fragment>
+                            <GroupHeader
+                                name={this.state.name as string}
+                                notes={this.state.notes as string}
+                            />
+                            <GroupBody
+                                itemIds={this.state.itemIds}
+                                fetchNewAlerts={this.props.fetchNewAlerts}
+                            />
+                        </Fragment>
+                    )}
 
-                {this.renderEditItemModal()}
+                </Card>
             </Fragment>
         )
     }
 
-    async getGroupItems(): Promise<Array<ItemModel>> {
-        const response = await axios.get(`/api/items/?group-id=${this.state.id}`);
-        return response.data;
-    }
-
-    showEditItemModal(item: ItemModel) {
+    async getGroupItemIds(): Promise<void> {
+        const groupItemIds = await getGroupItemIds(this.props.groupId);
         this.setState({
-            itemToEdit: item,
-            showEditItemModal: true
+            itemIds: groupItemIds
         });
     }
 
-    renderEditItemModal() {
-        if (this.state.showEditItemModal && this.state.itemToEdit !== undefined) {
-            return (
-                <EditItemModal
-                    showEditModal={this.state.showEditItemModal}
-                    closeEditModal={this.toggleEditItemModal}
-                    item={this.state.itemToEdit}
-                />
-            );
-        } else {
-            return <Fragment/>;
-        }
+    async finishLoading(): Promise<void> {
+        this.setState({loading: false});
     }
-
-    toggleEditItemModal() {
-        this.setState({showEditItemModal: !this.state.showEditItemModal});
-    }
-
 }

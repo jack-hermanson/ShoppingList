@@ -14,27 +14,33 @@ import {
 import Group from "./Group/Group";
 import {getGroupIds} from "../../api/groups";
 
+interface Props {
+    fetchNewAlerts: () => Promise<void>;
+}
 
 interface State {
     actionsDropdownOpen: boolean;
     groupIds: Array<number>;
+    loading: boolean;
 }
 
 
-export default class ShoppingList extends Component<any, State> {
+export default class ShoppingList extends Component<Props, State> {
 
-    constructor(props: any) {
+    constructor(props: Props) {
         super(props);
 
         this.state = {
             actionsDropdownOpen: false,
-            groupIds: []
+            groupIds: [],
+            loading: true
         };
     }
 
     async componentDidMount() {
         const groupIds = await getGroupIds();
         this.setState({groupIds: groupIds});
+        this.setState({loading: false});
     }
 
     render() {
@@ -54,9 +60,21 @@ export default class ShoppingList extends Component<any, State> {
                 </Heading>
                 <Row>
                     <Col sm={12} lg={8}>
-                        {this.state.groupIds.map(groupId => (
-                            <Group key={groupId} groupId={groupId} />
-                        ))}
+                        {this.state.loading ? (
+                            <Card>
+                                <CardBody>
+                                    Loading groups...
+                                </CardBody>
+                            </Card>
+                        ) : (
+                            this.state.groupIds.map(groupId => (
+                                <Group
+                                    key={groupId}
+                                    groupId={groupId}
+                                    fetchNewAlerts={this.props.fetchNewAlerts}
+                                />
+                            ))
+                        )}
                     </Col>
                     <Col>
                         <Card className="space-between mt-3 mt-lg-0">

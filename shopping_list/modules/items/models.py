@@ -6,6 +6,7 @@ class Item(db.Model):
     name = db.Column(db.String)
     notes = db.Column(db.Text)
     recurring = db.Column(db.Boolean)
+    checked = db.Column(db.Boolean, default=False)
     group_items = db.relationship('GroupItem', backref='item', lazy=True)
 
     def as_dict(self):
@@ -14,10 +15,11 @@ class Item(db.Model):
             'name': self.name,
             'notes': self.notes,
             'recurring': self.recurring,
+            'checked': self.checked,
             'groups': [
                 {
-                    'group_name': group_item.group.name,
-                    'group_id': group_item.group.id
+                    'groupName': group_item.group.name,
+                    'groupId': group_item.group.id
                 }
                 for group_item in self.group_items
             ]
@@ -31,8 +33,8 @@ class GroupItem(db.Model):
 
     def as_dict(self):
         return {
-            'item_id': self.item_id,
-            'group_id': self.group_id,
+            'itemId': self.item_id,
+            'groupId': self.group_id,
             'group': self.group.as_dict(),
             'item': self.item.as_dict()
         }
