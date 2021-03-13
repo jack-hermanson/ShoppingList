@@ -14,7 +14,7 @@ export const getItem = async (itemId: number): Promise<ItemModel> => {
     };
 }
 
-export const getItemsInGroup = async (groupId: number): Promise<Array<number>> => {
+export const getItemsInGroup = async (groupId: number): Promise<Array<ItemModel>> => {
     const response = await axios.get(`/api/items/group/${groupId}`);
     return response.data;
 }
