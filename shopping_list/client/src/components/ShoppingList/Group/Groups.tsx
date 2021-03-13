@@ -9,7 +9,7 @@ export default class Groups extends Component<any, any> {
     render() {
         return (
             <Fragment>
-                {this.context.map(group => (
+                {this.context!.groups.map(group => (
                     <Group key={group.id} group={group} />
                 ))}
             </Fragment>

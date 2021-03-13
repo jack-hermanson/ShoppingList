@@ -4,7 +4,12 @@ import {getGroups} from "../api/groups";
 
 const defaultGroups: Array<GroupModel> = [];
 
-export const GroupsContext = React.createContext(defaultGroups);
+interface GroupsContextType {
+    groups: Array<GroupModel>;
+    setGroups: React.Dispatch<React.SetStateAction<Array<GroupModel>>>
+}
+
+export const GroupsContext = React.createContext<GroupsContextType | undefined>(undefined);
 
 interface Props {
     children: React.ReactNode
@@ -20,7 +25,7 @@ export const GroupsProvider = (props: Props) => {
     }, []);
 
     return (
-        <GroupsContext.Provider value={groups}>
+        <GroupsContext.Provider value={{groups: groups, setGroups}}>
             {props.children}
         </GroupsContext.Provider>
     );
