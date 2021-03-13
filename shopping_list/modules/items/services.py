@@ -4,7 +4,6 @@ from typing import List
 
 
 def new(item: dict) -> dict:
-
     new_item = Item(
         name=item.get('name'),
         notes=item.get('notes') if item.get('notes') else '',
@@ -32,10 +31,10 @@ def get_all() -> list:
 
 
 def get_items_in_group(group_id: int) -> list:
-    group_items = GroupItem.query.filter(GroupItem.group_id == group_id).all()
-    return [item.as_dict() for item in [
-        group_item.item for group_item in group_items
-    ]]
+    return [
+        item.as_dict() for item in
+        db.session.query(Item).join(GroupItem).filter(GroupItem.group_id == group_id).all()
+    ]
 
 
 def delete_item(item_id: int) -> dict:
