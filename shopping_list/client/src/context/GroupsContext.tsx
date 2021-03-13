@@ -6,13 +6,13 @@ const defaultGroups: Array<GroupModel> = [];
 
 interface GroupsContextType {
     groups: Array<GroupModel>;
-    setGroups: React.Dispatch<React.SetStateAction<Array<GroupModel>>>
+    setGroups: React.Dispatch<React.SetStateAction<Array<GroupModel>>>;
 }
 
 export const GroupsContext = React.createContext<GroupsContextType | undefined>(undefined);
 
 interface Props {
-    children: React.ReactNode
+    children: React.ReactNode;
 }
 
 export const GroupsProvider = (props: Props) => {

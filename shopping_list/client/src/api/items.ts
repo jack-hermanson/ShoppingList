@@ -14,12 +14,9 @@ export const getItem = async (itemId: number): Promise<ItemModel> => {
     };
 }
 
-const getItemGroupIds = (item: ItemModel): Array<number> => {
-    let output: Array<number> = [];
-    item.groups.forEach(group => {
-        output.push(group.groupId);
-    });
-    return output;
+export const getItemsInGroup = async (groupId: number): Promise<Array<number>> => {
+    const response = await axios.get(`/api/items/group/${groupId}`);
+    return response.data;
 }
 
 interface ItemRequestModel extends Omit<ItemModel, "groups"> {
@@ -27,7 +24,7 @@ interface ItemRequestModel extends Omit<ItemModel, "groups"> {
 }
 
 export const editItem = async (item: ItemModel): Promise<void> => {
-    const requestItem: ItemRequestModel = {...item, groups: getItemGroupIds(item)};
+    const requestItem: ItemRequestModel = {...item, groups: []};  // todo
     try {
         const response = await axios.put(`/api/items/edit/${item.id}`, requestItem);
         const responseData: ItemModel = response.data;
