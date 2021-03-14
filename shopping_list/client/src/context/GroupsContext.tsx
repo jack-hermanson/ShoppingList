@@ -25,7 +25,7 @@ export const GroupsProvider = (props: Props) => {
     }, []);
 
     return (
-        <GroupsContext.Provider value={{groups: groups, setGroups}}>
+        <GroupsContext.Provider value={{groups, setGroups}}>
             {props.children}
         </GroupsContext.Provider>
     );
