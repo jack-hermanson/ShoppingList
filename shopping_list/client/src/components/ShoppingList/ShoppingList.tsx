@@ -11,22 +11,17 @@ import {
     DropdownMenu,
     DropdownItem
 } from "reactstrap";
-import Group from "./Group/Group";
 import Groups from "./Group/Groups";
 import {GroupsProvider} from "../../context/GroupsContext";
-
-interface Props {
-    fetchNewAlerts: () => Promise<void>;
-}
 
 interface State {
     actionsDropdownOpen: boolean;
 }
 
 
-export default class ShoppingList extends Component<Props, State> {
+export default class ShoppingList extends Component<any, State> {
 
-    constructor(props: Props) {
+    constructor(props: any) {
         super(props);
 
         this.state = {
@@ -38,16 +33,7 @@ export default class ShoppingList extends Component<Props, State> {
         return (
             <div>
                 <Heading title="Shopping List">
-                    <ButtonDropdown isOpen={this.state.actionsDropdownOpen} toggle={() => this.toggleActionsMenu()}
-                                    size="sm" color="info">
-                        <DropdownToggle caret>
-                            Actions
-                        </DropdownToggle>
-                        <DropdownMenu right>
-                            <DropdownItem>Test</DropdownItem>
-                            <DropdownItem>Test</DropdownItem>
-                        </DropdownMenu>
-                    </ButtonDropdown>
+                    {this.renderDropdownMenu()}
                 </Heading>
                 <Row>
                     <Col sm={12} lg={8}>
@@ -69,6 +55,21 @@ export default class ShoppingList extends Component<Props, State> {
             <GroupsProvider>
                 <Groups/>
             </GroupsProvider>
+        );
+    }
+
+    renderDropdownMenu() {
+        return (
+            <ButtonDropdown isOpen={this.state.actionsDropdownOpen} toggle={() => this.toggleActionsMenu()}
+                            size="sm" color="info">
+                <DropdownToggle caret>
+                    Actions
+                </DropdownToggle>
+                <DropdownMenu right>
+                    <DropdownItem>Test</DropdownItem>
+                    <DropdownItem>Test</DropdownItem>
+                </DropdownMenu>
+            </ButtonDropdown>
         );
     }
 

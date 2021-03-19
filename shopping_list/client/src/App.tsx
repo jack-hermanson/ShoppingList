@@ -40,9 +40,7 @@ class App extends Component<any, State> {
                 </Row>
                 <Row>
                     <Col>
-                        <ShoppingList
-                            fetchNewAlerts={this.fetchNewAlerts}
-                        />
+                        <ShoppingList />
                     </Col>
                 </Row>
             </Container>
