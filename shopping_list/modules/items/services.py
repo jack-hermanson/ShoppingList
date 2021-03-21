@@ -1,5 +1,6 @@
 from shopping_list import db
 from .models import Item, GroupItem
+from ..groups.models import Group
 from typing import List
 
 
@@ -27,7 +28,8 @@ def new(item: dict) -> dict:
 
 
 def get_all() -> list:
-    return [item.as_dict() for item in Item.query.all()]
+    print(item.as_dict() for item in Item.query.all())
+    return []
 
 
 def get_items_in_group(group_id: int) -> list:

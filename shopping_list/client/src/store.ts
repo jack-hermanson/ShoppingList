@@ -1,8 +1,9 @@
 import GroupModel from "./models/GroupModel";
-import {action, Action, createStore, thunk, Thunk} from "easy-peasy";
+import {action, Action, computed, Computed, createStore, thunk, Thunk} from "easy-peasy";
 import axios from "axios";
 import {createTypedHooks} from "easy-peasy";
 import AlertModel from "./models/AlertModel";
+import ItemModel from "./models/ItemModel";
 
 interface StoreModel {
     groups: GroupModel[];
@@ -10,6 +11,10 @@ interface StoreModel {
     fetchGroups: Thunk<StoreModel>;
     addGroup: Action<StoreModel, GroupModel>;
     saveGroup: Thunk<StoreModel, GroupModel>;
+
+    items: ItemModel[] | null;
+    setItems: Action<StoreModel, ItemModel[]>;
+    fetchItems: Thunk<StoreModel>;
 
     alerts: AlertModel[];
 }
@@ -29,6 +34,15 @@ export const store = createStore<StoreModel>({
     saveGroup: thunk(async (actions, payload) => {
         const res = await axios.post("/api/groups/", payload);
         actions.addGroup(res.data);
+    }),
+
+    items: null,
+    setItems: action((state, payload) => {
+        state.items = payload;
+    }),
+    fetchItems: thunk(async (actions) => {
+        const res = await axios.get("/api/items/");
+        actions.setGroups(res.data);
     }),
 
     alerts: [],
