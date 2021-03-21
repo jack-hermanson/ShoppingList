@@ -29,7 +29,7 @@ def new(item: dict) -> dict:
 
 
 def get_all() -> list:
-    sleep(1)
+    # sleep(1)  # testing only
     items = db.session.query(Item).join(GroupItem, Group).\
         filter(GroupItem.item_id == Item.id).\
         filter(GroupItem.group_id == Group.id).all()
