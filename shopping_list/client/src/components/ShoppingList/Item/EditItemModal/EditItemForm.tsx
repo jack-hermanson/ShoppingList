@@ -1,59 +1,58 @@
-import React, {ChangeEvent, Component, Fragment} from "react";
+import React, {ChangeEvent, Fragment} from "react";
 import {Label} from "reactstrap";
 import TextInput from "../../../FormInput/TextInput";
 import CheckboxInput from "../../../FormInput/CheckboxInput";
+import ItemModel from "../../../../models/ItemModel";
 
 interface Props {
-    name: string;
-    notes: string;
-    recurring: boolean;
+    editedItem: ItemModel;
     handleNameTextChange: (event: ChangeEvent<HTMLInputElement>) => void;
     handleNotesTextChange: (event: ChangeEvent<HTMLInputElement>) => void;
     handleRecurringCheckChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export default class EditItemForm extends Component<Props, any> {
-    render() {
-        return (
-            <Fragment>
-                {this.renderNameInput()}
-                {this.renderNotesInput()}
-                {this.renderRecurringInput()}
-            </Fragment>
-        );
-    }
+export const EditItemForm = (props: Props) => {
 
-    renderNameInput() {
+    return (
+        <Fragment>
+            {renderNameInput()}
+            {renderNotesInput()}
+            {renderRecurringInput()}
+        </Fragment>
+    );
+
+
+    function renderNameInput() {
         return (
             <TextInput
                 label="Name"
                 id="name-input"
                 type="text"
-                value={this.props.name}
-                onChange={this.props.handleNameTextChange}
+                value={props.editedItem.name}
+                onChange={props.handleNameTextChange}
             />
         );
     }
 
-    renderNotesInput() {
+    function renderNotesInput() {
         return (
             <TextInput
                 label="Notes"
                 id="notes-input"
                 type="textarea"
-                value={this.props.notes}
-                onChange={this.props.handleNotesTextChange}
+                value={props.editedItem.notes}
+                onChange={props.handleNotesTextChange}
             />
         );
     }
 
-    renderRecurringInput() {
+    function renderRecurringInput() {
         return (
             <Fragment>
                 <Label className="mb-0">Recurring</Label>
                 <CheckboxInput
-                    checked={this.props.recurring}
-                    handleChange={this.props.handleRecurringCheckChange}
+                    checked={props.editedItem.recurring}
+                    handleChange={props.handleRecurringCheckChange}
                     label="Item repeats"
                 />
             </Fragment>

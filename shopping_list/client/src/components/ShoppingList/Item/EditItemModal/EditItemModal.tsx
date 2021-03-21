@@ -1,7 +1,8 @@
-import React, {Fragment} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import {Modal, ModalHeader, ModalBody, ModalFooter, Form, Button} from "reactstrap";
-import EditItemForm from "./EditItemForm";
+import {EditItemForm} from "./EditItemForm";
 import {useStoreActions, useStoreState} from "../../../../store";
+import ItemModel from "../../../../models/ItemModel";
 
 export const EditItemModal = () => {
 
@@ -12,23 +13,43 @@ export const EditItemModal = () => {
         setFocusItem(null);
     }
 
+    const [editedItem, setEditedItem] = useState<ItemModel>(focusItem!);
+
+    useEffect(() => {
+        setEditedItem(focusItem!);
+    }, [focusItem]);
+
     return (
         <Form>
             {focusItem &&
-                <Fragment>
-                    <Modal centered toggle={removeFocusItem} isOpen={true}>
-                        <ModalHeader toggle={removeFocusItem} className="d-flex">
-                            {focusItem.name}
-                        </ModalHeader>
-                        <ModalBody>
-                            {/*{renderEditItemForm()}*/}
-                        </ModalBody>
-                        <ModalFooter>
-                            <Button onClick={removeFocusItem} color="secondary">Cancel</Button>
-                            <Button onClick={() => console.log("submitted")} type="submit" color="info">Submit</Button>
-                        </ModalFooter>
-                    </Modal>
-                </Fragment>
+            <Fragment>
+                <Modal centered toggle={removeFocusItem} isOpen={true}>
+                    <ModalHeader toggle={removeFocusItem} className="d-flex">
+                        {focusItem.name}
+                    </ModalHeader>
+                    <ModalBody>
+                        <EditItemForm
+                            editedItem={editedItem}
+                            handleNameTextChange={event => setEditedItem({
+                                ...editedItem,
+                                name: event.target.value
+                            })}
+                            handleNotesTextChange={event => setEditedItem({
+                                ...editedItem,
+                                notes: event.target.value
+                            })}
+                            handleRecurringCheckChange={event => setEditedItem({
+                                ...editedItem,
+                                recurring: event.target.checked
+                            })}
+                        />
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button onClick={removeFocusItem} color="secondary">Cancel</Button>
+                        <Button onClick={() => console.log("submitted")} type="submit" color="info">Submit</Button>
+                    </ModalFooter>
+                </Modal>
+            </Fragment>
             }
         </Form>
     );
