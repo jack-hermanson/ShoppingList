@@ -12,11 +12,11 @@ interface Props {
 
 export const GroupBody = ({group}: Props) => (
     <Fragment>
-        {/*{this.state.items !== null*/}
+        {/*{this.data.items !== null*/}
         {/*    ?*/}
         {/*    <Table className="mb-0 same-width" striped>*/}
         {/*        <tbody>*/}
-        {/*        {this.state.items.map((item: ItemModel) => (*/}
+        {/*        {this.data.items.map((item: ItemModel) => (*/}
         {/*            <Item item={item} key={item.id}/>*/}
         {/*        ))}*/}
         {/*        </tbody>*/}
