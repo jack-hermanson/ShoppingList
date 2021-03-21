@@ -1,8 +1,7 @@
 import React, {Component, Fragment} from "react";
-import Item from "../Item/Item";
+import {Item} from "../Item/Item";
 import {Table} from "reactstrap";
 import ItemModel from "../../../models/ItemModel";
-import EditItemModal from "../Item/EditItemModal/EditItemModal";
 import GroupModel from "../../../models/GroupModel";
 import {getItemsInGroup} from "../../../api/items";
 import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
