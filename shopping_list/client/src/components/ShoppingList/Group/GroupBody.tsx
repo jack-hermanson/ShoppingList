@@ -4,7 +4,7 @@ import {Table} from "reactstrap";
 import ItemModel from "../../../models/ItemModel";
 import GroupModel from "../../../models/GroupModel";
 import {getItemsInGroup} from "../../../api/items";
-import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
+import {LoadingSpinner} from "../../LoadingSpinner/LoadingSpinner";
 
 interface Props {
     group: GroupModel;
