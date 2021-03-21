@@ -2,7 +2,7 @@ import React, {Fragment} from "react";
 import GroupModel from "../../../models/GroupModel";
 import {Card} from "reactstrap";
 import GroupHeader from "./GroupHeader";
-import GroupBody from "./GroupBody";
+import {GroupBody} from "./GroupBody";
 
 interface Props {
     group: GroupModel;
