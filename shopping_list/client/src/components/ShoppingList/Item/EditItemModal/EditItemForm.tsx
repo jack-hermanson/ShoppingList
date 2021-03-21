@@ -1,5 +1,5 @@
 import React, {ChangeEvent, Component, Fragment} from "react";
-import {FormGroup, Input, Label} from "reactstrap";
+import {Label} from "reactstrap";
 import TextInput from "../../../FormInput/TextInput";
 import CheckboxInput from "../../../FormInput/CheckboxInput";
 
