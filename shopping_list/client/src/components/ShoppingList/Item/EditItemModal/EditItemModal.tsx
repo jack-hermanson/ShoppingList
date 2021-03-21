@@ -8,6 +8,7 @@ export const EditItemModal = () => {
 
     const focusItem = useStoreState(state => state.focusItem);
     const setFocusItem = useStoreActions(actions => actions.setFocusItem);
+    const editItem = useStoreActions(actions => actions.editItem);
 
     const removeFocusItem = () => {
         setFocusItem(null);
@@ -56,7 +57,7 @@ export const EditItemModal = () => {
 
     function handleFormSubmit() {
         console.log("form submitted");
-        console.log("edited item", editedItem);
+        editItem(editedItem);
         removeFocusItem();
     }
 }

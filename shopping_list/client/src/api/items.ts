@@ -19,14 +19,13 @@ export const getItemsInGroup = async (groupId: number): Promise<Array<ItemModel>
     return response.data;
 }
 
-interface ItemRequestModel extends Omit<ItemModel, "groups"> {
+export interface ItemRequestModel extends Omit<ItemModel, "groups"> {
     groups: Array<number>;
 }
 
-export const editItem = async (item: ItemModel): Promise<void> => {
-    const requestItem: ItemRequestModel = {...item, groups: []};  // todo
+export const editItem = async (item: ItemRequestModel): Promise<void> => {
     try {
-        const response = await axios.put(`/api/items/edit/${item.id}`, requestItem);
+        const response = await axios.put(`/api/items/edit/${item.id}`, item);
         const responseData: ItemModel = response.data;
         await setSuccessAlert("updated", `item "${responseData.name}"`)
     } catch(error) {

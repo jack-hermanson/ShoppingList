@@ -4,6 +4,7 @@ import axios from "axios";
 import {createTypedHooks} from "easy-peasy";
 import AlertModel from "./models/AlertModel";
 import ItemModel from "./models/ItemModel";
+import {ItemRequestModel} from "./api/items";
 
 interface StoreModel {
     groups: GroupModel[];
@@ -15,6 +16,7 @@ interface StoreModel {
     items: ItemModel[] | null;
     setItems: Action<StoreModel, ItemModel[]>;
     fetchItems: Thunk<StoreModel>;
+    editItem: Action<StoreModel, ItemModel>;
     focusItem: ItemModel | null;
     setFocusItem: Action<StoreModel, ItemModel | null>;
 
@@ -45,6 +47,18 @@ export const store = createStore<StoreModel>({
     fetchItems: thunk(async (actions) => {
         const res = await axios.get("/api/items/");
         actions.setItems(res.data);
+    }),
+    editItem: action((state, payload) => {
+        const newItem: ItemRequestModel = {
+            ...payload,
+            groups: payload.groups.map(group => group.groupId)
+        };
+        state.items = state.items!.map((item: ItemModel) => {
+            if (item.id === newItem.id) {
+                return payload;
+            }
+            return item;
+        });
     }),
     focusItem: null,
     setFocusItem: action((state, payload) => {
