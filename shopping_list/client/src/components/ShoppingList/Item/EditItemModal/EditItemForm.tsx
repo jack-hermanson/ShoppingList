@@ -1,4 +1,4 @@
-import React, {ChangeEvent, Fragment} from "react";
+import React, {ChangeEvent, Fragment, useEffect} from "react";
 import {Label} from "reactstrap";
 import TextInput from "../../../FormInput/TextInput";
 import CheckboxInput from "../../../FormInput/CheckboxInput";
@@ -12,6 +12,10 @@ interface Props {
 }
 
 export const EditItemForm = (props: Props) => {
+
+    useEffect(() => {
+        document.getElementById("name-input")?.focus();
+    });
 
     return (
         <Fragment>
