@@ -12,7 +12,6 @@ import {
     DropdownItem
 } from "reactstrap";
 import Groups from "./Group/Groups";
-import {GroupsProvider} from "../../context/GroupsContext";
 
 export const ShoppingList = () => (
     <div>
@@ -36,9 +35,7 @@ export const ShoppingList = () => (
 
 function renderGroups() {
     return (
-        <GroupsProvider>
-            <Groups/>
-        </GroupsProvider>
+        <Groups/>
     );
 }
 
