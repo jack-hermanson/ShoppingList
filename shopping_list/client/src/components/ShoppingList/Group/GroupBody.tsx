@@ -10,20 +10,24 @@ interface Props {
     group: GroupModel;
 }
 
-export const GroupBody = ({group}: Props) => (
-    <Fragment>
-        {/*{this.data.items !== null*/}
-        {/*    ?*/}
-        {/*    <Table className="mb-0 same-width" striped>*/}
-        {/*        <tbody>*/}
-        {/*        {this.data.items.map((item: ItemModel) => (*/}
-        {/*            <Item item={item} key={item.id}/>*/}
-        {/*        ))}*/}
-        {/*        </tbody>*/}
-        {/*    </Table>*/}
-        {/*    :*/}
-        {/*    <LoadingSpinner className="my-3"/>*/}
-        {/*}*/}
-        <pre className="p-4 mb-0">GroupBody.tsx</pre>
-    </Fragment>
-);
+export const GroupBody = ({group}: Props) => {
+    console.log(group);
+
+    return (
+        <Fragment>
+            {/*{this.data.items !== null*/}
+            {/*    ?*/}
+            {/*    <Table className="mb-0 same-width" striped>*/}
+            {/*        <tbody>*/}
+            {/*        {this.data.items.map((item: ItemModel) => (*/}
+            {/*            <Item item={item} key={item.id}/>*/}
+            {/*        ))}*/}
+            {/*        </tbody>*/}
+            {/*    </Table>*/}
+            {/*    :*/}
+            {/*    <LoadingSpinner className="my-3"/>*/}
+            {/*}*/}
+            <pre className="p-4 mb-0">GroupBody.tsx</pre>
+        </Fragment>
+    );
+};

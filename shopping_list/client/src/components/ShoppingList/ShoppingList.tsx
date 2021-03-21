@@ -11,7 +11,7 @@ import {
     DropdownMenu,
     DropdownItem
 } from "reactstrap";
-import Groups from "./Group/Groups";
+import {Groups} from "./Group/Groups";
 
 export const ShoppingList = () => (
     <div>
