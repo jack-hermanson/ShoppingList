@@ -8,14 +8,17 @@ interface Props {
     group: GroupModel;
 }
 
-export const Group = ({group}: Props) => (
-    <Fragment>
-        <Card className="space-between">
-            <GroupHeader
-                name={group.name!}
-                notes={group.notes!}
-            />
-            <GroupBody group={group}/>
-        </Card>
-    </Fragment>
-);
+export const Group = ({group}: Props) => {
+
+    return (
+        <Fragment>
+            <Card className="space-between">
+                <GroupHeader
+                    name={group.name!}
+                    notes={group.notes!}
+                />
+                <GroupBody group={group}/>
+            </Card>
+        </Fragment>
+    );
+};

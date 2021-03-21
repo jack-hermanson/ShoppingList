@@ -1,18 +1,25 @@
-import React, {Component, Fragment} from "react";
-import {GroupsContext} from "../../../context/GroupsContext";
+import React, {Fragment, useEffect} from "react";
+import {useStoreState, useStoreActions} from "../../../store";
 import {Group} from "./Group";
 
-export default class Groups extends Component<any, any> {
-    static contextType = GroupsContext;
-    context!: React.ContextType<typeof GroupsContext>;
+export const Groups = () => {
 
-    render() {
-        return (
-            <Fragment>
-                {this.context!.groups.map(group => (
-                    <Group key={group.id} group={group} />
-                ))}
-            </Fragment>
-        );
-    }
-}
+    const groups = useStoreState(state => state.groups);
+    const fetchGroups = useStoreActions(actions => actions.fetchGroups);
+    const fetchItems = useStoreActions(actions => actions.fetchItems);
+
+    useEffect( () => {
+        fetchGroups();
+        fetchItems();
+    }, [fetchGroups, fetchItems]);
+
+    console.log("Groups.tsx, groups:", groups);
+
+    return (
+        <Fragment>
+            {groups.map(group => (
+                <Group key={group.id} group={group} />
+            ))}
+        </Fragment>
+    );
+};
