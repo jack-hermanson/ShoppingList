@@ -1,26 +1,21 @@
-import React, {Component, Fragment} from "react";
+import React, {Fragment} from "react";
 import GroupModel from "../../../models/GroupModel";
 import {Card} from "reactstrap";
 import GroupHeader from "./GroupHeader";
-import GroupBody from "./GroupBody";
+import {GroupBody} from "./GroupBody";
 
 interface Props {
     group: GroupModel;
 }
 
-export default class Group extends Component<Props, any> {
-
-    render() {
-        return (
-            <Fragment>
-                <Card className="space-between">
-                    <GroupHeader
-                        name={this.props.group.name!}
-                        notes={this.props.group.notes!}
-                    />
-                    <GroupBody group={this.props.group} />
-                </Card>
-            </Fragment>
-        )
-    }
-}
+export const Group = ({group}: Props) => (
+    <Fragment>
+        <Card className="space-between">
+            <GroupHeader
+                name={group.name!}
+                notes={group.notes!}
+            />
+            <GroupBody group={group}/>
+        </Card>
+    </Fragment>
+);
