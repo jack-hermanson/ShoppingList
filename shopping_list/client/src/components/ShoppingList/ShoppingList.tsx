@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment, useState} from "react";
 import Heading from "../Heading/Heading";
 import {
     Card,
@@ -11,38 +11,41 @@ import {
     DropdownMenu,
     DropdownItem
 } from "reactstrap";
-import {Groups} from "./Group/Groups";
+import Groups from "./Group/Groups";
 
-export const ShoppingList = () => (
-    <div>
-        <Heading title="Shopping List">
-            {renderDropdownMenu()}
-        </Heading>
-        <Row>
-            <Col sm={12} lg={8}>
-                {renderGroups()}
-            </Col>
-            <Col>
-                <Card className="space-between mt-3 mt-lg-0">
-                    <CardHeader>New Item</CardHeader>
-                    <CardBody>Form</CardBody>
-                </Card>
-            </Col>
-        </Row>
-    </div>
-);
-
-
-function renderGroups() {
+export const ShoppingList = () => {
     return (
-        <Groups/>
-    );
-}
+        <Fragment>
+            <div>
+                <Heading title="Shopping List">
+                    {ActionsDropdownMenu()}
+                </Heading>
+                <Row>
+                    <Col sm={12} lg={8}>
+                        <Groups />
+                    </Col>
+                    <Col>
+                        <Card className="space-between mt-3 mt-lg-0">
+                            <CardHeader>New Item</CardHeader>
+                            <CardBody>Form</CardBody>
+                        </Card>
+                    </Col>
+                </Row>
+            </div>
 
-function renderDropdownMenu() {
-    // todo
+        </Fragment>
+    )
+};
+
+const ActionsDropdownMenu = () => {
+    const [showActionsDropdown, setShowActionsDropdown] = useState<boolean>(false);
+
+    const toggleDropdown = () => {
+        setShowActionsDropdown(!showActionsDropdown);
+    }
+
     return (
-        <ButtonDropdown isOpen={false} toggle={() => null}
+        <ButtonDropdown isOpen={showActionsDropdown} toggle={toggleDropdown}
                         size="sm" color="info">
             <DropdownToggle caret>
                 Actions

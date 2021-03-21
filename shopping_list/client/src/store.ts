@@ -1,5 +1,5 @@
 import GroupModel from "./models/GroupModel";
-import {action, Action, computed, Computed, createStore, thunk, Thunk} from "easy-peasy";
+import {action, Action, createStore, thunk, Thunk} from "easy-peasy";
 import axios from "axios";
 import {createTypedHooks} from "easy-peasy";
 import AlertModel from "./models/AlertModel";
@@ -15,6 +15,7 @@ interface StoreModel {
     items: ItemModel[] | null;
     setItems: Action<StoreModel, ItemModel[]>;
     fetchItems: Thunk<StoreModel>;
+    focusItem: ItemModel | null;
 
     alerts: AlertModel[];
 }
@@ -44,6 +45,7 @@ export const store = createStore<StoreModel>({
         const res = await axios.get("/api/items/");
         actions.setItems(res.data);
     }),
+    focusItem: null,
 
     alerts: [],
 });

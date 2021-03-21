@@ -3,7 +3,6 @@ import {Item} from "../Item/Item";
 import {Table} from "reactstrap";
 import ItemModel from "../../../models/ItemModel";
 import GroupModel from "../../../models/GroupModel";
-import {getItemsInGroup} from "../../../api/items";
 import {LoadingSpinner} from "../../LoadingSpinner/LoadingSpinner";
 import {useStoreState} from "../../../store";
 
@@ -16,8 +15,6 @@ export const GroupBody = ({group}: Props) => {
     const items = useStoreState(state => state.items?.filter(item => (
         item.groups.some(_group => _group.groupId === group.id)
     )));
-
-    console.log(items);
 
     return (
         <Fragment>

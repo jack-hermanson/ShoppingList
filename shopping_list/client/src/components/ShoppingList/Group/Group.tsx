@@ -9,7 +9,6 @@ interface Props {
 }
 
 export const Group = ({group}: Props) => {
-
     return (
         <Fragment>
             <Card className="space-between">
