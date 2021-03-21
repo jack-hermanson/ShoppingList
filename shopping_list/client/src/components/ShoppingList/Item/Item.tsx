@@ -1,7 +1,7 @@
 import React, {Fragment} from "react";
 import ItemModel from "../../../models/ItemModel";
 import {Input} from "reactstrap";
-import ItemLabel from "./ItemLabel";
+import {ItemLabel} from "./ItemLabel";
 import {FaInfoCircle} from "react-icons/fa";
 
 interface Props {
