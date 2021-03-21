@@ -46,11 +46,17 @@ export const EditItemModal = () => {
                     </ModalBody>
                     <ModalFooter>
                         <Button onClick={removeFocusItem} color="secondary">Cancel</Button>
-                        <Button onClick={() => console.log("submitted")} type="submit" color="info">Submit</Button>
+                        <Button onClick={handleFormSubmit} type="submit" color="info">Submit</Button>
                     </ModalFooter>
                 </Modal>
             </Fragment>
             }
         </Form>
     );
+
+    function handleFormSubmit() {
+        console.log("form submitted");
+        console.log("edited item", editedItem);
+        removeFocusItem();
+    }
 }
