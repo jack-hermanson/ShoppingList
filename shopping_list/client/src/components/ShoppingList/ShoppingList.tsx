@@ -12,6 +12,7 @@ import {
     DropdownItem
 } from "reactstrap";
 import Groups from "./Group/Groups";
+import {EditItemModal} from "./Item/EditItemModal/EditItemModal";
 
 export const ShoppingList = () => {
     return (
@@ -32,7 +33,7 @@ export const ShoppingList = () => {
                     </Col>
                 </Row>
             </div>
-
+            <EditItemModal />
         </Fragment>
     )
 };

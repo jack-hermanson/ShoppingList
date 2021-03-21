@@ -16,6 +16,7 @@ interface StoreModel {
     setItems: Action<StoreModel, ItemModel[]>;
     fetchItems: Thunk<StoreModel>;
     focusItem: ItemModel | null;
+    setFocusItem: Action<StoreModel, ItemModel | null>;
 
     alerts: AlertModel[];
 }
@@ -46,6 +47,9 @@ export const store = createStore<StoreModel>({
         actions.setItems(res.data);
     }),
     focusItem: null,
+    setFocusItem: action((state, payload) => {
+        state.focusItem = payload;
+    }),
 
     alerts: [],
 });
