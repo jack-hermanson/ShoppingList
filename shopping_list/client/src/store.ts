@@ -42,7 +42,7 @@ export const store = createStore<StoreModel>({
     }),
     fetchItems: thunk(async (actions) => {
         const res = await axios.get("/api/items/");
-        actions.setGroups(res.data);
+        actions.setItems(res.data);
     }),
 
     alerts: [],

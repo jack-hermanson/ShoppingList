@@ -14,7 +14,7 @@ interface Props {
 export const GroupBody = ({group}: Props) => {
 
     const items = useStoreState(state => state.items?.filter(item => (
-        item.groups.includes({groupId: group.id!, groupName: group.name!})
+        item.groups.some(_group => _group.groupId === group.id)
     )));
 
     console.log(items);

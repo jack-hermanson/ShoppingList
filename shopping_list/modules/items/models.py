@@ -9,7 +9,7 @@ class Item(db.Model):
     checked = db.Column(db.Boolean, default=False)
     group_items = db.relationship('GroupItem', backref='item', lazy=True)
 
-    def as_dict(self):
+    def as_dict(self) -> dict:
         return {
             'id': self.id,
             'name': self.name,

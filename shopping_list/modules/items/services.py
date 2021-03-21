@@ -2,6 +2,7 @@ from shopping_list import db
 from .models import Item, GroupItem
 from ..groups.models import Group
 from typing import List
+from time import sleep
 
 
 def new(item: dict) -> dict:
@@ -28,8 +29,11 @@ def new(item: dict) -> dict:
 
 
 def get_all() -> list:
-    print(item.as_dict() for item in Item.query.all())
-    return []
+    sleep(1)
+    items = db.session.query(Item).join(GroupItem, Group).\
+        filter(GroupItem.item_id == Item.id).\
+        filter(GroupItem.group_id == Group.id).all()
+    return [item.as_dict() for item in items]
 
 
 def get_items_in_group(group_id: int) -> list:
