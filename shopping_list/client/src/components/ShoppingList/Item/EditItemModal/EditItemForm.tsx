@@ -1,62 +1,96 @@
-import React, {ChangeEvent, Component, Fragment} from "react";
-import {Label} from "reactstrap";
+import React, {ChangeEvent, Fragment, useEffect} from "react";
+import {Label, FormGroup} from "reactstrap";
 import TextInput from "../../../FormInput/TextInput";
 import CheckboxInput from "../../../FormInput/CheckboxInput";
+import ItemModel from "../../../../models/ItemModel";
+import {useStoreState} from "../../../../store";
 
 interface Props {
-    name: string;
-    notes: string;
-    recurring: boolean;
+    editedItem: ItemModel;
     handleNameTextChange: (event: ChangeEvent<HTMLInputElement>) => void;
     handleNotesTextChange: (event: ChangeEvent<HTMLInputElement>) => void;
     handleRecurringCheckChange: (event: ChangeEvent<HTMLInputElement>) => void;
+    handleGroupCheckChange: (event: ChangeEvent<HTMLInputElement>, groupId: number) => void;
+    handleFormSubmit: () => void;
 }
 
-export default class EditItemForm extends Component<Props, any> {
-    render() {
+export const EditItemForm = (props: Props) => {
+
+    useEffect(() => {
+        document.getElementById("name-input")?.focus();
+    });
+
+    const groups = useStoreState(state => state.groups);
+
+    return (
+        <Fragment>
+            {renderNameInput()}
+            {renderNotesInput()}
+            {renderRecurringInput()}
+            {renderGroupsInput()}
+        </Fragment>
+    );
+
+
+    function renderNameInput() {
         return (
-            <Fragment>
-                {this.renderNameInput()}
-                {this.renderNotesInput()}
-                {this.renderRecurringInput()}
-            </Fragment>
+            <FormGroup>
+                <TextInput
+                    label="Name"
+                    id="name-input"
+                    type="text"
+                    value={props.editedItem.name}
+                    onChange={props.handleNameTextChange}
+                    onKeyPress={(event) => {
+                        if (event.key === "Enter") {
+                            props.handleFormSubmit();
+                        }
+                    }}
+                />
+            </FormGroup>
         );
     }
 
-    renderNameInput() {
+    function renderNotesInput() {
         return (
-            <TextInput
-                label="Name"
-                id="name-input"
-                type="text"
-                value={this.props.name}
-                onChange={this.props.handleNameTextChange}
-            />
+            <FormGroup>
+                <TextInput
+                    label="Notes"
+                    id="notes-input"
+                    type="textarea"
+                    value={props.editedItem.notes}
+                    onChange={props.handleNotesTextChange}
+                />
+            </FormGroup>
         );
     }
 
-    renderNotesInput() {
+    function renderRecurringInput() {
         return (
-            <TextInput
-                label="Notes"
-                id="notes-input"
-                type="textarea"
-                value={this.props.notes}
-                onChange={this.props.handleNotesTextChange}
-            />
-        );
-    }
-
-    renderRecurringInput() {
-        return (
-            <Fragment>
+            <FormGroup>
                 <Label className="mb-0">Recurring</Label>
                 <CheckboxInput
-                    checked={this.props.recurring}
-                    handleChange={this.props.handleRecurringCheckChange}
+                    checked={props.editedItem.recurring}
+                    handleChange={props.handleRecurringCheckChange}
                     label="Item repeats"
                 />
-            </Fragment>
-        )
+            </FormGroup>
+        );
+    }
+
+    function renderGroupsInput() {
+        return (
+            <FormGroup>
+                <Label className="mb-0">Groups</Label>
+                {groups.map(group => (
+                    <CheckboxInput
+                        key={group.id}
+                        checked={props.editedItem.groups.some(_group => _group.groupId === group.id)}
+                        handleChange={(event) => props.handleGroupCheckChange(event, group.id!)}
+                        label={group.name!}
+                    />
+                ))}
+            </FormGroup>
+        );
     }
 }

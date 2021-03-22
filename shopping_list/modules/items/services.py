@@ -71,33 +71,17 @@ def edit_item(item_id: int, new_item: dict) -> dict:
 
     # groups
     req_group_ids = new_item.get('groups') or []
-    # get existing GroupItems first
-    current_group_item_ids = [
-        group_item.item_id for group_item in
-        GroupItem.query.filter(
-            GroupItem.item_id == item_id
-        ).all()
-    ]
-    # delete ones not in request
-    for group_id in current_group_item_ids:
-        if group_id not in req_group_ids:
-            group_item = GroupItem.query.filter(
-                GroupItem.item_id == item_id
-            ).first_or_404()
-            db.session.delete(group_item)
-            db.session.commit()
 
-    # add ones in request that don't already exist
+    for group_item in GroupItem.query.filter(GroupItem.item_id == item_id):
+        db.session.delete(group_item)
+    db.session.commit()
+
     for group_id in req_group_ids:
-        if group_id not in current_group_item_ids:
-            group_item = GroupItem(
-                item_id=item_id,
-                group_id=group_id
-            )
-            db.session.add(group_item)
-            db.session.commit()
+        group_item = GroupItem(item_id=item_id, group_id=group_id)
+        db.session.add(group_item)
+    db.session.commit()
 
-    # done
+    # sleep(1)  # for testing only
     return item.as_dict()
 
 
