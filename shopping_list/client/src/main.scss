@@ -71,3 +71,7 @@ table.same-width {
 hr {
   background-color: #888;
 }
+
+.form-group:last-of-type {
+  margin-bottom: 0.25em !important;
+}

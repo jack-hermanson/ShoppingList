@@ -1,5 +1,5 @@
-import React, {ChangeEvent, Component, KeyboardEvent} from "react";
-import {FormGroup, Input, Label} from "reactstrap";
+import React, {ChangeEvent, Component, KeyboardEvent, Fragment} from "react";
+import {Input, Label} from "reactstrap";
 
 interface Props {
     label: string;
@@ -13,7 +13,7 @@ interface Props {
 export default class TextInput extends Component<Props, any> {
     render() {
         return (
-            <FormGroup>
+            <Fragment>
                 <Label htmlFor={this.props.id}>{this.props.label}</Label>
                 <Input
                     id={this.props.id}
@@ -22,7 +22,7 @@ export default class TextInput extends Component<Props, any> {
                     onChange={this.props.onChange}
                     onKeyPress={this.props.onKeyPress}
                 />
-            </FormGroup>
+            </Fragment>
         );
     }
 }
