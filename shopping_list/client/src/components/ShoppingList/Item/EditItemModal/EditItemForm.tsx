@@ -10,6 +10,7 @@ interface Props {
     handleNameTextChange: (event: ChangeEvent<HTMLInputElement>) => void;
     handleNotesTextChange: (event: ChangeEvent<HTMLInputElement>) => void;
     handleRecurringCheckChange: (event: ChangeEvent<HTMLInputElement>) => void;
+    handleGroupCheckChange: (event: ChangeEvent<HTMLInputElement>, groupId: number) => void;
     handleFormSubmit: () => void;
 }
 
@@ -85,7 +86,7 @@ export const EditItemForm = (props: Props) => {
                     <CheckboxInput
                         key={group.id}
                         checked={props.editedItem.groups.some(_group => _group.groupId === group.id)}
-                        handleChange={(event) => console.log("change", event.target.checked)}
+                        handleChange={(event) => props.handleGroupCheckChange(event, group.id!)}
                         label={group.name!}
                     />
                 ))}
