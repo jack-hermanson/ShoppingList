@@ -98,6 +98,7 @@ def edit_item(item_id: int, new_item: dict) -> dict:
             db.session.commit()
 
     # done
+    # sleep(1)  # for testing only
     return item.as_dict()
 
 

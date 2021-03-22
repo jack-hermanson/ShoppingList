@@ -4,7 +4,7 @@ import axios from "axios";
 import {createTypedHooks} from "easy-peasy";
 import AlertModel from "./models/AlertModel";
 import ItemModel from "./models/ItemModel";
-import {ItemRequestModel} from "./api/items";
+import {editItem, ItemRequestModel} from "./api/items";
 
 interface StoreModel {
     groups: GroupModel[];
@@ -58,6 +58,10 @@ export const store = createStore<StoreModel>({
                 return payload;
             }
             return item;
+        });
+        const startTime = Date.now();
+        editItem(newItem).then(() => {
+            console.log(`Item edited. Response time: ${(Date.now() - startTime) / 1000}s`);
         });
     }),
     focusItem: null,
