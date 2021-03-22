@@ -11,6 +11,7 @@ interface Props {
 
 export const Item = ({item}: Props) => {
     const setFocusItem = useStoreActions(actions => actions.setFocusItem);
+    const toggleItemCheck = useStoreActions(actions => actions.toggleItemCheck);
 
     return (
         <Fragment>
@@ -22,7 +23,10 @@ export const Item = ({item}: Props) => {
                             type="checkbox"
                             className="custom-control-input"
                             checked={item.checked}
-                            onChange={() => console.log("check toggle")}
+                            onChange={(event) => toggleItemCheck({
+                                itemId: item.id!,
+                                checked: event.target.checked
+                            })}
                         />
                         <ItemLabel item={item}/>
                     </div>
