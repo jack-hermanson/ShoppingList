@@ -4,7 +4,7 @@ import axios from "axios";
 import {createTypedHooks} from "easy-peasy";
 import AlertModel from "./models/AlertModel";
 import ItemModel from "./models/ItemModel";
-import {editItem, ItemRequestModel} from "./api/items";
+import {editItem, ItemRequestModel, toggleItemCheck} from "./api/items";
 
 interface StoreModel {
     groups: GroupModel[];
@@ -17,6 +17,7 @@ interface StoreModel {
     setItems: Action<StoreModel, ItemModel[]>;
     fetchItems: Thunk<StoreModel>;
     editItem: Action<StoreModel, ItemModel>;
+    toggleItemCheck: Action<StoreModel, {itemId: number, checked: boolean}>;
     focusItem: ItemModel | null;
     setFocusItem: Action<StoreModel, ItemModel | null>;
 
@@ -61,7 +62,20 @@ export const store = createStore<StoreModel>({
         });
         const startTime = Date.now();
         editItem(newItem).then(() => {
-            console.log(`Item edited. Response time: ${(Date.now() - startTime) / 1000}s`);
+            console.log(`Item edited. Response time: ${timeDif(startTime)}s`);
+        });
+    }),
+    toggleItemCheck: action((state, payload) => {
+        const startTime = Date.now();
+        state.items = state.items!.map((item: ItemModel) => {
+            if (item.id === payload.itemId) {
+                item.checked = payload.checked;
+                return item;
+            }
+            return item;
+        });
+        toggleItemCheck(payload.itemId, payload.checked).then(() => {
+            console.log(`Item ${payload.checked ? "" : "un"}checked. Response time: ${timeDif(startTime)}s`);
         });
     }),
     focusItem: null,
@@ -71,6 +85,10 @@ export const store = createStore<StoreModel>({
 
     alerts: [],
 });
+
+const timeDif = (originalTime: number) => {
+    return (Date.now() - originalTime) / 1000;
+}
 
 const typedHooks = createTypedHooks<StoreModel>();
 

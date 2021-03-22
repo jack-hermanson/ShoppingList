@@ -24,6 +24,14 @@ export const editItem = async (item: ItemRequestModel): Promise<void> => {
         const responseData: ItemModel = response.data;
         await setSuccessAlert("updated", `item "${responseData.name}"`)
     } catch(error) {
-        throw error;
+        await setAlert(`Error in editItem api call: ${error.message}`, "danger");
+    }
+}
+
+export const toggleItemCheck = async (itemId: number, checked: boolean): Promise<void> => {
+    try {
+        await axios.put(`/api/items/toggle/${itemId}`, {"checked": checked});
+    } catch (error) {
+        await setAlert(`Error in toggleItemCheck api call: ${error.message}`, "danger");
     }
 }
