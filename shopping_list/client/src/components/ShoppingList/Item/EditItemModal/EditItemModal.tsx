@@ -43,6 +43,7 @@ export const EditItemModal = () => {
                                 ...editedItem,
                                 recurring: event.target.checked
                             })}
+                            handleFormSubmit={handleFormSubmit}
                         />
                     </ModalBody>
                     <ModalFooter>

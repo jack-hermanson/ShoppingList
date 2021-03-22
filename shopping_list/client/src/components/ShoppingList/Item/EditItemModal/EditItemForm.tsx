@@ -9,6 +9,7 @@ interface Props {
     handleNameTextChange: (event: ChangeEvent<HTMLInputElement>) => void;
     handleNotesTextChange: (event: ChangeEvent<HTMLInputElement>) => void;
     handleRecurringCheckChange: (event: ChangeEvent<HTMLInputElement>) => void;
+    handleFormSubmit: () => void;
 }
 
 export const EditItemForm = (props: Props) => {
@@ -34,6 +35,11 @@ export const EditItemForm = (props: Props) => {
                 type="text"
                 value={props.editedItem.name}
                 onChange={props.handleNameTextChange}
+                onKeyPress={(event) => {
+                    if (event.key === "Enter") {
+                        props.handleFormSubmit();
+                    }
+                }}
             />
         );
     }
