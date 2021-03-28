@@ -36,6 +36,7 @@ export const EditItemForm = (props: Props) => {
         return (
             <FormGroup>
                 <TextInput
+                    required
                     label="Name"
                     id="name-input"
                     type="text"
