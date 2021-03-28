@@ -28,7 +28,7 @@ export const ShoppingList = () => {
                     </Col>
                     <Col>
                         <Card className="space-between mt-3 mt-lg-0">
-                            <CardHeader>New Item</CardHeader>
+                            <CardHeader>New Group</CardHeader>
                             <CardBody className="pt-2">
                                 <NewGroupForm/>
                             </CardBody>

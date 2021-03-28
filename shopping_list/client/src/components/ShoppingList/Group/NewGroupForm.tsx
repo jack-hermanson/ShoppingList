@@ -27,7 +27,7 @@ export const NewGroupForm = () => {
                 <Input required
                        value={newGroup.name!}
                        type="text"
-                       placeholder="Name of the category..."
+                       placeholder="Name of the group..."
                        id="group-name-input"
                        onChange={e => setNewGroup({...newGroup, name: e.target.value})}
                 />
