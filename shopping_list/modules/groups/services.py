@@ -16,7 +16,7 @@ def new(group: dict) -> dict:
 
 
 def get_all() -> list:
-    return [group.as_dict() for group in Group.query.all()]
+    return [group.as_dict() for group in Group.query.order_by(Group.name).all()]
 
 
 def get_all_ids() -> List[int]:

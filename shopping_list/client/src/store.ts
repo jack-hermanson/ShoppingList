@@ -31,7 +31,11 @@ export const store = createStore<StoreModel>({
     }),
     fetchGroups: thunk(async (actions) => {
         const res = await axios.get("/api/groups/");
-        actions.setGroups(res.data);
+        actions.setGroups(res.data.sort((first: GroupModel, second: GroupModel) => {
+            if (first.name === "Misc") return 1;
+            if (second.name === "Misc") return -1;
+            return 0;
+        }));
     }),
     addGroup: action((state, payload) => {
         state.groups.push(payload);
