@@ -10223,4 +10223,13 @@ hr {
   margin-bottom: 0.25em !important;
 }
 
+.bottom-buttons {
+  margin-top: 2em;
+}
+
+label[required]:after {
+  content: " *";
+  color: red;
+}
+
 /*# sourceMappingURL=main.css.map */
