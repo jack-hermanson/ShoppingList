@@ -43,6 +43,7 @@ export const store = createStore<StoreModel>({
     saveGroup: thunk(async (actions, payload) => {
         const res = await axios.post("/api/groups/", payload);
         actions.addGroup(res.data);
+        return res.data;
     }),
 
     items: null,

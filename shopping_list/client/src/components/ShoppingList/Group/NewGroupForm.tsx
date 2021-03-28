@@ -1,6 +1,7 @@
 import React, {FormEvent, useState} from "react";
 import {Button, FormGroup, Input, Label} from "reactstrap";
 import GroupModel from "../../../models/GroupModel";
+import {useStoreActions} from "../../../store";
 
 
 export const NewGroupForm = () => {
@@ -11,10 +12,12 @@ export const NewGroupForm = () => {
         id: null
     });
 
+    const saveGroup = useStoreActions(actions => actions.saveGroup);
+
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log("submitted");
-        console.log({newGroup})
+        await saveGroup(newGroup);
+        setNewGroup({...newGroup, name: "", notes: ""});
     }
 
     return (
