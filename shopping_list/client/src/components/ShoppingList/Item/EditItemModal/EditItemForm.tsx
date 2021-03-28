@@ -42,6 +42,7 @@ export const EditItemForm = (props: Props) => {
                     type="text"
                     value={props.editedItem.name}
                     onChange={props.handleNameTextChange}
+                    placeholder="The name of the item..."
                     onKeyPress={(event) => {
                         if (event.key === "Enter") {
                             props.handleFormSubmit();
@@ -61,6 +62,7 @@ export const EditItemForm = (props: Props) => {
                     type="textarea"
                     value={props.editedItem.notes}
                     onChange={props.handleNotesTextChange}
+                    placeholder="Optional..."
                 />
             </FormGroup>
         );

@@ -1,7 +1,8 @@
 import React, {useState} from "react";
-import {FormGroup} from "reactstrap";
-import TextInput from "../../FormInput/TextInput";
+import {Button, FormGroup} from "reactstrap";
 import ItemModel from "../../../models/ItemModel";
+import {useStoreState} from "../../../store";
+import {EditItemForm} from "./EditItemModal/EditItemForm";
 
 export const NewItemForm = () => {
 
@@ -14,38 +15,43 @@ export const NewItemForm = () => {
         id: undefined
     });
 
+    const groups = useStoreState(state => state.groups);
+
+    const handleSubmit = () => {
+        console.log("submit");
+    }
+
     return (
         <form>
-            <FormGroup>
-                <TextInput
-                    label="Name"
-                    id="item-name-input"
-                    type="text"
-                    value={newItem.name}
-                    onChange={(event) => {
-                        setNewItem({
-                            ...newItem,
-                            name: event.target.value
-                        });
-                    }}
-                    required
-                    placeholder="The name of the item..."
-                />
-            </FormGroup>
-            <FormGroup>
-                <TextInput
-                    label="Notes"
-                    id="item-notes-input"
-                    type="textarea"
-                    value={newItem.notes}
-                    onChange={(event) => {
-                        setNewItem({
-                            ...newItem,
-                            notes: event.target.value
-                        });
-                    }}
-                    placeholder="Optional..."
-                />
+            <EditItemForm
+                editedItem={newItem}
+                handleNameTextChange={(event) => {
+                    setNewItem({...newItem, name: event.target.value});
+                }}
+                handleNotesTextChange={(event) => {
+                    setNewItem({...newItem, notes: event.target.value});
+                }}
+                handleRecurringCheckChange={(event) => {
+                    setNewItem({...newItem, recurring: event.target.checked});
+                }}
+                handleGroupCheckChange={((event, groupId) => {
+                    setNewItem({
+                        ...newItem,
+                        groups: groups.filter(group => {
+                            if (group.id === groupId) {
+                                return event.target.checked;
+                            }
+                            return newItem.groups.some(someGroup => someGroup.groupId === group.id);
+                        }).map(fullGroup => ({
+                            groupId: fullGroup.id!,
+                            groupName: fullGroup.name!
+                        }))
+                    });
+                })}
+                handleFormSubmit={handleSubmit}
+            />
+            <FormGroup className="bottom-buttons">
+                <Button block color="info" type="submit">Save</Button>
             </FormGroup>
         </form>
     )
