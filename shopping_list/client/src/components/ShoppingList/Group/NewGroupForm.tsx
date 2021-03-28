@@ -12,12 +12,12 @@ export const NewGroupForm = () => {
     return (
         <form onSubmit={handleSubmit}>
             <FormGroup>
-                <Label htmlFor="group-name-input">Name</Label>
-                <Input type="text" id="group-name-input" />
+                <Label required htmlFor="group-name-input">Name</Label>
+                <Input required type="text" placeholder="Name of the category..." id="group-name-input" />
             </FormGroup>
             <FormGroup>
                 <Label htmlFor="group-notes-input">Notes</Label>
-                <Input type="textarea" id="group-notes-input" />
+                <Input type="textarea" placeholder="Optional..." id="group-notes-input" />
             </FormGroup>
             <FormGroup className="bottom-buttons">
                 <Button block type="submit" color="info">Save</Button>

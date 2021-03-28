@@ -10227,4 +10227,9 @@ hr {
   margin-top: 2em;
 }
 
+label[required]:after {
+  content: " *";
+  color: red;
+}
+
 /*# sourceMappingURL=main.css.map */
