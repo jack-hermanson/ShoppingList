@@ -14,6 +14,7 @@ import {
 import Groups from "./Group/Groups";
 import {EditItemModal} from "./Item/EditItemModal/EditItemModal";
 import {NewGroupForm} from "./Group/NewGroupForm";
+import {NewItemForm} from "./Item/NewItemForm";
 
 export const ShoppingList = () => {
     return (
@@ -28,6 +29,12 @@ export const ShoppingList = () => {
                     </Col>
                     <Col>
                         <Card className="space-between mt-3 mt-lg-0">
+                            <CardHeader>New Item</CardHeader>
+                            <CardBody className="pt-2">
+                                <NewItemForm />
+                            </CardBody>
+                        </Card>
+                        <Card className="space-between">
                             <CardHeader>New Group</CardHeader>
                             <CardBody className="pt-2">
                                 <NewGroupForm/>

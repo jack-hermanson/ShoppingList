@@ -44,7 +44,6 @@ export const NewGroupForm = () => {
                     id="group-notes-input"
                     label="Notes"
                     value={newGroup.notes!}
-                    required
                 />
             </FormGroup>
             <FormGroup className="bottom-buttons">
