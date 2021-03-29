@@ -24,6 +24,7 @@ export const NewItemForm = () => {
     return (
         <form>
             <EditItemForm
+                formName="new-item"
                 editedItem={newItem}
                 handleNameTextChange={(event) => {
                     setNewItem({...newItem, name: event.target.value});

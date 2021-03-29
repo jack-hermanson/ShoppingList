@@ -12,6 +12,7 @@ interface Props {
     handleRecurringCheckChange: (event: ChangeEvent<HTMLInputElement>) => void;
     handleGroupCheckChange: (event: ChangeEvent<HTMLInputElement>, groupId: number) => void;
     handleFormSubmit: () => void;
+    formName: string;
 }
 
 export const EditItemForm = (props: Props) => {
@@ -38,7 +39,7 @@ export const EditItemForm = (props: Props) => {
                 <TextInput
                     required
                     label="Name"
-                    id="name-input"
+                    id={`${props.formName}-name-input`}
                     type="text"
                     value={props.editedItem.name}
                     onChange={props.handleNameTextChange}
@@ -58,7 +59,7 @@ export const EditItemForm = (props: Props) => {
             <FormGroup>
                 <TextInput
                     label="Notes"
-                    id="notes-input"
+                    id={`${props.formName}-notes-input`}
                     type="textarea"
                     value={props.editedItem.notes}
                     onChange={props.handleNotesTextChange}

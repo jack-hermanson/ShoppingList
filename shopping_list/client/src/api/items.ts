@@ -22,7 +22,7 @@ export const editItem = async (item: ItemRequestModel): Promise<void> => {
     try {
         const response = await axios.put(`/api/items/edit/${item.id}`, item);
         const responseData: ItemModel = response.data;
-        await setSuccessAlert("updated", `item "${responseData.name}"`)
+        await setSuccessAlert("updated", `item "${responseData.name}"`);
     } catch(error) {
         await setAlert(`Error in editItem api call: ${error.message}`, "danger");
     }
@@ -33,5 +33,17 @@ export const toggleItemCheck = async (itemId: number, checked: boolean): Promise
         await axios.put(`/api/items/toggle/${itemId}`, {"checked": checked});
     } catch (error) {
         await setAlert(`Error in toggleItemCheck api call: ${error.message}`, "danger");
+    }
+}
+
+export const saveItem = async (item: ItemRequestModel): Promise<ItemModel> => {
+    try {
+        const response = await axios.post("/api/items/", item);
+        const responseData: ItemModel = response.data;
+        await setSuccessAlert("added", `item "${responseData.name}"`);
+        return responseData;
+    } catch (error) {
+        await setAlert(`Error in the saveItem api call: ${error.message}`, "danger");
+        throw new Error(error);
     }
 }

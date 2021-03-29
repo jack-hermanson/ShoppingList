@@ -1,4 +1,4 @@
-import React, {Fragment, useCallback, useEffect, useState} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import {Modal, ModalHeader, ModalBody, ModalFooter, Form, Button} from "reactstrap";
 import {EditItemForm} from "./EditItemForm";
 import {useStoreActions, useStoreState} from "../../../../store";
@@ -46,6 +46,7 @@ export const EditItemModal = () => {
                         <AlertPanel color="danger" text={validationText}/>
                         }
                         <EditItemForm
+                            formName="edit-item"
                             editedItem={editedItem}
                             handleNameTextChange={event => setEditedItem({
                                 ...editedItem,
