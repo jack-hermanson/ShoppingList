@@ -3,6 +3,7 @@ import {Button, FormGroup} from "reactstrap";
 import ItemModel from "../../../models/ItemModel";
 import {useStoreState} from "../../../store";
 import {EditItemForm} from "./EditItemModal/EditItemForm";
+import AlertPanel from "../../AlertPanel/AlertPanel";
 
 export const NewItemForm = () => {
 
@@ -16,13 +17,23 @@ export const NewItemForm = () => {
     });
 
     const groups = useStoreState(state => state.groups);
+    const [valid, setValid] = useState<boolean>(true);
+    const [validationText, setValidationText] = useState<string>("");
 
     const handleSubmit = () => {
-        console.log("submit");
+        if (valid) {
+            console.log("submit");
+        }
     }
 
     return (
-        <form>
+        <form onSubmit={(event) => {
+            event.preventDefault();
+            handleSubmit();
+        }}>
+            {!valid &&
+            <AlertPanel color="danger" text={validationText}/>
+            }
             <EditItemForm
                 formName="new-item"
                 editedItem={newItem}
@@ -36,23 +47,30 @@ export const NewItemForm = () => {
                     setNewItem({...newItem, recurring: event.target.checked});
                 }}
                 handleGroupCheckChange={((event, groupId) => {
+                    const newGroups = groups.filter(group => {
+                        if (group.id === groupId) {
+                            return event.target.checked;
+                        }
+                        return newItem.groups.some(someGroup => someGroup.groupId === group.id);
+                    }).map(fullGroup => ({
+                        groupId: fullGroup.id!,
+                        groupName: fullGroup.name!
+                    }));
                     setNewItem({
                         ...newItem,
-                        groups: groups.filter(group => {
-                            if (group.id === groupId) {
-                                return event.target.checked;
-                            }
-                            return newItem.groups.some(someGroup => someGroup.groupId === group.id);
-                        }).map(fullGroup => ({
-                            groupId: fullGroup.id!,
-                            groupName: fullGroup.name!
-                        }))
+                        groups: newGroups
                     });
+                    if (newGroups.length < 1) {  // todo: must validate in submit
+                        setValid(false);
+                        setValidationText("Each item must be in at least one group.")
+                    } else {
+                        setValid(true);
+                    }
                 })}
                 handleFormSubmit={handleSubmit}
             />
             <FormGroup className="bottom-buttons">
-                <Button block color="info" type="submit">Save</Button>
+                <Button block disabled={!valid} color="info" type="submit">Save</Button>
             </FormGroup>
         </form>
     )
