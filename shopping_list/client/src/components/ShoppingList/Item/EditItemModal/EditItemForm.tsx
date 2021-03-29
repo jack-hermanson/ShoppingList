@@ -17,10 +17,6 @@ interface Props {
 
 export const EditItemForm = (props: Props) => {
 
-    useEffect(() => {
-        document.getElementById("name-input")?.focus();
-    });
-
     const groups = useStoreState(state => state.groups);
 
     return (
