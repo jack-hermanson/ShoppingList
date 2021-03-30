@@ -1,9 +1,10 @@
-import React, {ChangeEvent, Fragment, useEffect} from "react";
+import React, {ChangeEvent, Fragment, useEffect, useState} from "react";
 import {Label, FormGroup} from "reactstrap";
 import TextInput from "../../../FormInput/TextInput";
 import CheckboxInput from "../../../FormInput/CheckboxInput";
 import ItemModel from "../../../../models/ItemModel";
 import {useStoreState} from "../../../../store";
+import AlertPanel from "../../../AlertPanel/AlertPanel";
 
 interface Props {
     editedItem: ItemModel;
@@ -18,9 +19,14 @@ interface Props {
 export const EditItemForm = (props: Props) => {
 
     const groups = useStoreState(state => state.groups);
+    const [validationText, setValidationText] = useState<string>("");
+    const [valid, setValid] = useState<boolean>(true);
 
     return (
         <Fragment>
+            {!valid &&
+            <AlertPanel color="danger" text={validationText}/>
+            }
             {renderNameInput()}
             {renderNotesInput()}
             {renderRecurringInput()}
@@ -28,6 +34,9 @@ export const EditItemForm = (props: Props) => {
         </Fragment>
     );
 
+    function validateInput() {
+
+    }
 
     function renderNameInput() {
         return (

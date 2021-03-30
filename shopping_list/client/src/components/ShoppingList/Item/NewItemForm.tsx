@@ -17,13 +17,9 @@ export const NewItemForm = () => {
     });
 
     const groups = useStoreState(state => state.groups);
-    const [valid, setValid] = useState<boolean>(true);
-    const [validationText, setValidationText] = useState<string>("");
 
     const handleSubmit = () => {
-        if (valid) {
-            console.log("submit");
-        }
+        console.log("submit")
     }
 
     return (
@@ -31,9 +27,7 @@ export const NewItemForm = () => {
             event.preventDefault();
             handleSubmit();
         }}>
-            {!valid &&
-            <AlertPanel color="danger" text={validationText}/>
-            }
+
             <EditItemForm
                 formName="new-item"
                 editedItem={newItem}
@@ -60,17 +54,11 @@ export const NewItemForm = () => {
                         ...newItem,
                         groups: newGroups
                     });
-                    if (newGroups.length < 1) {  // todo: must validate in submit
-                        setValid(false);
-                        setValidationText("Each item must be in at least one group.")
-                    } else {
-                        setValid(true);
-                    }
                 })}
                 handleFormSubmit={handleSubmit}
             />
             <FormGroup className="bottom-buttons">
-                <Button block disabled={!valid} color="info" type="submit">Save</Button>
+                <Button block color="info" type="submit">Save</Button>
             </FormGroup>
         </form>
     )

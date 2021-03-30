@@ -12,12 +12,9 @@ export const EditItemModal = () => {
     const setFocusItem = useStoreActions(actions => actions.setFocusItem);
     const editItem = useStoreActions(actions => actions.editItem);
     const groups = useStoreState(state => state.groups);
-    const [valid, setValid] = useState<boolean>(true);
-    const [validationText, setValidationText] = useState<string>("");
 
     const removeFocusItem = () => {
         setFocusItem(null);
-        setValid(true);
     }
 
     const [editedItem, setEditedItem] = useState<ItemModel>(focusItem!);
@@ -27,10 +24,8 @@ export const EditItemModal = () => {
     }, [focusItem]);
 
     function handleFormSubmit() {
-        if (valid) {
-            editItem(editedItem);
-            removeFocusItem();
-        }
+        editItem(editedItem);
+        removeFocusItem();
     }
 
     return (
@@ -42,9 +37,6 @@ export const EditItemModal = () => {
                         {focusItem.name}
                     </ModalHeader>
                     <ModalBody>
-                        {!valid &&
-                        <AlertPanel color="danger" text={validationText}/>
-                        }
                         <EditItemForm
                             formName="edit-item"
                             editedItem={editedItem}
@@ -74,19 +66,13 @@ export const EditItemModal = () => {
                                     }
                                 });
                                 setEditedItem({...editedItem, groups: newGroups});
-                                if (newGroups.length < 1) {
-                                    setValid(false);
-                                    setValidationText("Each item must be in at least one group.")
-                                } else {
-                                    setValid(true);
-                                }
                             }}
                             handleFormSubmit={handleFormSubmit}
                         />
                     </ModalBody>
                     <ModalFooter>
                         <Button onClick={removeFocusItem} color="secondary">Cancel</Button>
-                        <Button disabled={!valid} onClick={handleFormSubmit} type="submit" color="info">Submit</Button>
+                        <Button onClick={handleFormSubmit} type="submit" color="info">Submit</Button>
                     </ModalFooter>
                 </Modal>
             </Fragment>
