@@ -31,8 +31,8 @@ export const EditItemModal = () => {
         <Form>
             {focusItem &&
             <Fragment>
-                <Modal centered toggle={removeFocusItem} isOpen={true}>
-                    <ModalHeader toggle={removeFocusItem} className="d-flex">
+                <Modal centered toggle={toggleModal} isOpen={true}>
+                    <ModalHeader toggle={toggleModal} className="d-flex">
                         {focusItem.name}
                     </ModalHeader>
                     <ModalBody>
@@ -71,7 +71,7 @@ export const EditItemModal = () => {
                         />
                     </ModalBody>
                     <ModalFooter>
-                        <Button onClick={removeFocusItem} color="secondary">Cancel</Button>
+                        <Button onClick={toggleModal} color="secondary">Cancel</Button>
                         <Button onClick={handleFormSubmit} type="submit" color="info">Submit</Button>
                     </ModalFooter>
                 </Modal>
@@ -80,18 +80,19 @@ export const EditItemModal = () => {
         </Form>
     );
 
+    function toggleModal() {
+        removeFocusItem();
+        setValidForm(null);
+    }
+
     function handleFormSubmit() {
-        console.log("submit");
         const {isValid, alertText} = validateEditItemForm(editedItem);
         setValidForm(isValid);
         setAlertPanelText(alertText);
 
         if (isValid) {
-            console.log("submit valid");
             editItem(editedItem);
             removeFocusItem();
-        } else {
-            console.log("submit invalid");
         }
     }
 
