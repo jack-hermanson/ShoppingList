@@ -6,7 +6,7 @@ interface Props {
 
 export const StickyTop = ({children}: Props) => {
     return (
-        <div className="sticky-top">
+        <div className="sticky-top" style={{zIndex: 10}}>
             {children}
         </div>
     )
