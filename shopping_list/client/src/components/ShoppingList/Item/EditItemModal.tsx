@@ -1,10 +1,11 @@
-import React, {Fragment, useCallback, useEffect, useState} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import {Modal, ModalHeader, ModalBody, ModalFooter, Form, Button} from "reactstrap";
 import {EditItemForm} from "./EditItemForm";
-import {useStoreActions, useStoreState} from "../../../../store";
-import ItemModel from "../../../../models/ItemModel";
-import AlertPanel from "../../../AlertPanel/AlertPanel";
-import GroupModel from "../../../../models/GroupModel";
+import {useStoreActions, useStoreState} from "../../../store";
+import ItemModel from "../../../models/ItemModel";
+import AlertPanel from "../../AlertPanel/AlertPanel";
+import GroupModel from "../../../models/GroupModel";
+import {defaultNewItem, validateEditItemForm} from "./utils";
 
 export const EditItemModal = () => {
 
@@ -12,12 +13,12 @@ export const EditItemModal = () => {
     const setFocusItem = useStoreActions(actions => actions.setFocusItem);
     const editItem = useStoreActions(actions => actions.editItem);
     const groups = useStoreState(state => state.groups);
-    const [valid, setValid] = useState<boolean>(true);
-    const [validationText, setValidationText] = useState<string>("");
+    const [validForm, setValidForm] = useState<boolean | null>(null);
+    const [alertPanelText, setAlertPanelText] = useState<string>("");
+
 
     const removeFocusItem = () => {
         setFocusItem(null);
-        setValid(true);
     }
 
     const [editedItem, setEditedItem] = useState<ItemModel>(focusItem!);
@@ -26,26 +27,18 @@ export const EditItemModal = () => {
         setEditedItem(focusItem!);
     }, [focusItem]);
 
-    function handleFormSubmit() {
-        if (valid) {
-            editItem(editedItem);
-            removeFocusItem();
-        }
-    }
-
     return (
         <Form>
             {focusItem &&
             <Fragment>
-                <Modal centered toggle={removeFocusItem} isOpen={true}>
-                    <ModalHeader toggle={removeFocusItem} className="d-flex">
+                <Modal centered toggle={toggleModal} isOpen={true}>
+                    <ModalHeader toggle={toggleModal} className="d-flex">
                         {focusItem.name}
                     </ModalHeader>
                     <ModalBody>
-                        {!valid &&
-                        <AlertPanel color="danger" text={validationText}/>
-                        }
+                        {renderAlert()}
                         <EditItemForm
+                            formName="edit-item"
                             editedItem={editedItem}
                             handleNameTextChange={event => setEditedItem({
                                 ...editedItem,
@@ -73,19 +66,13 @@ export const EditItemModal = () => {
                                     }
                                 });
                                 setEditedItem({...editedItem, groups: newGroups});
-                                if (newGroups.length < 1) {
-                                    setValid(false);
-                                    setValidationText("Each item must be in at least one group.")
-                                } else {
-                                    setValid(true);
-                                }
                             }}
                             handleFormSubmit={handleFormSubmit}
                         />
                     </ModalBody>
                     <ModalFooter>
-                        <Button onClick={removeFocusItem} color="secondary">Cancel</Button>
-                        <Button disabled={!valid} onClick={handleFormSubmit} type="submit" color="info">Submit</Button>
+                        <Button onClick={toggleModal} color="secondary">Cancel</Button>
+                        <Button onClick={handleFormSubmit} type="submit" color="info">Submit</Button>
                     </ModalFooter>
                 </Modal>
             </Fragment>
@@ -93,4 +80,27 @@ export const EditItemModal = () => {
         </Form>
     );
 
+    function toggleModal() {
+        removeFocusItem();
+        setValidForm(null);
+    }
+
+    function handleFormSubmit() {
+        const {isValid, alertText} = validateEditItemForm(editedItem);
+        setValidForm(isValid);
+        setAlertPanelText(alertText);
+
+        if (isValid) {
+            editItem(editedItem);
+            removeFocusItem();
+        }
+    }
+
+    function renderAlert() {
+        if (validForm === false) {
+            return (
+                <AlertPanel color="danger" text={alertPanelText} />
+            );
+        }
+    }
 }

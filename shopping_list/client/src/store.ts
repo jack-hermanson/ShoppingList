@@ -4,7 +4,7 @@ import axios from "axios";
 import {createTypedHooks} from "easy-peasy";
 import AlertModel from "./models/AlertModel";
 import ItemModel from "./models/ItemModel";
-import {editItem, ItemRequestModel, toggleItemCheck} from "./api/items";
+import {editItem, ItemRequestModel, saveItem, toggleItemCheck} from "./api/items";
 
 interface StoreModel {
     groups: GroupModel[];
@@ -17,6 +17,7 @@ interface StoreModel {
     setItems: Action<StoreModel, ItemModel[]>;
     fetchItems: Thunk<StoreModel>;
     editItem: Action<StoreModel, ItemModel>;
+    saveItem: Thunk<StoreModel, ItemModel>;
     toggleItemCheck: Action<StoreModel, {itemId: number, checked: boolean}>;
     focusItem: ItemModel | null;
     setFocusItem: Action<StoreModel, ItemModel | null>;
@@ -86,6 +87,16 @@ export const store = createStore<StoreModel>({
     focusItem: null,
     setFocusItem: action((state, payload) => {
         state.focusItem = payload;
+    }),
+    saveItem: thunk(async (actions, payload) => {
+        const startTime = Date.now();
+        const newItem: ItemRequestModel = {
+            ...payload,
+            groups: payload.groups.map(group => group.groupId)
+        };
+        await saveItem(newItem);
+        await actions.fetchItems();
+        console.log(`New item added. Response time: ${timeDif(startTime)}s`);
     }),
 
     alerts: [],

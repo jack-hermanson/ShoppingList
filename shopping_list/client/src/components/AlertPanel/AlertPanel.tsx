@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {Alert} from "reactstrap";
 
 export interface AlertPanelProps {
-    color: string;
+    color: "info" | "success" | "primary" | "warning" | "danger";
     text: string;
 }
 

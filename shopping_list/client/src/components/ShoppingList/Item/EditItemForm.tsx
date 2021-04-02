@@ -1,9 +1,9 @@
-import React, {ChangeEvent, Fragment, useEffect} from "react";
+import React, {ChangeEvent, Fragment, useState} from "react";
 import {Label, FormGroup} from "reactstrap";
-import TextInput from "../../../FormInput/TextInput";
-import CheckboxInput from "../../../FormInput/CheckboxInput";
-import ItemModel from "../../../../models/ItemModel";
-import {useStoreState} from "../../../../store";
+import TextInput from "../../FormInput/TextInput";
+import CheckboxInput from "../../FormInput/CheckboxInput";
+import ItemModel from "../../../models/ItemModel";
+import {useStoreState} from "../../../store";
 
 interface Props {
     editedItem: ItemModel;
@@ -12,13 +12,10 @@ interface Props {
     handleRecurringCheckChange: (event: ChangeEvent<HTMLInputElement>) => void;
     handleGroupCheckChange: (event: ChangeEvent<HTMLInputElement>, groupId: number) => void;
     handleFormSubmit: () => void;
+    formName: string;
 }
 
 export const EditItemForm = (props: Props) => {
-
-    useEffect(() => {
-        document.getElementById("name-input")?.focus();
-    });
 
     const groups = useStoreState(state => state.groups);
 
@@ -31,16 +28,17 @@ export const EditItemForm = (props: Props) => {
         </Fragment>
     );
 
-
     function renderNameInput() {
         return (
             <FormGroup>
                 <TextInput
+                    required
                     label="Name"
-                    id="name-input"
+                    id={`${props.formName}-name-input`}
                     type="text"
                     value={props.editedItem.name}
                     onChange={props.handleNameTextChange}
+                    placeholder="The name of the item..."
                     onKeyPress={(event) => {
                         if (event.key === "Enter") {
                             props.handleFormSubmit();
@@ -56,10 +54,11 @@ export const EditItemForm = (props: Props) => {
             <FormGroup>
                 <TextInput
                     label="Notes"
-                    id="notes-input"
+                    id={`${props.formName}-notes-input`}
                     type="textarea"
                     value={props.editedItem.notes}
                     onChange={props.handleNotesTextChange}
+                    placeholder="Optional..."
                 />
             </FormGroup>
         );
