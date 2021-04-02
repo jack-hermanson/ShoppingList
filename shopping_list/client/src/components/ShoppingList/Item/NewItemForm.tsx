@@ -1,9 +1,10 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import {Button, FormGroup} from "reactstrap";
 import ItemModel from "../../../models/ItemModel";
 import {useStoreState} from "../../../store";
-import {EditItemForm} from "./EditItemModal/EditItemForm";
+import {EditItemForm} from "./EditItemForm";
 import AlertPanel from "../../AlertPanel/AlertPanel";
+import {validateEditItemForm} from "./utils";
 
 export const NewItemForm = () => {
 
@@ -17,17 +18,15 @@ export const NewItemForm = () => {
     });
 
     const groups = useStoreState(state => state.groups);
-
-    const handleSubmit = () => {
-        console.log("submit")
-    }
+    const [validForm, setValidForm] = useState<boolean | null>(null);
+    const [alertPanelText, setAlertPanelText] = useState<string>("");
 
     return (
         <form onSubmit={(event) => {
             event.preventDefault();
             handleSubmit();
         }}>
-
+            {renderAlert()}
             <EditItemForm
                 formName="new-item"
                 editedItem={newItem}
@@ -61,5 +60,20 @@ export const NewItemForm = () => {
                 <Button block color="info" type="submit">Save</Button>
             </FormGroup>
         </form>
-    )
+    );
+
+    function renderAlert() {
+        if (validForm === false) {
+            return (
+                <AlertPanel color="danger" text={alertPanelText} />
+            );
+        }
+    }
+
+    function handleSubmit() {
+        console.log("submit");
+        const {isValid, alertText} = validateEditItemForm(newItem);
+        setValidForm(isValid);
+        setAlertPanelText(alertText);
+    }
 }

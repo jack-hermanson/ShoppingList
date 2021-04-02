@@ -1,10 +1,10 @@
 import React, {Fragment, useEffect, useState} from "react";
 import {Modal, ModalHeader, ModalBody, ModalFooter, Form, Button} from "reactstrap";
 import {EditItemForm} from "./EditItemForm";
-import {useStoreActions, useStoreState} from "../../../../store";
-import ItemModel from "../../../../models/ItemModel";
-import AlertPanel from "../../../AlertPanel/AlertPanel";
-import GroupModel from "../../../../models/GroupModel";
+import {useStoreActions, useStoreState} from "../../../store";
+import ItemModel from "../../../models/ItemModel";
+import AlertPanel from "../../AlertPanel/AlertPanel";
+import GroupModel from "../../../models/GroupModel";
 
 export const EditItemModal = () => {
 
@@ -12,6 +12,8 @@ export const EditItemModal = () => {
     const setFocusItem = useStoreActions(actions => actions.setFocusItem);
     const editItem = useStoreActions(actions => actions.editItem);
     const groups = useStoreState(state => state.groups);
+    const [validForm, setValidForm] = useState<boolean | null>(null);
+
 
     const removeFocusItem = () => {
         setFocusItem(null);
@@ -79,5 +81,4 @@ export const EditItemModal = () => {
             }
         </Form>
     );
-
 }

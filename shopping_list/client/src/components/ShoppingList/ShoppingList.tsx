@@ -12,7 +12,7 @@ import {
     DropdownItem
 } from "reactstrap";
 import Groups from "./Group/Groups";
-import {EditItemModal} from "./Item/EditItemModal/EditItemModal";
+import {EditItemModal} from "./Item/EditItemModal";
 import {NewGroupForm} from "./Group/NewGroupForm";
 import {NewItemForm} from "./Item/NewItemForm";
 import {scrollIntoView} from "../../utils";
