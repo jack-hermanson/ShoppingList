@@ -4,18 +4,11 @@ import ItemModel from "../../../models/ItemModel";
 import {useStoreState} from "../../../store";
 import {EditItemForm} from "./EditItemForm";
 import AlertPanel from "../../AlertPanel/AlertPanel";
-import {validateEditItemForm} from "./utils";
+import {defaultNewItem, validateEditItemForm} from "./utils";
 
 export const NewItemForm = () => {
 
-    const [newItem, setNewItem] = useState<ItemModel>({
-        name: "",
-        notes: "",
-        groups: [],
-        checked: false,
-        recurring: false,
-        id: undefined
-    });
+    const [newItem, setNewItem] = useState<ItemModel>(defaultNewItem);
 
     const groups = useStoreState(state => state.groups);
     const [validForm, setValidForm] = useState<boolean | null>(null);
@@ -75,5 +68,12 @@ export const NewItemForm = () => {
         const {isValid, alertText} = validateEditItemForm(newItem);
         setValidForm(isValid);
         setAlertPanelText(alertText);
+
+        if (isValid) {
+            console.log("submit valid");
+            setNewItem(defaultNewItem);
+        } else {
+            console.log("submit invalid");
+        }
     }
 }

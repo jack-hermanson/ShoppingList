@@ -16,3 +16,12 @@ export function validateEditItemForm(editedItem: ItemModel): {
     }
     return {isValid: valid, alertText};
 }
+
+export const defaultNewItem: ItemModel = {
+    name: "",
+    notes: "",
+    groups: [],
+    checked: false,
+    recurring: false,
+    id: undefined
+}
