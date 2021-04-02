@@ -6,14 +6,16 @@ export function validateEditItemForm(editedItem: ItemModel): {
 } {
     let valid = true;
     let alertText = "";
-    if (editedItem.groups.length < 1) {
-        valid = false;
-        alertText += "At least one group is required. ";
-    }
+
     if (editedItem.name.replace(" ", "").length < 2) {
         valid = false;
         alertText += "The 'name' field must have at least 2 characters. ";
     }
+    if (editedItem.groups.length < 1) {
+        valid = false;
+        alertText += "At least one group is required. ";
+    }
+
     return {isValid: valid, alertText};
 }
 

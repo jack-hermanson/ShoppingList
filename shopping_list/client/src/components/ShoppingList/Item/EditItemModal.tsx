@@ -5,6 +5,7 @@ import {useStoreActions, useStoreState} from "../../../store";
 import ItemModel from "../../../models/ItemModel";
 import AlertPanel from "../../AlertPanel/AlertPanel";
 import GroupModel from "../../../models/GroupModel";
+import {defaultNewItem, validateEditItemForm} from "./utils";
 
 export const EditItemModal = () => {
 
@@ -13,6 +14,7 @@ export const EditItemModal = () => {
     const editItem = useStoreActions(actions => actions.editItem);
     const groups = useStoreState(state => state.groups);
     const [validForm, setValidForm] = useState<boolean | null>(null);
+    const [alertPanelText, setAlertPanelText] = useState<string>("");
 
 
     const removeFocusItem = () => {
@@ -25,11 +27,6 @@ export const EditItemModal = () => {
         setEditedItem(focusItem!);
     }, [focusItem]);
 
-    function handleFormSubmit() {
-        editItem(editedItem);
-        removeFocusItem();
-    }
-
     return (
         <Form>
             {focusItem &&
@@ -39,6 +36,7 @@ export const EditItemModal = () => {
                         {focusItem.name}
                     </ModalHeader>
                     <ModalBody>
+                        {renderAlert()}
                         <EditItemForm
                             formName="edit-item"
                             editedItem={editedItem}
@@ -81,4 +79,27 @@ export const EditItemModal = () => {
             }
         </Form>
     );
+
+    function handleFormSubmit() {
+        console.log("submit");
+        const {isValid, alertText} = validateEditItemForm(editedItem);
+        setValidForm(isValid);
+        setAlertPanelText(alertText);
+
+        if (isValid) {
+            console.log("submit valid");
+            editItem(editedItem);
+            removeFocusItem();
+        } else {
+            console.log("submit invalid");
+        }
+    }
+
+    function renderAlert() {
+        if (validForm === false) {
+            return (
+                <AlertPanel color="danger" text={alertPanelText} />
+            );
+        }
+    }
 }
