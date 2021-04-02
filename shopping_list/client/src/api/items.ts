@@ -47,3 +47,16 @@ export const saveItem = async (item: ItemRequestModel): Promise<ItemModel> => {
         throw new Error(error);
     }
 }
+
+export const deleteItem = async (itemId: number): Promise<void> => {
+    try {
+        await axios.delete("/api/items/", {
+            data: {
+                id: itemId
+            }
+        });
+    } catch (error) {
+        await setAlert(`Error in the deleteItem api call: ${error.message}`, "danger");
+        throw new Error(error);
+    }
+}

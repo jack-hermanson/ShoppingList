@@ -4,7 +4,7 @@ import axios from "axios";
 import {createTypedHooks} from "easy-peasy";
 import AlertModel from "./models/AlertModel";
 import ItemModel from "./models/ItemModel";
-import {editItem, ItemRequestModel, saveItem, toggleItemCheck} from "./api/items";
+import {deleteItem, editItem, ItemRequestModel, saveItem, toggleItemCheck} from "./api/items";
 
 interface StoreModel {
     groups: GroupModel[];
@@ -17,7 +17,7 @@ interface StoreModel {
     setItems: Action<StoreModel, ItemModel[]>;
     fetchItems: Thunk<StoreModel>;
     editItem: Action<StoreModel, ItemModel>;
-    deleteItem: Action<StoreModel, number>;
+    deleteItem: Thunk<StoreModel, number>;
     saveItem: Thunk<StoreModel, ItemModel>;
     toggleItemCheck: Action<StoreModel, {itemId: number, checked: boolean}>;
     focusItem: ItemModel | null;
@@ -72,8 +72,11 @@ export const store = createStore<StoreModel>({
             console.log(`Item edited. Response time: ${timeDif(startTime)}s`);
         });
     }),
-    deleteItem: action((state, itemId: number) => {
-        console.log("delete item with id " + itemId);
+    deleteItem: thunk(async (actions, itemId: number) => {
+        const startTime = Date.now();
+        await deleteItem(itemId);
+        console.log(`Item deleted. Response time: ${timeDif(startTime)}s`);
+        await actions.fetchItems();
     }),
     toggleItemCheck: action((state, payload) => {
         const startTime = Date.now();
