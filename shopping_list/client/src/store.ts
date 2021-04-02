@@ -89,12 +89,14 @@ export const store = createStore<StoreModel>({
         state.focusItem = payload;
     }),
     saveItem: thunk(async (actions, payload) => {
+        const startTime = Date.now();
         const newItem: ItemRequestModel = {
             ...payload,
             groups: payload.groups.map(group => group.groupId)
         };
         await saveItem(newItem);
         await actions.fetchItems();
+        console.log(`New item added. Response time: ${timeDif(startTime)}s`);
     }),
 
     alerts: [],
