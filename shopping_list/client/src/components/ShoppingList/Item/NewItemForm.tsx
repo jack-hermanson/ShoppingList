@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Button, FormGroup} from "reactstrap";
 import ItemModel from "../../../models/ItemModel";
-import {useStoreState} from "../../../store";
+import {useStoreActions, useStoreState} from "../../../store";
 import {EditItemForm} from "./EditItemForm";
 import AlertPanel from "../../AlertPanel/AlertPanel";
 import {defaultNewItem, validateEditItemForm} from "./utils";
@@ -11,6 +11,7 @@ export const NewItemForm = () => {
     const [newItem, setNewItem] = useState<ItemModel>(defaultNewItem);
 
     const groups = useStoreState(state => state.groups);
+    const saveItem = useStoreActions(actions => actions.saveItem)
     const [validForm, setValidForm] = useState<boolean | null>(null);
     const [alertPanelText, setAlertPanelText] = useState<string>("");
 
@@ -64,16 +65,14 @@ export const NewItemForm = () => {
     }
 
     function handleSubmit() {
-        console.log("submit");
         const {isValid, alertText} = validateEditItemForm(newItem);
         setValidForm(isValid);
         setAlertPanelText(alertText);
 
         if (isValid) {
-            console.log("submit valid");
-            setNewItem(defaultNewItem);
-        } else {
-            console.log("submit invalid");
+            saveItem(newItem).then(() => {
+                setNewItem(defaultNewItem);
+            });
         }
     }
 }
