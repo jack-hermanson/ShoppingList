@@ -1,5 +1,5 @@
 import React, {FormEvent, useState} from "react";
-import {Button, FormGroup, Input, Label} from "reactstrap";
+import {Button, FormGroup} from "reactstrap";
 import GroupModel from "../../../models/GroupModel";
 import {useStoreActions} from "../../../store";
 import TextInput from "../../FormInput/TextInput";
@@ -10,7 +10,8 @@ export const NewGroupForm = () => {
     const [newGroup, setNewGroup] = useState<GroupModel>({
         name: "",
         notes: "",
-        id: null
+        id: null,
+        visible: true
     });
 
     const saveGroup = useStoreActions(actions => actions.saveGroup);

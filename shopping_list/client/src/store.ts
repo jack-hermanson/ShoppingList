@@ -5,6 +5,7 @@ import {createTypedHooks} from "easy-peasy";
 import AlertModel from "./models/AlertModel";
 import ItemModel from "./models/ItemModel";
 import {deleteItem, editItem, ItemRequestModel, saveItem, toggleItemCheck} from "./api/items";
+import {getGroups} from "./api/groups";
 
 interface StoreModel {
     groups: GroupModel[];
@@ -32,8 +33,8 @@ export const store = createStore<StoreModel>({
         state.groups = payload;
     }),
     fetchGroups: thunk(async (actions) => {
-        const res = await axios.get("/api/groups/");
-        actions.setGroups(res.data.sort((first: GroupModel, second: GroupModel) => {
+        const res = await getGroups();
+        actions.setGroups(res.sort((first: GroupModel, second: GroupModel) => {
             if (first.name === "Misc") return 1;
             if (second.name === "Misc") return -1;
             return 0;
