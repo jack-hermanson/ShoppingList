@@ -16,7 +16,9 @@ export const Group = ({group}: Props) => {
                     name={group.name!}
                     notes={group.notes!}
                 />
-                <GroupBody group={group}/>
+                {group.visible !== false && (
+                    <GroupBody group={group}/>
+                )}
             </Card>
         </Fragment>
     );
