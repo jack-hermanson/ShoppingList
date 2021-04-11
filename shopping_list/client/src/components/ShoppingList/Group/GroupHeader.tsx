@@ -1,25 +1,28 @@
-import React, {Component} from "react";
+import React from "react";
 import {Button, CardHeader} from "reactstrap";
+import {useStoreActions} from "../../../store";
 
 interface Props {
     name: string;
     notes: string;
+    id: number;
+    visible: boolean | null;
 }
 
-export default class GroupHeader extends Component<Props, any> {
-    render() {
-        return (
-            <CardHeader className="d-flex">
-                <div className="d-block mt-auto">
-                    {this.props.name}
-                    {this.props.notes === ""
-                        ? ""
-                        : <small className="d-block text-muted">{this.props.notes}</small>}
-                </div>
-                <div className="my-auto ml-auto">
-                    <Button size="sm" color="info">Complete</Button>
-                </div>
-            </CardHeader>
-        );
-    }
+export const GroupHeader = (props: Props) => {
+    const toggleGroup = useStoreActions(actions => actions.toggleGroup);
+
+    return (
+        <CardHeader className="d-flex">
+            <div className={`d-block mt-auto ${props.visible === false && "text-muted"}`} onClick={() => toggleGroup(props.id)}>
+                {props.name}
+                {props.notes !== "" &&
+                    <small className="d-block text-muted">{props.notes}</small>
+                }
+            </div>
+            <div className="my-auto ml-auto">
+                <Button size="sm" color="info">Complete</Button>
+            </div>
+        </CardHeader>
+    );
 }
