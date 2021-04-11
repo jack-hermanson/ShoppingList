@@ -16,9 +16,9 @@ export const GroupHeader = (props: Props) => {
         <CardHeader className="d-flex">
             <div className={`d-block mt-auto ${props.visible === false && "text-muted"}`} onClick={() => toggleGroup(props.id)}>
                 {props.name}
-                {props.notes === ""
-                    ? ""
-                    : <small className="d-block text-muted">{props.notes}</small>}
+                {props.notes !== "" &&
+                    <small className="d-block text-muted">{props.notes}</small>
+                }
             </div>
             <div className="my-auto ml-auto">
                 <Button size="sm" color="info">Complete</Button>
