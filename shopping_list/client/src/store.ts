@@ -13,6 +13,7 @@ interface StoreModel {
     fetchGroups: Thunk<StoreModel>;
     addGroup: Action<StoreModel, GroupModel>;
     saveGroup: Thunk<StoreModel, GroupModel>;
+    toggleGroup: Action<StoreModel, number>;
 
     items: ItemModel[] | null;
     setItems: Action<StoreModel, ItemModel[]>;
@@ -47,6 +48,13 @@ export const store = createStore<StoreModel>({
         const res = await axios.post("/api/groups/", payload);
         actions.addGroup(res.data);
         return res.data;
+    }),
+    toggleGroup: action((state, payload) => {
+        state.groups = state.groups.map(group => {
+            if (group.id !== payload) return group;
+            group.visible = !group.visible;
+            return group;
+        });
     }),
 
     items: null,
