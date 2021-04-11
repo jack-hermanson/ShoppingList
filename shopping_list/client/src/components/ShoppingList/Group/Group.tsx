@@ -1,7 +1,7 @@
 import React, {Fragment} from "react";
 import GroupModel from "../../../models/GroupModel";
 import {Card} from "reactstrap";
-import GroupHeader from "./GroupHeader";
+import {GroupHeader} from "./GroupHeader";
 import {GroupBody} from "./GroupBody";
 
 interface Props {
@@ -15,6 +15,8 @@ export const Group = ({group}: Props) => {
                 <GroupHeader
                     name={group.name!}
                     notes={group.notes!}
+                    id={group.id!}
+                    visible={group.visible}
                 />
                 {group.visible !== false && (
                     <GroupBody group={group}/>
