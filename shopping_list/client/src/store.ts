@@ -61,8 +61,10 @@ export const store = createStore<StoreModel>({
         });
     }),
     completeGroup: thunk(async (actions, payload) => {
+        const startTime = Date.now();
         await completeGroup(payload);
         await actions.fetchItems();
+        console.log(`Group completed. Response time: ${timeDif(startTime)}s`);
     }),
 
     items: null,
