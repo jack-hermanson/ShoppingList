@@ -31,6 +31,7 @@ export const GroupHeader = (props: Props) => {
                     <DropdownToggle split color="info" />
                     <DropdownMenu right>
                         <DropdownItem onClick={() => {
+                            document.getElementById("new-item-name-input")?.focus();
                             scrollIntoView("new-item-form-card");
                             setNewItem({
                                 ...defaultNewItem,
@@ -40,7 +41,7 @@ export const GroupHeader = (props: Props) => {
                                         groupId: props.id
                                     }
                                 ]
-                            })
+                            });
                         }}>New Item</DropdownItem>
                         <DropdownItem>Edit Group</DropdownItem>
                     </DropdownMenu>
