@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import {Button, FormGroup} from "reactstrap";
-import ItemModel from "../../../models/ItemModel";
 import {useStoreActions, useStoreState} from "../../../store";
 import {EditItemForm} from "./EditItemForm";
 import AlertPanel from "../../AlertPanel/AlertPanel";
@@ -8,7 +7,8 @@ import {defaultNewItem, validateEditItemForm} from "./utils";
 
 export const NewItemForm = () => {
 
-    const [newItem, setNewItem] = useState<ItemModel>(defaultNewItem);
+    const newItem = useStoreState(state => state.newItem);
+    const setNewItem = useStoreActions(actions => actions.setNewItem);
 
     const groups = useStoreState(state => state.groups);
     const saveItem = useStoreActions(actions => actions.saveItem)
@@ -38,7 +38,7 @@ export const NewItemForm = () => {
                         if (group.id === groupId) {
                             return event.target.checked;
                         }
-                        return newItem.groups.some(someGroup => someGroup.groupId === group.id);
+                        return newItem.groups.some((someGroup: {groupId: number}) => someGroup.groupId === group.id);
                     }).map(fullGroup => ({
                         groupId: fullGroup.id!,
                         groupName: fullGroup.name!

@@ -6,6 +6,7 @@ import AlertModel from "./models/AlertModel";
 import ItemModel from "./models/ItemModel";
 import {deleteItem, editItem, ItemRequestModel, saveItem, toggleItemCheck} from "./api/items";
 import {getGroups} from "./api/groups";
+import {defaultNewItem} from "./components/ShoppingList/Item/utils";
 
 interface StoreModel {
     groups: GroupModel[];
@@ -24,6 +25,8 @@ interface StoreModel {
     toggleItemCheck: Action<StoreModel, {itemId: number, checked: boolean}>;
     focusItem: ItemModel | null;
     setFocusItem: Action<StoreModel, ItemModel | null>;
+    newItem: ItemModel;
+    setNewItem: Action<StoreModel, ItemModel>;
 
     alerts: AlertModel[];
 }
@@ -113,6 +116,10 @@ export const store = createStore<StoreModel>({
         await saveItem(newItem);
         await actions.fetchItems();
         console.log(`New item added. Response time: ${timeDif(startTime)}s`);
+    }),
+    newItem: defaultNewItem,
+    setNewItem: action((state, payload) => {
+        state.newItem = payload;
     }),
 
     alerts: [],
