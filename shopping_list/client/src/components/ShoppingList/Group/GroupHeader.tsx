@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, CardHeader} from "reactstrap";
+import {Button, ButtonDropdown, CardHeader, DropdownItem, DropdownMenu, DropdownToggle} from "reactstrap";
 import {useStoreActions} from "../../../store";
 
 interface Props {
@@ -21,7 +21,13 @@ export const GroupHeader = (props: Props) => {
                 }
             </div>
             <div className="my-auto ml-auto">
-                <Button size="sm" color="info">Complete</Button>
+                <ButtonDropdown isOpen={true} toggle={() => null}>
+                    <Button color="info">Complete</Button>
+                    <DropdownToggle split color="info" />
+                    <DropdownMenu right>
+                        <DropdownItem>Item</DropdownItem>
+                    </DropdownMenu>
+                </ButtonDropdown>
             </div>
         </CardHeader>
     );
