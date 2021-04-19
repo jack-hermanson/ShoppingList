@@ -3,6 +3,8 @@ from .models import Group
 from ..items.models import GroupItem
 from typing import List
 
+from ..items.services import delete_item
+
 
 def new(group: dict) -> dict:
     new_group = Group(
@@ -55,5 +57,17 @@ def edit_group(group_id: int, edited_group: dict) -> dict:
     group.notes = edited_group.get('notes')
     db.session.commit()
 
+    return group.as_dict()
+
+
+def complete_group(group_id: int) -> dict:
+    group = Group.query.get_or_404(group_id)
+    for group_item in group.group_items:
+        if group_item.item.checked:
+            if group_item.item.recurring:
+                group_item.item.checked = False
+                db.session.commit()
+            else:
+                delete_item(group_item.item_id)
     return group.as_dict()
 

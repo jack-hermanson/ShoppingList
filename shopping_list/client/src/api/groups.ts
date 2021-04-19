@@ -7,3 +7,10 @@ export const getGroups = async (): Promise<Array<GroupModel>> => {
         return {...group, visible: true};
     });
 };
+
+export const completeGroup = async (group_id: number): Promise<void> => {
+    const response = await axios.post(`/api/groups/complete/${group_id}`);
+    if (response.status !== 200) {
+        throw new Error(`Response status ${response.status} in completeGroup`);
+    }
+}

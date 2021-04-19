@@ -65,6 +65,7 @@ export const NewItemForm = () => {
     }
 
     function handleSubmit() {
+        console.log("handling submit");
         const {isValid, alertText} = validateEditItemForm(newItem);
         setValidForm(isValid);
         setAlertPanelText(alertText);

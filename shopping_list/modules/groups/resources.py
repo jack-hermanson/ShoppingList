@@ -64,3 +64,10 @@ class EditGroup(Resource):
 
         return jsonify(services.edit_group(group_id, args))
 
+
+class CompleteGroup(Resource):
+
+    @staticmethod
+    def post(group_id):
+        return jsonify(services.complete_group(group_id))
+
