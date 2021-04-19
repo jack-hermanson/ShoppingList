@@ -10197,11 +10197,11 @@ label.required:after {
 }
 
 .card .table tr th:first-of-type, .card .table tr td:first-child {
-  padding-left: 1.25em;
+  padding-left: 1.5em;
 }
 
 .card .table tr td:last-child, .card .table th:last-child {
-  padding-right: 1.25em;
+  padding-right: 1.5em;
 }
 .card .table tr:first-child td, .card .table tr:first-child th {
   border-top: none;

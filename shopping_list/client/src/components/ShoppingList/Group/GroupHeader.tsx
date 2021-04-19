@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {Button, ButtonDropdown, CardHeader, DropdownItem, DropdownMenu, DropdownToggle} from "reactstrap";
 import {useStoreActions} from "../../../store";
 
@@ -11,6 +11,7 @@ interface Props {
 
 export const GroupHeader = (props: Props) => {
     const toggleGroup = useStoreActions(actions => actions.toggleGroup);
+    const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
 
     return (
         <CardHeader className="d-flex">
@@ -21,11 +22,12 @@ export const GroupHeader = (props: Props) => {
                 }
             </div>
             <div className="my-auto ml-auto">
-                <ButtonDropdown isOpen={true} toggle={() => null}>
+                <ButtonDropdown size="sm" isOpen={dropdownOpen} toggle={() => setDropdownOpen(open => !open)}>
                     <Button color="info">Complete</Button>
                     <DropdownToggle split color="info" />
                     <DropdownMenu right>
-                        <DropdownItem>Item</DropdownItem>
+                        <DropdownItem>New Item</DropdownItem>
+                        <DropdownItem>Edit Group</DropdownItem>
                     </DropdownMenu>
                 </ButtonDropdown>
             </div>
