@@ -41,7 +41,9 @@ export const EditItemForm = (props: Props) => {
                     placeholder="The name of the item..."
                     onKeyPress={(event) => {
                         if (event.key === "Enter") {
+                            console.log("key press enter")
                             props.handleFormSubmit();
+                            event.preventDefault();
                         }
                     }}
                 />
