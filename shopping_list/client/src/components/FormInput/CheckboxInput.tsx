@@ -13,11 +13,12 @@ export default class CheckboxInput extends Component<Props, any> {
             <FormGroup check>
                 <Label check>
                     <Input
+                        className="checkbox-lg"
                         checked={this.props.checked}
                         onChange={this.props.handleChange}
                         type="checkbox"
                     />
-                    {this.props.label}
+                    <span className="pl-2">{this.props.label}</span>
                 </Label>
             </FormGroup>
         );

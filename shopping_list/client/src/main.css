@@ -10232,4 +10232,10 @@ label[required]:after {
   color: red;
 }
 
+.checkbox-lg {
+  width: 1.4rem;
+  height: 1.4rem;
+  margin-top: 0;
+}
+
 /*# sourceMappingURL=main.css.map */
