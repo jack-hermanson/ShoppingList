@@ -17,7 +17,8 @@ export const GroupHeader = (props: Props) => {
     const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
     const setNewItem = useStoreActions(actions => actions.setNewItem);
     const groups = useStoreState(state => state.groups);
-    const [completeModalOpen, setCompleteModalOpen] = useState<boolean>(false);
+    const [completeModalOpen, setCompleteModalOpen] = useState<boolean>(false)
+    const completeGroup = useStoreActions(actions => actions.completeGroup);
 
     return (
         <Fragment>
@@ -69,8 +70,9 @@ export const GroupHeader = (props: Props) => {
                 specific="complete this group"
                 dialogText={"Checked non-recurring items will be deleted. Checked recurring items will just become unchecked. Unchecked items will not be affected."}
                 onConfirm={() => {
-                    console.log("confirm completion");
-                    setCompleteModalOpen(false);
+                    completeGroup(props.id).then(() => {
+                        setCompleteModalOpen(false);
+                    });
                 }}
                 isOpen={completeModalOpen}
                 toggle={() => setCompleteModalOpen(false)}
