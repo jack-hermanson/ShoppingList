@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {Button, FormGroup} from "reactstrap";
 import {useStoreActions, useStoreState} from "../../../store";
 import {EditItemForm} from "./EditItemForm";
-import AlertPanel from "../../AlertPanel/AlertPanel";
+import AlertPanel from "../../Alerts/AlertPanel";
 import {defaultNewItem, validateEditItemForm} from "./utils";
 
 export const NewItemForm = () => {

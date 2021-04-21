@@ -18,11 +18,19 @@ export interface ItemRequestModel extends Omit<ItemModel, "groups"> {
     groups: Array<number>;
 }
 
+export const getItems = async (): Promise<ItemModel[]> => {
+    const response: {data: ItemModel[]} = await axios.get("/api/items/");
+    return response.data;
+}
+
 export const editItem = async (item: ItemRequestModel): Promise<void> => {
     try {
         const response = await axios.put(`/api/items/edit/${item.id}`, item);
         const responseData: ItemModel = response.data;
-        await setSuccessAlert("updated", `item "${responseData.name}"`);
+        console.log("new name", responseData.name);
+        setSuccessAlert("updated", `item "${responseData.name}"`).then(() => {
+            console.log(responseData.name);
+        });
     } catch(error) {
         await setAlert(`Error in editItem api call: ${error.message}`, "danger");
     }
@@ -50,11 +58,13 @@ export const saveItem = async (item: ItemRequestModel): Promise<ItemModel> => {
 
 export const deleteItem = async (itemId: number): Promise<void> => {
     try {
-        await axios.delete("/api/items/", {
+        const response: {data: {id: number, name: string}} = await axios.delete("/api/items/", {
             data: {
                 id: itemId
             }
         });
+        const responseData = response.data;
+        await setSuccessAlert("deleted", `item "${responseData.name}"`);
     } catch (error) {
         await setAlert(`Error in the deleteItem api call: ${error.message}`, "danger");
         throw new Error(error);

@@ -3,10 +3,9 @@ import {Modal, ModalHeader, ModalBody, ModalFooter, Form, Button} from "reactstr
 import {EditItemForm} from "./EditItemForm";
 import {useStoreActions, useStoreState} from "../../../store";
 import ItemModel from "../../../models/ItemModel";
-import AlertPanel from "../../AlertPanel/AlertPanel";
+import AlertPanel from "../../Alerts/AlertPanel";
 import GroupModel from "../../../models/GroupModel";
-import {defaultNewItem, validateEditItemForm} from "./utils";
-import {useStore} from "easy-peasy";
+import {validateEditItemForm} from "./utils";
 
 export const EditItemModal = () => {
 

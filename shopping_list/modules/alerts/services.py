@@ -3,6 +3,7 @@ from typing import List
 
 
 def set_alert(text: str, color: str) -> dict:
+    print(f"Received alert text: {text}, color: {color}.")
     if not session.get('alerts'):
         session['alerts'] = []
     new_alert = {

@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from "react";
+import React, {Fragment} from "react";
 import {Item} from "../Item/Item";
 import {Table} from "reactstrap";
 import ItemModel from "../../../models/ItemModel";
