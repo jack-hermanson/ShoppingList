@@ -3,6 +3,7 @@ import {ShoppingList} from "./components/ShoppingList/ShoppingList";
 import React from "react";
 import {StoreProvider} from "easy-peasy";
 import {store} from "./store";
+import {Alerts} from "./components/Alerts/Alerts";
 
 const App = () => {
 
@@ -11,9 +12,7 @@ const App = () => {
             <Container className={"main-container pt-0"}>
                 <Row>
                     <Col>
-                        {/*{alerts.map(alert => (*/}
-                        {/*    <AlertPanel color={alert.color} text={alert.text} key={alert.text}/>*/}
-                        {/*))}*/}
+                        <Alerts />
                     </Col>
                 </Row>
                 <Row>

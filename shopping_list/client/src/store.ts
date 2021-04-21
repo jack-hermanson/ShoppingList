@@ -1,5 +1,5 @@
 import GroupModel from "./models/GroupModel";
-import {action, Action, createStore, thunk, Thunk} from "easy-peasy";
+import {action, Action, createStore, Store, thunk, Thunk} from "easy-peasy";
 import axios from "axios";
 import {createTypedHooks} from "easy-peasy";
 import AlertModel from "./models/AlertModel";
@@ -7,6 +7,7 @@ import ItemModel from "./models/ItemModel";
 import {deleteItem, editItem, ItemRequestModel, saveItem, toggleItemCheck} from "./api/items";
 import {completeGroup, getGroups} from "./api/groups";
 import {defaultNewItem} from "./components/ShoppingList/Item/utils";
+import {getAlerts} from "./api/alerts";
 
 interface StoreModel {
     groups: GroupModel[];
@@ -30,6 +31,8 @@ interface StoreModel {
     setNewItem: Action<StoreModel, ItemModel>;
 
     alerts: AlertModel[];
+    setAlerts: Action<StoreModel, AlertModel[]>;
+    fetchAlerts: Thunk<StoreModel>;
 }
 
 export const store = createStore<StoreModel>({
@@ -96,6 +99,7 @@ export const store = createStore<StoreModel>({
         await deleteItem(itemId);
         console.log(`Item deleted. Response time: ${timeDif(startTime)}s`);
         await actions.fetchItems();
+        await actions.fetchAlerts();
     }),
     toggleItemCheck: action((state, payload) => {
         const startTime = Date.now();
@@ -130,6 +134,14 @@ export const store = createStore<StoreModel>({
     }),
 
     alerts: [],
+    setAlerts: action((state, payload) => {
+        state.alerts = payload;
+    }),
+    fetchAlerts: thunk(async (actions) => {
+        const alerts = await getAlerts();
+        actions.setAlerts(alerts);
+        console.log(alerts);
+    })
 });
 
 const timeDif = (originalTime: number) => {

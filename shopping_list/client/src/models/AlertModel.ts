@@ -1,4 +1,6 @@
+import {bsColor} from "../constants";
+
 export default interface AlertModel {
-    color: string;
+    color: bsColor;
     text: string;
 }

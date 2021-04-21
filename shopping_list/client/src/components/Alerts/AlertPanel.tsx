@@ -1,8 +1,9 @@
 import React, {Component} from "react";
 import {Alert} from "reactstrap";
+import {bsColor} from "../../constants";
 
 export interface AlertPanelProps {
-    color: "info" | "success" | "primary" | "warning" | "danger";
+    color: bsColor;
     text: string;
 }
 
