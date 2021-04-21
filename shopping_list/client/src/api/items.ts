@@ -18,6 +18,11 @@ export interface ItemRequestModel extends Omit<ItemModel, "groups"> {
     groups: Array<number>;
 }
 
+export const getItems = async (): Promise<ItemModel[]> => {
+    const response: {data: ItemModel[]} = await axios.get("/api/items/");
+    return response.data;
+}
+
 export const editItem = async (item: ItemRequestModel): Promise<void> => {
     try {
         const response = await axios.put(`/api/items/edit/${item.id}`, item);
