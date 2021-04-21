@@ -8,7 +8,7 @@ export const Alerts = () => {
     return (
         <Fragment>
             {alerts?.map(alert => (
-                <AlertPanel color={alert.color} text={alert.text} />
+                <AlertPanel key={alert.text} color={alert.color} text={alert.text} />
             ))}
         </Fragment>
     );

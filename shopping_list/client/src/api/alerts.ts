@@ -1,9 +1,11 @@
 import axios from "axios";
+import AlertModel from "../models/AlertModel";
 
 const alertsEndpoint = "/api/alerts/";
 
 export const getAlerts = async () => {
-    const response = await axios.get(alertsEndpoint);
+    const response: { data: AlertModel[] } = await axios.get(alertsEndpoint);
+    console.log("getAlerts(), response.data", response.data);
     return response.data;
 }
 

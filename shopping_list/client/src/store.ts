@@ -1,5 +1,5 @@
 import GroupModel from "./models/GroupModel";
-import {action, Action, createStore, Store, thunk, Thunk} from "easy-peasy";
+import {action, Action, createStore, thunk, Thunk} from "easy-peasy";
 import axios from "axios";
 import {createTypedHooks} from "easy-peasy";
 import AlertModel from "./models/AlertModel";
@@ -8,6 +8,7 @@ import {deleteItem, editItem, ItemRequestModel, saveItem, toggleItemCheck} from 
 import {completeGroup, getGroups} from "./api/groups";
 import {defaultNewItem} from "./components/ShoppingList/Item/utils";
 import {getAlerts} from "./api/alerts";
+import {start} from "repl";
 
 interface StoreModel {
     groups: GroupModel[];
@@ -21,7 +22,7 @@ interface StoreModel {
     items: ItemModel[] | null;
     setItems: Action<StoreModel, ItemModel[]>;
     fetchItems: Thunk<StoreModel>;
-    editItem: Action<StoreModel, ItemModel>;
+    editItem: Thunk<StoreModel, ItemModel>;
     deleteItem: Thunk<StoreModel, number>;
     saveItem: Thunk<StoreModel, ItemModel>;
     toggleItemCheck: Action<StoreModel, {itemId: number, checked: boolean}>;
@@ -78,21 +79,16 @@ export const store = createStore<StoreModel>({
         const res = await axios.get("/api/items/");
         actions.setItems(res.data);
     }),
-    editItem: action((state, payload) => {
+    editItem: thunk(async (actions, item) => {
         const newItem: ItemRequestModel = {
-            ...payload,
-            groups: payload.groups.map(group => group.groupId)
+            ...item,
+            groups: item.groups.map(group => group.groupId)
         };
-        state.items = state.items!.map((item: ItemModel) => {
-            if (item.id === newItem.id) {
-                return payload;
-            }
-            return item;
-        });
         const startTime = Date.now();
-        editItem(newItem).then(() => {
-            console.log(`Item edited. Response time: ${timeDif(startTime)}s`);
-        });
+        await editItem(newItem);
+        console.log(`Item edited. Response time: ${timeDif(startTime)}s`);
+        await actions.fetchItems();
+        await actions.fetchAlerts();
     }),
     deleteItem: thunk(async (actions, itemId: number) => {
         const startTime = Date.now();
@@ -125,8 +121,9 @@ export const store = createStore<StoreModel>({
             groups: payload.groups.map(group => group.groupId)
         };
         await saveItem(newItem);
-        await actions.fetchItems();
         console.log(`New item added. Response time: ${timeDif(startTime)}s`);
+        await actions.fetchItems();
+        await actions.fetchAlerts();
     }),
     newItem: defaultNewItem,
     setNewItem: action((state, payload) => {
@@ -138,9 +135,9 @@ export const store = createStore<StoreModel>({
         state.alerts = payload;
     }),
     fetchAlerts: thunk(async (actions) => {
+        console.log("fetching alerts");
         const alerts = await getAlerts();
         actions.setAlerts(alerts);
-        console.log(alerts);
     })
 });
 
