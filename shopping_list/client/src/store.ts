@@ -5,7 +5,7 @@ import {createTypedHooks} from "easy-peasy";
 import AlertModel from "./models/AlertModel";
 import ItemModel from "./models/ItemModel";
 import {deleteItem, editItem, ItemRequestModel, saveItem, toggleItemCheck} from "./api/items";
-import {completeGroup, getGroups} from "./api/groups";
+import {completeGroup, getGroups, saveGroup} from "./api/groups";
 import {defaultNewItem} from "./components/ShoppingList/Item/utils";
 import {getAlerts} from "./api/alerts";
 import {start} from "repl";
@@ -14,7 +14,6 @@ interface StoreModel {
     groups: GroupModel[];
     setGroups: Action<StoreModel, GroupModel[]>;
     fetchGroups: Thunk<StoreModel>;
-    addGroup: Action<StoreModel, GroupModel>;
     saveGroup: Thunk<StoreModel, GroupModel>;
     toggleGroup: Action<StoreModel, number>;
     completeGroup: Thunk<StoreModel, number>
@@ -49,13 +48,12 @@ export const store = createStore<StoreModel>({
             return 0;
         }));
     }),
-    addGroup: action((state, payload) => {
-        state.groups.push(payload);
-    }),
     saveGroup: thunk(async (actions, payload) => {
-        const res = await axios.post("/api/groups/", payload);
-        actions.addGroup(res.data);
-        return res.data;
+        const startTime = Date.now();
+        await saveGroup(payload);
+        console.log(`New group created. Response time: ${timeDif(startTime)}s`);
+        await actions.fetchGroups();
+        await actions.fetchAlerts();
     }),
     toggleGroup: action((state, payload) => {
         state.groups = state.groups.map(group => {
