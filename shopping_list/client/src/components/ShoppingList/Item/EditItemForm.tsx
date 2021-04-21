@@ -1,4 +1,4 @@
-import React, {ChangeEvent, Fragment, useState} from "react";
+import React, {ChangeEvent, Fragment} from "react";
 import {Label, FormGroup} from "reactstrap";
 import TextInput from "../../FormInput/TextInput";
 import CheckboxInput from "../../FormInput/CheckboxInput";
