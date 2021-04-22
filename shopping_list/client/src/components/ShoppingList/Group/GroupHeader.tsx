@@ -4,30 +4,30 @@ import {useStoreActions, useStoreState} from "../../../store";
 import {scrollIntoView} from "../../../utils";
 import {defaultNewItem} from "../Item/utils";
 import {ConfirmModal} from "../../Utils/ConfirmModal";
+import {EditGroupModal} from "./EditGroupModal";
+import GroupModel from "../../../models/GroupModel";
 
 interface Props {
-    name: string;
-    notes: string;
-    id: number;
-    visible: boolean | null;
+    group: GroupModel;
 }
 
-export const GroupHeader = (props: Props) => {
+export const GroupHeader: React.FC<Props> = ({group}) => {
     const toggleGroup = useStoreActions(actions => actions.toggleGroup);
     const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
     const setNewItem = useStoreActions(actions => actions.setNewItem);
     const groups = useStoreState(state => state.groups);
     const [completeModalOpen, setCompleteModalOpen] = useState<boolean>(false)
     const completeGroup = useStoreActions(actions => actions.completeGroup);
+    const [showEditModal, setShowEditModal] = useState<boolean>(false);
 
     return (
         <Fragment>
             <CardHeader style={{cursor: "pointer"}} className="d-flex">
-                <div className={`d-block mt-auto ${props.visible === false && "text-muted"}`}
-                     onClick={() => toggleGroup(props.id)}>
-                    {props.name}
-                    {props.notes !== "" &&
-                    <small className="d-block text-muted">{props.notes}</small>
+                <div className={`d-block mt-auto ${group.visible === false && "text-muted"}`}
+                     onClick={() => toggleGroup(group.id!)}>
+                    {group.name}
+                    {group.notes !== "" &&
+                    <small className="d-block text-muted">{group.notes}</small>
                     }
                 </div>
                 <div className="my-auto ml-auto">
@@ -35,14 +35,24 @@ export const GroupHeader = (props: Props) => {
                 </div>
             </CardHeader>
             {renderConfirmModal()}
+            {renderEditModal()}
         </Fragment>
     );
+
+    function renderEditModal() {
+        return (
+            <EditGroupModal group={group}
+                            toggle={() => setShowEditModal(false)}
+                            isOpen={showEditModal}
+            />
+        );
+    }
 
     function renderButtonDropdown() {
         return (
             <ButtonDropdown size="sm" isOpen={dropdownOpen} toggle={() => setDropdownOpen(open => !open)}>
                 <Button color="info" onClick={() => setCompleteModalOpen(open => !open)}>Complete</Button>
-                <DropdownToggle split color="info"/>
+                <DropdownToggle split className="border-left" color="info"/>
                 <DropdownMenu right>
                     <DropdownItem onClick={() => {
                         document.getElementById("new-item-name-input")?.focus();
@@ -51,13 +61,15 @@ export const GroupHeader = (props: Props) => {
                             ...defaultNewItem,
                             groups: [
                                 {
-                                    groupName: groups.find(group => group.id === props.id)!.name!,
-                                    groupId: props.id
+                                    groupName: groups.find(group => group.id === group.id)!.name!,
+                                    groupId: group.id!
                                 }
                             ]
                         });
                     }}>New Item</DropdownItem>
-                    <DropdownItem>Edit Group</DropdownItem>
+                    <DropdownItem onClick={() => {
+                        setShowEditModal(true);
+                    }}>Edit Group</DropdownItem>
                 </DropdownMenu>
             </ButtonDropdown>
         );
@@ -70,7 +82,7 @@ export const GroupHeader = (props: Props) => {
                 specific="complete this group"
                 dialogText={"Checked non-recurring items will be deleted. Checked recurring items will just become unchecked. Unchecked items will not be affected."}
                 onConfirm={() => {
-                    completeGroup(props.id).then(() => {
+                    completeGroup(group.id!).then(() => {
                         setCompleteModalOpen(false);
                     });
                 }}

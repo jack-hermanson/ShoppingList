@@ -1,6 +1,6 @@
 import React, {ChangeEvent, Fragment} from "react";
 import {Label, FormGroup} from "reactstrap";
-import TextInput from "../../FormInput/TextInput";
+import {TextInput} from "../../FormInput/TextInput";
 import CheckboxInput from "../../FormInput/CheckboxInput";
 import ItemModel from "../../../models/ItemModel";
 import {useStoreState} from "../../../store";

@@ -2,7 +2,7 @@ import React, {FormEvent, useState} from "react";
 import {Button, FormGroup} from "reactstrap";
 import GroupModel from "../../../models/GroupModel";
 import {useStoreActions} from "../../../store";
-import TextInput from "../../FormInput/TextInput";
+import {TextInput} from "../../FormInput/TextInput";
 
 
 export const NewGroupForm = () => {

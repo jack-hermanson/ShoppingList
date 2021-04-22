@@ -13,10 +13,7 @@ export const Group = ({group}: Props) => {
         <Fragment>
             <Card className="space-between">
                 <GroupHeader
-                    name={group.name!}
-                    notes={group.notes!}
-                    id={group.id!}
-                    visible={group.visible}
+                    group={group}
                 />
                 {group.visible !== false && (
                     <GroupBody group={group}/>
