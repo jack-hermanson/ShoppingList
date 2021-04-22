@@ -22,7 +22,7 @@ export const GroupHeader = (props: Props) => {
 
     return (
         <Fragment>
-            <CardHeader className="d-flex">
+            <CardHeader style={{cursor: "pointer"}} className="d-flex">
                 <div className={`d-block mt-auto ${props.visible === false && "text-muted"}`}
                      onClick={() => toggleGroup(props.id)}>
                     {props.name}
