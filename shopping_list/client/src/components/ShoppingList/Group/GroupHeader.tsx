@@ -52,7 +52,7 @@ export const GroupHeader: React.FC<Props> = ({group}) => {
         return (
             <ButtonDropdown size="sm" isOpen={dropdownOpen} toggle={() => setDropdownOpen(open => !open)}>
                 <Button color="info" onClick={() => setCompleteModalOpen(open => !open)}>Complete</Button>
-                <DropdownToggle split color="info"/>
+                <DropdownToggle split className="border-left" color="info"/>
                 <DropdownMenu right>
                     <DropdownItem onClick={() => {
                         document.getElementById("new-item-name-input")?.focus();
@@ -67,7 +67,9 @@ export const GroupHeader: React.FC<Props> = ({group}) => {
                             ]
                         });
                     }}>New Item</DropdownItem>
-                    <DropdownItem onClick={() => setShowEditModal(true)}>Edit Group</DropdownItem>
+                    <DropdownItem onClick={() => {
+                        setShowEditModal(true);
+                    }}>Edit Group</DropdownItem>
                 </DropdownMenu>
             </ButtonDropdown>
         );

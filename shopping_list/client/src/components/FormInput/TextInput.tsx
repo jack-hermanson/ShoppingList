@@ -1,4 +1,4 @@
-import React, {ChangeEvent, Component, KeyboardEvent, Fragment} from "react";
+import React, {ChangeEvent, Component, KeyboardEvent, Fragment, useEffect} from "react";
 import {Input, Label} from "reactstrap";
 
 interface Props {
@@ -10,23 +10,30 @@ interface Props {
     onKeyPress?: (event: KeyboardEvent<HTMLInputElement>) => void;
     required?: boolean;
     placeholder?: string;
+    autofocus?: boolean;
 }
 
-export default class TextInput extends Component<Props, any> {
-    render() {
-        return (
-            <Fragment>
-                <Label required={this.props.required} htmlFor={this.props.id}>{this.props.label}</Label>
-                <Input
-                    required={this.props.required}
-                    id={this.props.id}
-                    type={this.props.type}
-                    value={this.props.value}
-                    onChange={this.props.onChange}
-                    onKeyPress={this.props.onKeyPress}
-                    placeholder={this.props.placeholder}
-                />
-            </Fragment>
-        );
-    }
+export const TextInput: React.FC<Props> = (props) => {
+
+    useEffect(() => {
+        if (props.autofocus) {
+            document.getElementById(props.id)?.focus();
+        }
+    });
+
+    return (
+        <Fragment>
+            <Label required={props.required} htmlFor={props.id}>{props.label}</Label>
+            <Input
+                required={props.required}
+                id={props.id}
+                type={props.type}
+                value={props.value}
+                onChange={props.onChange}
+                onKeyPress={props.onKeyPress}
+                placeholder={props.placeholder}
+                autoFocus={props.autofocus}
+            />
+        </Fragment>
+    );
 }
