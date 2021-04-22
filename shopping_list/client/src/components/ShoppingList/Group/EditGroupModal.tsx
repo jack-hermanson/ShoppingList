@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Button, FormGroup, Label, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 import GroupModel from "../../../models/GroupModel";
 import {TextInput} from "../../FormInput/TextInput";
+import {useStoreActions} from "../../../store";
 
 interface Props {
     group: GroupModel;
@@ -13,6 +14,7 @@ export const EditGroupModal: React.FC<Props> = (
     {group, toggle, isOpen}
 ) => {
     const [editedGroup, setEditedGroup] = useState<GroupModel>(group);
+    const editGroup = useStoreActions(actions => actions.editGroup);
 
     return (
         <Modal isOpen={isOpen} centered toggle={toggle}>
@@ -38,6 +40,7 @@ export const EditGroupModal: React.FC<Props> = (
 
     async function submit() {
         console.log("submit form");
+        await editGroup(editedGroup);
         toggle();
     }
 

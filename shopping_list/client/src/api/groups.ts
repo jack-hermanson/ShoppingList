@@ -22,6 +22,7 @@ export const saveGroup = async (group: GroupModel): Promise<void> => {
 }
 
 export const editGroup = async (group: GroupModel): Promise<void> => {
-    const response: {data: GroupModel} = await axios.put(`/api/groups/${group.id}`);
+    console.log({group});
+    const response: {data: GroupModel} = await axios.put(`/api/groups/edit/${group.id}`, group);
     await setSuccessAlert("edited", `group "${response.data.name}"`);
 }
