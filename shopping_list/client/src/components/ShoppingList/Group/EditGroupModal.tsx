@@ -20,33 +20,8 @@ export const EditGroupModal: React.FC<Props> = (
                 Edit Group
             </ModalHeader>
             <ModalBody>
-                <FormGroup>
-                    <TextInput
-                        label="Name"
-                        id={`group-${group.id}-name`}
-                        type="text"
-                        value={editedGroup.name!}
-                        onChange={event => setEditedGroup({
-                            ...group,
-                            name: event.target.value
-                        })}
-                        required
-                        autofocus
-                        onKeyPress={event => event.key === "Enter" && submit()}
-                    />
-                </FormGroup>
-                <FormGroup>
-                    <TextInput
-                        label="Notes"
-                        id={`group-${group.id}-notes`}
-                        type="textarea"
-                        value={editedGroup.notes!}
-                        onChange={event => setEditedGroup({
-                            ...group,
-                            notes: event.target.value
-                        })}
-                    />
-                </FormGroup>
+                {renderNameInput()}
+                {renderNotesInput()}
             </ModalBody>
             <ModalFooter>
                 <Button className="mr-auto" color="danger">Delete</Button>
@@ -64,5 +39,42 @@ export const EditGroupModal: React.FC<Props> = (
     async function submit() {
         console.log("submit form");
         toggle();
+    }
+
+    function renderNameInput() {
+        return (
+            <FormGroup>
+                <TextInput
+                    label="Name"
+                    id={`group-${group.id}-name`}
+                    type="text"
+                    value={editedGroup.name!}
+                    onChange={event => setEditedGroup({
+                        ...group,
+                        name: event.target.value
+                    })}
+                    required
+                    autofocus
+                    onKeyPress={event => event.key === "Enter" && submit()}
+                />
+            </FormGroup>
+        );
+    }
+
+    function renderNotesInput() {
+        return (
+            <FormGroup>
+                <TextInput
+                    label="Notes"
+                    id={`group-${group.id}-notes`}
+                    type="textarea"
+                    value={editedGroup.notes!}
+                    onChange={event => setEditedGroup({
+                        ...group,
+                        notes: event.target.value
+                    })}
+                />
+            </FormGroup>
+        );
     }
 }
