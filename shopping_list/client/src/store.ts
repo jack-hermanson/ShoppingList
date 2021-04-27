@@ -4,7 +4,7 @@ import {createTypedHooks} from "easy-peasy";
 import AlertModel from "./models/AlertModel";
 import ItemModel from "./models/ItemModel";
 import {deleteItem, editItem, getItems, ItemRequestModel, saveItem, toggleItemCheck} from "./api/items";
-import {completeGroup, editGroup, getGroups, saveGroup} from "./api/groups";
+import {completeGroup, deleteGroup, editGroup, getGroups, saveGroup} from "./api/groups";
 import {defaultNewItem} from "./components/ShoppingList/Item/utils";
 import {getAlerts} from "./api/alerts";
 
@@ -16,6 +16,7 @@ interface StoreModel {
     toggleGroup: Action<StoreModel, number>;
     completeGroup: Thunk<StoreModel, number>
     editGroup: Thunk<StoreModel, GroupModel>;
+    deleteGroup: Thunk<StoreModel, number>;
 
     items: ItemModel[] | null;
     setItems: Action<StoreModel, ItemModel[]>;
@@ -73,6 +74,13 @@ export const store = createStore<StoreModel>({
         console.log(`Group edited. Response time: ${timeDif(startTime)}s`);
         await actions.fetchGroups();
         await actions.fetchAlerts();
+    }),
+    deleteGroup: thunk(async (actions, payload) => {
+        const startTime = Date.now();
+        await deleteGroup(payload);
+        console.log(`Group deleted. Response time: ${timeDif(startTime)}s`);
+        await actions.fetchGroups();
+        await actions.fetchItems();
     }),
 
     items: null,
