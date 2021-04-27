@@ -15,6 +15,7 @@ export const EditGroupModal: React.FC<Props> = (
 ) => {
     const [editedGroup, setEditedGroup] = useState<GroupModel>(group);
     const editGroup = useStoreActions(actions => actions.editGroup);
+    const deleteGroup = useStoreActions(actions => actions.deleteGroup);
 
     return (
         <Modal isOpen={isOpen} centered toggle={toggle}>
@@ -26,7 +27,10 @@ export const EditGroupModal: React.FC<Props> = (
                 {renderNotesInput()}
             </ModalBody>
             <ModalFooter>
-                <Button className="mr-auto" color="danger">Delete</Button>
+                <Button onClick={async () => {
+                    toggle();
+                    await deleteGroup(group.id!);
+                }} className="mr-auto" color="danger">Delete</Button>
                 <Button color="secondary" onClick={() => {
                     setEditedGroup(group);
                     toggle();
