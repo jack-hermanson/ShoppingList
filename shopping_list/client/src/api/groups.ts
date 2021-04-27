@@ -33,5 +33,5 @@ export const deleteGroup = async (groupId: number): Promise<void> => {
     }
 
     const response: { data: DeleteGroupResponse } = await axios.delete(`/api/groups/delete/${groupId}`);
-    await setSuccessAlert("deleted", `group "${response.data.name}" and ${response.data.itemsDeleted} items`);
+    await setSuccessAlert("deleted", `group "${response.data.name}" and ${response.data.itemsDeleted} item${response.data.itemsDeleted === 1 ? "" : "s"}`);
 };

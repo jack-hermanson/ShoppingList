@@ -81,6 +81,7 @@ export const store = createStore<StoreModel>({
         console.log(`Group deleted. Response time: ${timeDif(startTime)}s`);
         await actions.fetchGroups();
         await actions.fetchItems();
+        await actions.fetchAlerts();
     }),
 
     items: null,
