@@ -15,6 +15,8 @@ export const EditGroupModal: React.FC<Props> = (
 ) => {
     const [editedGroup, setEditedGroup] = useState<GroupModel>(group);
     const editGroup = useStoreActions(actions => actions.editGroup);
+    const deleteGroup = useStoreActions(actions => actions.deleteGroup);
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState<boolean>(false);
 
     return (
         <Modal isOpen={isOpen} centered toggle={toggle}>
@@ -24,9 +26,12 @@ export const EditGroupModal: React.FC<Props> = (
             <ModalBody>
                 {renderNameInput()}
                 {renderNotesInput()}
+                {renderDeleteConfirmation()}
             </ModalBody>
             <ModalFooter>
-                <Button className="mr-auto" color="danger">Delete</Button>
+                <Button onClick={async () => {
+                    setShowDeleteConfirm(true);
+                }} className="mr-auto" color="danger">Delete</Button>
                 <Button color="secondary" onClick={() => {
                     setEditedGroup(group);
                     toggle();
@@ -79,5 +84,27 @@ export const EditGroupModal: React.FC<Props> = (
                 />
             </FormGroup>
         );
+    }
+
+    function renderDeleteConfirmation() {
+        return (
+            <Modal isOpen={showDeleteConfirm} toggle={() => setShowDeleteConfirm(false)}>
+                <ModalHeader toggle={() => setShowDeleteConfirm(false)}>
+                    Confirm Group Deletion
+                </ModalHeader>
+                <ModalBody>
+                    Are you sure you want to delete the group "{group.name}"?
+                </ModalBody>
+                <ModalFooter>
+                    <Button color="secondary" onClick={() => setShowDeleteConfirm(false)}>Cancel</Button>
+                    <Button color="danger" onClick={submitDelete}>Delete</Button>
+                </ModalFooter>
+            </Modal>
+        );
+    }
+
+    async function submitDelete() {
+        toggle();
+        await deleteGroup(group.id!);
     }
 }

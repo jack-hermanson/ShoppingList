@@ -26,3 +26,12 @@ export const editGroup = async (group: GroupModel): Promise<void> => {
     const response: {data: GroupModel} = await axios.put(`/api/groups/edit/${group.id}`, group);
     await setSuccessAlert("edited", `group "${response.data.name}"`);
 }
+
+export const deleteGroup = async (groupId: number): Promise<void> => {
+    interface DeleteGroupResponse extends GroupModel {
+        itemsDeleted: number;
+    }
+
+    const response: { data: DeleteGroupResponse } = await axios.delete(`/api/groups/delete/${groupId}`);
+    await setSuccessAlert("deleted", `group "${response.data.name}" and ${response.data.itemsDeleted} item${response.data.itemsDeleted === 1 ? "" : "s"}`);
+};

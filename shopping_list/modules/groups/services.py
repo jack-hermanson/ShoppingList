@@ -1,6 +1,8 @@
+from sqlalchemy import and_
+
 from shopping_list import db
 from .models import Group
-from ..items.models import GroupItem
+from ..items.models import GroupItem, Item
 from typing import List
 
 from ..items.services import delete_item
@@ -31,23 +33,35 @@ def get_one(group_id: int) -> dict:
     return group.as_dict()
 
 
-def delete_group(group_id: int, delete_items: bool) -> dict:
+def delete_group(group_id: int) -> dict:
     group_items = GroupItem.query.filter(GroupItem.group_id == group_id).all()
     group = Group.query.get_or_404(group_id)
     group_name = group.name
+    items_deleted = 0
 
-    for group_item in group_items:
-        if delete_items:
-            db.session.delete(group_item.item)
-        db.session.delete(group_item)
-
+    items_in_group = [group_item.item for group_item in group_items]
+    for item in items_in_group:
+        current_group_item = GroupItem.query.filter(and_(
+            GroupItem.item_id == item.id,
+            GroupItem.group_id == group_id
+        )).first()
+        other_group_items = GroupItem.query.filter(and_(
+            GroupItem.item_id == item.id,
+            GroupItem.group_id != group_id
+        )).all()
+        print(other_group_items)
+        db.session.delete(current_group_item)
+        if not other_group_items:
+            db.session.delete(item)
+            items_deleted += 1
+        db.session.commit()
     db.session.delete(group)
     db.session.commit()
 
     return {
         'id': group_id,
-        'deleteItems': delete_items,
-        'name': group_name
+        'name': group_name,
+        'itemsDeleted': items_deleted
     }
 
 

@@ -44,13 +44,8 @@ class GetGroup(Resource):
 class DeleteGroup(Resource):
 
     @staticmethod
-    def delete():
-        parser = reqparse.RequestParser()
-        parser.add_argument('id', type=int, required=True)
-        parser.add_argument('deleteItems', type=bool, required=True)
-        args: dict = parser.parse_args()
-
-        return jsonify(services.delete_group(args.get('id'), args.get('deleteItems')))
+    def delete(group_id):
+        return jsonify(services.delete_group(group_id))
 
 
 class EditGroup(Resource):
