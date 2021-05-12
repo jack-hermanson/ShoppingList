@@ -1,6 +1,7 @@
 from flask import jsonify
 from flask_restful import Resource, reqparse
 from . import services
+from ...logger import log
 
 
 class NewGroup(Resource):
@@ -20,10 +21,7 @@ class GetGroups(Resource):
 
     @staticmethod
     def get():
-        parser = reqparse.RequestParser()
-        parser.add_argument('order-by', type=str, required=False)
-        args: dict = parser.parse_args()
-
+        log("GetGroups resource hit", 1)
         return jsonify(services.get_all())
 
 
@@ -45,6 +43,7 @@ class DeleteGroup(Resource):
 
     @staticmethod
     def delete(group_id):
+        log(f"Deleted group with ID {group_id}", 1)
         return jsonify(services.delete_group(group_id))
 
 
@@ -57,6 +56,8 @@ class EditGroup(Resource):
         parser.add_argument('notes', type=str, required=True)
         args: dict = parser.parse_args()
 
+        log(f"Edited group with ID {group_id}", 1)
+
         return jsonify(services.edit_group(group_id, args))
 
 
@@ -64,5 +65,6 @@ class CompleteGroup(Resource):
 
     @staticmethod
     def post(group_id):
+        log(f"Completed group with ID {group_id}", 1)
         return jsonify(services.complete_group(group_id))
 
