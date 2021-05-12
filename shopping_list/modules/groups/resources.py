@@ -1,6 +1,7 @@
 from flask import jsonify
 from flask_restful import Resource, reqparse
 from . import services
+import requests
 
 
 class NewGroup(Resource):
@@ -20,10 +21,11 @@ class GetGroups(Resource):
 
     @staticmethod
     def get():
-        parser = reqparse.RequestParser()
-        parser.add_argument('order-by', type=str, required=False)
-        args: dict = parser.parse_args()
-
+        requests.post("https://jack-logger.herokuapp.com/api/logs", {
+            "body": "Shopping list GetGroups resource hit",
+            "appId": 1,
+            "level": 1
+        })
         return jsonify(services.get_all())
 
 
